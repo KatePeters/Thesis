@@ -66,17 +66,22 @@ df = pd.DataFrame({'day1':nlicks_minus2_sal_M, 'day2':nlicks_minus1_sal_M, \
 rat = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
 sb.swarmplot(data=df)
 
+# Figure 1 
 
->>> ax = sns.swarmplot(x="day", y="total_bill", hue="sex", data=tips)
+# Bar scatter over 3 days with saline and PCP (males) = 6 bars
+# Bar scatter over 3 days with saline and PCP (females) = 6 bars
 
-x = day
-y = licks 
-hue = drug 
+# Add significance stars (Python or manualy) to show if there are difs
+    # last time I ran analysis NOT significant, but not compared all cohorts
+    
 
-data = df 
+# Figure 2
 
-
-
+# Lick analysis violin plots for saline vs pcp 
+# Violin plots to show no difference 
+    # Back this up with stats
+    # What stats? MANOVA with just sal and pcp as the IV? 
+    # Look up in Field how to do this in SPSS
 
 
 
