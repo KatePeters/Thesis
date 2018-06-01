@@ -27,6 +27,9 @@ Functions:
 
 
 
+
+
+
 # FIGURE 1 
 
 
@@ -41,30 +44,21 @@ nlicks_pcp_M, nlicks_minus1_pcp_M, nlicks_minus2_pcp_M = nlicksgrouped(last_lick
 nlicks_sal_F, nlicks_minus1_sal_F, nlicks_minus2_sal_F = nlicksgrouped(last_lick_sal_F, lick_minus1_sal_F, lick_minus2_sal_F)
 nlicks_pcp_F, nlicks_minus1_pcp_F, nlicks_minus2_pcp_F = nlicksgrouped(last_lick_pcp_F, lick_minus1_pcp_F, lick_minus2_pcp_F)
 
-# Do I need to re-format the data so that it is grouped by rat over the 3
-# days and not ALL the rats over 3 days? How does it know which rat is which
-# to join? Within-subjects format?
-# pcp males
+dataM = [[nlicks_minus2_sal_M,nlicks_minus1_sal_M, nlicks_sal_M], [nlicks_minus2_pcp_M,nlicks_minus1_pcp_M, nlicks_pcp_M]]
+colors1 = ['#5FADEA','#FFD700','#5FADEA','#FFD700','#5FADEA','#FFD700']
+colors2 = ['#0054A5','#0054A5','#0054A5', '#FFBC00','#FFBC00','#FFBC00']
+dataF = [[nlicks_minus2_sal_F,nlicks_minus1_sal_F, nlicks_sal_F], [nlicks_minus2_pcp_F,nlicks_minus1_pcp_F, nlicks_pcp_F]]
 
-# saline females
-
-# pcp females
-
+# Males licking on 3 lick days 
+barscatter(dataM, transpose=True, paired=False, barfacecolor=colors1, barfacecoloroption='individual',  ylabel='Licks', grouplabel=['day 1', 'day 2', 'day 3'])
+# Females licking on 3 lick days 
+barscatter(dataF, transpose=True, paired=False, barfacecolor=colors1, barfacecoloroption='individual',  ylabel='Licks', grouplabel=['day 1', 'day 2', 'day 3'])
 # put into data frame --> format so that rat1day1, rat1day2, rat1day3
-import seaborn as sb
-import pandas as pd
-
-sb.swarmplot(nlicks_sal_M, nlicks_minus1_sal_M, nlicks_minus2_sal_M)
-
-ax = sb.swarmplot(x="day", y="total_bill", hue="smoker",\
-                   data=tips, palette="Set2", dodge=True)
+colors = ['lightblue', 'blue', 'darkblue', 'pink', 'hotpink','red']
 
 
-df = pd.DataFrame({'day1':nlicks_minus2_sal_M, 'day2':nlicks_minus1_sal_M, \
-                   'day3':nlicks_sal_M})
+# Figure 2 VIOLIN PLOTS FOR LICK PARAMTERS 
 
-rat = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
-sb.swarmplot(data=df)
 
 # Figure 1 
 
@@ -84,4 +78,9 @@ sb.swarmplot(data=df)
     # Look up in Field how to do this in SPSS
 
 
+# Figure 3
+
+# Barscatter percentage distracted
+# Males, pcp/sal 
+# Females pcp/sal 
 
