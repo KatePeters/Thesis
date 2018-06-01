@@ -510,6 +510,7 @@ def nlicksgrouped(licklist1, licklist2, licklist3):
     lick = []
     lickminus1 = []
     lickminus2 = []
+    licklistminus3 = []
     
     for rat in licklist1:
         lick.append(len(rat[0]))
@@ -519,6 +520,8 @@ def nlicksgrouped(licklist1, licklist2, licklist3):
         
     for rat in licklist3:
         lickminus2.append(len(rat[0]))
+        
+
     return lick, lickminus1, lickminus2    
  
 #############################################################################
@@ -587,6 +590,7 @@ amph_pcp_M = subsetter(extract_males, ['170423','171012'], 'PCP')
 last_lick_sal_F = subsetter(extract_females, ['171124'], 'SAL')
 lick_minus1_sal_F = subsetter(extract_females, ['171122'], 'SAL')
 lick_minus2_sal_F = subsetter(extract_females, ['171121'], 'SAL')
+lick_minus3_sal_F = subsetter(extract_females, ['171120'], 'SAL')
 distraction_sal_F = subsetter(extract_females, ['171125'], 'SAL',dis=True)
 hab1_sal_F = subsetter(extract_females, ['171126'], 'SAL')
 hab2_sal_F = subsetter(extract_females, ['171127'], 'SAL')
@@ -595,6 +599,7 @@ amph_sal_F = subsetter(extract_females, ['171128'], 'SAL')
 last_lick_pcp_F = subsetter(extract_females, ['171124'], 'PCP')
 lick_minus1_pcp_F = subsetter(extract_females, ['171122'], 'PCP')
 lick_minus2_pcp_F = subsetter(extract_females, ['171121'], 'PCP')
+lick_minus3_pcp_F = subsetter(extract_females, ['171120'], 'PCP')
 distraction_pcp_F = subsetter(extract_females, ['171125'], 'PCP',dis=True)
 hab1_pcp_F = subsetter(extract_females, ['171126'], 'PCP')
 hab2_pcp_F = subsetter(extract_females, ['171127'], 'PCP')
@@ -773,6 +778,6 @@ nlicks_pcp_M, nlicks_minus1_pcp_M, nlicks_minus2_pcp_M = nlicksgrouped(last_lick
 # FEMALES
 nlicks_sal_F, nlicks_minus1_sal_F, nlicks_minus2_sal_F = nlicksgrouped(last_lick_sal_F, lick_minus1_sal_F, lick_minus2_sal_F)
 nlicks_pcp_F, nlicks_minus1_pcp_F, nlicks_minus2_pcp_F = nlicksgrouped(last_lick_pcp_F, lick_minus1_pcp_F, lick_minus2_pcp_F)
-    
-######################### INDIVIDUAL DIFFERENCES #######################
+
+######################## INDIVIDUAL DIFFERENCES #######################
 #sb.jointplot(x=df['nRuns'], y=df['nBursts'], kind='hex')) #or type 'reg' for kernel estimation and regression
