@@ -510,7 +510,7 @@ def nlicksgrouped(licklist1, licklist2, licklist3):
     lick = []
     lickminus1 = []
     lickminus2 = []
-    licklistminus3 = []
+
     
     for rat in licklist1:
         lick.append(len(rat[0]))
@@ -522,7 +522,8 @@ def nlicksgrouped(licklist1, licklist2, licklist3):
         lickminus2.append(len(rat[0]))
         
 
-    return lick, lickminus1, lickminus2    
+
+    return lick, lickminus1, lickminus2   
  
 #############################################################################
 #############################################################################

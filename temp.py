@@ -1,48 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Fri May 25 09:12:11 2018
+Created on Fri Jun 15 10:18:31 2018
 
 @author: u1490431
-
-#############################################################################
-
-CHAPTER 3 - DISTRACTION FROM ONGOING SACCHARIN CONSUMPTION: EXPERIMENTS
-            IN SALINE AND PHENCYCLIDINE TREATED RATS
-
-#############################################################################
-
-This file contains the code for producing FIGURES 
-All functions and imports are at the beginning and no others are required
-
-Imports:
-     
-Functions: 
- 
 """
-# Imports for generating figures / functions that require them 
-import numpy as np
-import matplotlib.pyplot as plt
-from itertools import chain
-
-# Functions 
-
-"""
-This function will create bar+scatter plots when passed a 1 or 2 dimensional
-array. Data needs to be passed in as a numpy object array, e.g.
-data = np.empty((2), dtype=np.object)
-data[0] = np.array(allData['nCasLicks'][index])
-data[1] = np.array(allData['nMaltLicks'][index])
-Various options allow specification of colors and paired/unpaired plotting.
-It can return the figures, axes, bars, and scatters for further modification.
-e.g.
-fig1, ax1, barlist1, sc1 = jmf.barscatter(data)
-for i in barlist1[1].get_children():
-    i.set_color('g')
-"""
-
 
 #New barscatter
+
 
 def barscatter(data, transpose = False,
                 groupwidth = .75,
@@ -191,8 +156,7 @@ def barscatter(data, transpose = False,
         plt.ylabel(ylabel)
     
     if xlabel != 'none':
-        plt.xlabel(xlabel, labelpad=30)
-        
+        plt.xlabel(xlabel)
     
     # Set range and tick values for Y axis
     if yaxisparams != 'auto':
@@ -237,138 +201,3 @@ def barscatter(data, transpose = False,
             plt.legend(legendbar, legendtext, loc=legendloc)
     
     return ax, barx, barlist, sclist
-
-#plt.savefig('foo.png')
-        
-# To do
-# check if n's are the same for paired and if not default to unpaired
-# add color options for scatters
-# add alpha options etc
-# add axis options
-# remove white background
-# work out how to export or save as pdf, tiff, eps etc
-# work out how to return handles to scatters so can be altered outside of function
-# make help doc
-# make html file to show usage using ijupyter
-
-      
-def setcolors(coloroption, colors, barspergroup, nGroups, data, paired_scatter = False):
-            
-    nColors = len(colors)
-    
-    if (paired_scatter == True) & (coloroption == 'within'):
-        print('Not possible to make a Paired scatter plot with Within setting.')
-        coloroption = 'same'
-        
-    if coloroption == 'within':
-        if nColors < barspergroup:
-            print('Not enough colors for this option! Reverting to one color.')
-            coloroption = 'same'
-        elif nColors > barspergroup:
-            colors = colors[:barspergroup]
-        coloroutput = [colors for i in data]
-        coloroutput = list(chain(*coloroutput))
-        
-    if coloroption == 'between':
-        if nColors < nGroups:
-            print('Not enough colors for this option! Reverting to one color.')
-            coloroption = 'same'
-        elif nColors > nGroups:
-            colors = colors[:nGroups]
-        if paired_scatter == False:
-            coloroutput = [[c]*barspergroup for c in colors]
-            coloroutput = list(chain(*coloroutput))
-        else:
-            coloroutput = colors
-            
-    if coloroption == 'individual':
-        if nColors < nGroups*barspergroup:
-            print('Not enough colors for this color option')
-            coloroption = 'same'
-        elif nColors > nGroups*barspergroup:
-            coloroutput = colors[:nGroups*barspergroup]
-        else: 
-            coloroutput = colors
-    
-    if coloroption == 'same':
-        coloroutput = [colors[0] for x in range(len(data.flatten()))]
-
-    return coloroutput
-
-def data2obj1D(data):
-    obj = np.empty(len(data), dtype=np.object)
-    for i,x in enumerate(data):
-        obj[i] = np.array(x)  
-    return obj
-
-def data2obj2D(data):
-    obj = np.empty((np.shape(data)[0], np.shape(data)[1]), dtype=np.object)
-    for i,x in enumerate(data):
-        for j,y in enumerate(x):
-            obj[i][j] = np.array(y)
-    return obj
-
-
-
-
-
-
-# FIGURE 1a and 1b 
-# Saline and pcp treated rats across the three lick days before distraction 
-# a - Males (n=16 per group)
-# b - Females (n=16 per group)
-
-# saline males
-# already have these somewhere but easier to index this way! 
- 
-# Want to plot licking across days 1,2,3 
-# Also compare means on each day (mainly the last)
-   
-nlicks_sal_M, nlicks_minus1_sal_M, nlicks_minus2_sal_M = nlicksgrouped(last_lick_sal_M, lick_minus1_sal_M, lick_minus2_sal_M)
-nlicks_pcp_M, nlicks_minus1_pcp_M, nlicks_minus2_pcp_M = nlicksgrouped(last_lick_pcp_M, lick_minus1_pcp_M, lick_minus2_pcp_M)
-nlicks_sal_F, nlicks_minus1_sal_F, nlicks_minus2_sal_F = nlicksgrouped(last_lick_sal_F, lick_minus1_sal_F, lick_minus2_sal_F)
-nlicks_pcp_F, nlicks_minus1_pcp_F, nlicks_minus2_pcp_F = nlicksgrouped(last_lick_pcp_F, lick_minus1_pcp_F, lick_minus2_pcp_F)
-
-dataM = [[nlicks_minus2_sal_M,nlicks_minus1_sal_M, nlicks_sal_M], [nlicks_minus2_pcp_M,nlicks_minus1_pcp_M, nlicks_pcp_M]]
-colors1 = ['#5FADEA','#5FADEA','#5FADEA','#FFD700','#FFD700','#FFD700']
-colors2 = ['#0054A5','#0054A5','#0054A5', '#FFBC00','#FFBC00','#FFBC00']
-col3 = ['#21897E','#1C7168','#0F3F3A','#FBA04B','#FB8B24','#CE721E']
-dataF = [[nlicks_minus2_sal_F,nlicks_minus1_sal_F, nlicks_sal_F], [nlicks_minus2_pcp_F,nlicks_minus1_pcp_F, nlicks_pcp_F]]
-labels = ['-3','-2','-1','-3','-2','-1']
-# Males licking on 3 lick days 
-ax, barx, barlist, sclist = barscatter(dataM, transpose=False, paired=True, barfacecolor=col3, barfacecoloroption='individual',  ylabel='Licks', xlabel='Lick days before distraction') #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-# Adding x labels for bars:
-for x, label in zip(barx, labels):
-               ax.text(x, -500, label)   
-# Females licking on 3 lick days 
-ax, barx, barlist, sclist = barscatter(dataF, transpose=False, paired=True, barfacecolor=col3, barfacecoloroption='individual',  ylabel='Licks', xlabel='Lick days before distraction')#, grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-for x, label in zip(barx, labels):
-               ax.text(x, -500, label)
-# Figure 2 VIOLIN PLOTS FOR LICK PARAMTERS 
-
-
-
-# Figure 1 
-
-# Bar scatter over 3 days with saline and PCP (males) = 6 bars
-# Bar scatter over 3 days with saline and PCP (females) = 6 bars
-
-# Add significance stars (Python or manualy) to show if there are difs
-    # last time I ran analysis NOT significant, but not compared all cohorts
-    
-
-# Figure 2
-
-# Lick analysis violin plots for saline vs pcp 
-# Violin plots to show no difference 
-    # Back this up with stats
-    # What stats? MANOVA with just sal and pcp as the IV? 
-    # Look up in Field how to do this in SPSS
-
-
-# Figure 3
-
-# Barscatter percentage distracted
-# Males, pcp/sal 
-# Females pcp/sal 
-
