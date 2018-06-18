@@ -379,6 +379,15 @@ dataMdis = [[percent_dis_modelled_sal_M,percent_dis_dis_sal_M,\
          percent_dis_dis_pcp_M,percent_dis_hab1_pcp_M,\
          percent_dis_hab2_pcp_M,percent_dis_amph_pcp_M]]
 
+tenbarcolors = ['grey','grey','grey','grey','grey','blue','blue','blue','blue','blue']
+
+labels = ['mod','dis','hab1','hab2','amph','mod','dis','hab1','hab2','amph']
+ax, barx, barlist, sclist = barscatter(dataMdis, transpose=False, paired=True, barfacecolor=tenbarcolors, barfacecoloroption='individual',  ylabel='Licks', xlabel='Lick days before distraction') 
+for x, label in zip(barx, labels):
+               ax.text(x, -5,label)   
+
+
+
 dataFdis = [[percent_dis_modelled_sal_F,percent_dis_dis_sal_F,\
          percent_dis_hab1_sal_F,percent_dis_hab2_sal_F,\
          percent_dis_amph_sal_F], [percent_dis_modelled_pcp_F,\
