@@ -332,18 +332,19 @@ nlicks_pcp_F, nlicks_minus1_pcp_F, nlicks_minus2_pcp_F = nlicksgrouped(last_lick
 dataM = [[nlicks_minus2_sal_M,nlicks_minus1_sal_M, nlicks_sal_M], [nlicks_minus2_pcp_M,nlicks_minus1_pcp_M, nlicks_pcp_M]]
 colors1 = ['#5FADEA','#5FADEA','#5FADEA','#FFD700','#FFD700','#FFD700']
 colors2 = ['#0054A5','#0054A5','#0054A5', '#FFBC00','#FFBC00','#FFBC00']
+
+
 col3 = ['#21897E','#1C7168','#0F3F3A','#FBA04B','#FB8B24','#CE721E']
 dataF = [[nlicks_minus2_sal_F,nlicks_minus1_sal_F, nlicks_sal_F], [nlicks_minus2_pcp_F,nlicks_minus1_pcp_F, nlicks_pcp_F]]
 labels = ['-3','-2','-1','-3','-2','-1']
 # Males licking on 3 lick days 
-ax, barx, barlist, sclist = barscatter(dataM, transpose=False, paired=True, barfacecolor=col3, barfacecoloroption='individual',  ylabel='Licks', xlabel='Lick days before distraction') #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-# Adding x labels for bars:
-for x, label in zip(barx, labels):
-               ax.text(x, -500, label)   
+ax, barx, barlist, sclist = barscatter(dataM, transpose=False, paired=True, barfacecolor=col3, barfacecoloroption='individual',  ylabel='Licks', xlabel='Lick days before distraction', barlabels=labels) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+
+
+ 
 # Females licking on 3 lick days 
-ax, barx, barlist, sclist = barscatter(dataF, transpose=False, paired=True, barfacecolor=col3, barfacecoloroption='individual',  ylabel='Licks', xlabel='Lick days before distraction')#, grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-for x, label in zip(barx, labels):
-               ax.text(x, -500, label)
+ax, barx, barlist, sclist = barscatter(dataF, transpose=False, paired=True, barfacecolor=col3, barfacecoloroption='individual',  ylabel='Licks', xlabel='Lick days before distraction', barlabels=labels)#, grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+
 # Figure 2 VIOLIN PLOTS FOR LICK PARAMTERS 
 
 
@@ -379,19 +380,31 @@ dataMdis = [[percent_dis_modelled_sal_M,percent_dis_dis_sal_M,\
          percent_dis_dis_pcp_M,percent_dis_hab1_pcp_M,\
          percent_dis_hab2_pcp_M,percent_dis_amph_pcp_M]]
 
-tenbarcolors = ['grey','grey','grey','grey','grey','blue','blue','blue','blue','blue']
+
+tenbarcolors = ['#FFE5A5','#FFE5A5','#FFE5A5','#FFE5A5','#FFE5A5','#FFBA08','#FFBA08','#FFBA08','#FFBA08','#FFBA08']
 
 labels = ['mod','dis','hab1','hab2','amph','mod','dis','hab1','hab2','amph']
-ax, barx, barlist, sclist = barscatter(dataMdis, transpose=False, paired=True, barfacecolor=tenbarcolors, barfacecoloroption='individual',  ylabel='Licks', xlabel='Lick days before distraction') 
-for x, label in zip(barx, labels):
-               ax.text(x, -5,label)   
+ax, barx, barlist, sclist = barscatter(dataMdis, transpose=False, paired=True, barfacecolor=tenbarcolors, barfacecoloroption='individual',  ylabel='Licks', xlabel='Lick days before distraction', barlabels=labels) 
 
+#
+tenbarcolors = ['#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5','#249E8D','#249E8D','#249E8D','#249E8D','#249E8D']
+#Selective yellow --> #FFBA08
+# Navajo white --> #FFE5A5
+#Jungle green --> #249E8D
+#Light blue --> #AFDBD5
+#Lapis lazuli --> #346699
 
-
+### ISSUE HERE, I REMOVED A RAT FROM ALL PCP TREATED DATA!! Put it back in for the plots?
+## Make new variables WITH all 12 rats included for the sake of plotting? 
+# With a different names so not to cause confusion with the divi
 dataFdis = [[percent_dis_modelled_sal_F,percent_dis_dis_sal_F,\
          percent_dis_hab1_sal_F,percent_dis_hab2_sal_F,\
          percent_dis_amph_sal_F], [percent_dis_modelled_pcp_F,\
          percent_dis_dis_pcp_F,percent_dis_hab1_pcp_F,\
          percent_dis_hab2_pcp_F,percent_dis_amph_pcp_F]]
+
+
+labels = ['mod','dis','hab1','hab2','amph','mod','dis','hab1','hab2','amph']
+ax, barx, barlist, sclist = barscatter(dataFdis, transpose=False,paired=True, barfacecolor=tenbarcolors, barfacecoloroption='individual',  ylabel='Licks', xlabel='Lick days before distraction', barlabels=labels) 
 
 

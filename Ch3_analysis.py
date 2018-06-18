@@ -765,11 +765,16 @@ percent_dis_hab1_sal_F = percentdisgroup(hab1_dis_sal_F)
 percent_dis_hab2_sal_F = percentdisgroup(hab2_dis_sal_F)
 percent_dis_amph_sal_F = percentdisgroup(amph_dis_sal_F)
 # PCP
-percent_dis_dis_pcp_F = percentdisgroup(discalc_pcp_F[0:-1])
-percent_dis_modelled_pcp_F = percentdisgroup(mod_dis_pcp_F[0:-1])
-percent_dis_hab1_pcp_F = percentdisgroup(hab1_dis_pcp_F[0:-1])
-percent_dis_hab2_pcp_F = percentdisgroup(hab2_dis_pcp_F[0:-1])
-percent_dis_amph_pcp_F = percentdisgroup(amph_dis_pcp_F[0:-1]) 
+
+### EDITED - 18/06/18 removed [0:-1] for all but amphetamine and added a 0 for amph
+percent_dis_dis_pcp_F = percentdisgroup(discalc_pcp_F)
+percent_dis_modelled_pcp_F = percentdisgroup(mod_dis_pcp_F)
+percent_dis_hab1_pcp_F = percentdisgroup(hab1_dis_pcp_F)
+percent_dis_hab2_pcp_F = percentdisgroup(hab2_dis_pcp_F)
+percent_dis_amph_pcp_F = percentdisgroup(amph_dis_pcp_F[0:-1])
+
+percent_dis_amph_pcp_F.extend([0]) 
+
 
 # Using subset lists, finds N licks for the last 3 saccharin training days 
 # Stores as list variables for later plotting     
