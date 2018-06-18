@@ -371,4 +371,18 @@ for x, label in zip(barx, labels):
 # Barscatter percentage distracted
 # Males, pcp/sal 
 # Females pcp/sal 
+# SALINE
+
+dataMdis = [[percent_dis_modelled_sal_M,percent_dis_dis_sal_M,\
+         percent_dis_hab1_sal_M,percent_dis_hab2_sal_M,\
+         percent_dis_amph_sal_M], [percent_dis_modelled_pcp_M,\
+         percent_dis_dis_pcp_M,percent_dis_hab1_pcp_M,\
+         percent_dis_hab2_pcp_M,percent_dis_amph_pcp_M]]
+
+dataFdis = [[percent_dis_modelled_sal_F,percent_dis_dis_sal_F,\
+         percent_dis_hab1_sal_F,percent_dis_hab2_sal_F,\
+         percent_dis_amph_sal_F], [percent_dis_modelled_pcp_F,\
+         percent_dis_dis_pcp_F,percent_dis_hab1_pcp_F,\
+         percent_dis_hab2_pcp_F,percent_dis_amph_pcp_F]]
+
 
