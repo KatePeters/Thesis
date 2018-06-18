@@ -68,6 +68,7 @@ def barscatter(data, transpose = False,
                 barlabels = [],
                 yaxisparams = 'auto',
                 show_legend = 'none',
+                xrotation = 0,
                 legendloc='upper right',
                 ax=[]):
 #
@@ -218,7 +219,7 @@ def barscatter(data, transpose = False,
             yrange = ax.get_ylim()[1] - ax.get_ylim()[0]
             offset = ax.get_ylim()[0] - yrange/25
             for x, label in zip(barx, barlabels):
-                ax.text(x, offset, label, va='top', ha='center')
+                ax.text(x, offset, label, va='top', ha='center', rotation=xrotation)
     
     # Hide the right and top spines and set bottom to zero
     ax.spines['right'].set_visible(False)
@@ -340,7 +341,7 @@ col3 = ['#FFE5A5','#FFE5A5','#FFE5A5','#FFBA08','#FFBA08','#FFBA08']
 dataF = [[nlicks_minus2_sal_F,nlicks_minus1_sal_F, nlicks_sal_F], [nlicks_minus2_pcp_F,nlicks_minus1_pcp_F, nlicks_pcp_F]]
 labels = ['-3','-2','-1','-3','-2','-1']
 # Males licking on 3 lick days 
-ax, barx, barlist, sclist = barscatter(dataM, transpose=False, paired=True, barfacecolor=col3, barfacecoloroption='individual',  ylabel='Licks', xlabel='Lick days before distraction', barlabels=labels) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax, barx, barlist, sclist = barscatter(dataM, transpose=False, paired=True, barfacecolor=col3, barfacecoloroption='individual',  ylabel='Licks', xlabel='Lick days before distraction', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
 plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/figure1a.pdf", bbox_inches='tight')
 
 
@@ -388,7 +389,7 @@ dataMdis = [[percent_dis_modelled_sal_M,percent_dis_dis_sal_M,\
 tenbarcolors = ['#FFE5A5','#FFE5A5','#FFE5A5','#FFE5A5','#FFE5A5','#FFBA08','#FFBA08','#FFBA08','#FFBA08','#FFBA08']
 
 labels = ['mod','dis','hab1','hab2','amph','mod','dis','hab1','hab2','amph']
-ax, barx, barlist, sclist = barscatter(dataMdis, transpose=False, paired=True, barfacecolor=tenbarcolors, barfacecoloroption='individual',  ylabel='Mean percent distracted',  barlabels=labels) 
+ax, barx, barlist, sclist = barscatter(dataMdis, transpose=False, paired=True, barfacecolor=tenbarcolors, barfacecoloroption='individual',  ylabel='Mean percent distracted',  barlabels=labels, xrotation=45) 
 plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/figure2a.pdf", bbox_inches='tight')
             
 #
@@ -401,9 +402,10 @@ dataFdis = [[percent_dis_modelled_sal_F,percent_dis_dis_sal_F,\
          percent_dis_hab2_pcp_F,percent_dis_amph_pcp_F]]
 
 
-labels = ['mod','dis','hab1','hab2','amph','mod','dis','hab1','hab2','amph']
-ax, barx, barlist, sclist = barscatter(dataFdis, transpose=False,paired=True, barfacecolor=tenbarcolors, barfacecoloroption='individual',  ylabel='Mean percent distracted', barlabels=labels) 
 
+
+labels = ['mod','dis','hab1','hab2','amph','mod','dis','hab1','hab2','amph']
+ax, barx, barlist, sclist = barscatter(dataFdis, transpose=False,paired=True, barfacecolor=tenbarcolors, barfacecoloroption='individual',  ylabel='Mean percent distracted', barlabels=labels, xrotation=45) 
 plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/figure2b.pdf", bbox_inches='tight')
 #Selective yellow --> #FFBA08
 #Navajo white --> #FFE5A5
