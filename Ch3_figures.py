@@ -15,9 +15,9 @@ CHAPTER 3 - DISTRACTION FROM ONGOING SACCHARIN CONSUMPTION: EXPERIMENTS
 This file contains the code for producing FIGURES 
 All functions and imports are at the beginning and no others are required
 
-Imports:
+Imports: numpy=np, matplotlib.pyplot=plt, chain
      
-Functions: 
+Functions: barscatter(), setcolors(), data2obj1D(), data2obj2D()
  
 """
 # Imports for generating figures / functions that require them 
@@ -349,7 +349,7 @@ for x, label in zip(barx, labels):
 
 
 # Figure 1 
-
+# Done 
 # Bar scatter over 3 days with saline and PCP (males) = 6 bars
 # Bar scatter over 3 days with saline and PCP (females) = 6 bars
 
@@ -358,7 +358,7 @@ for x, label in zip(barx, labels):
     
 
 # Figure 2
-
+# mostly done - tinkering needed 
 # Lick analysis violin plots for saline vs pcp 
 # Violin plots to show no difference 
     # Back this up with stats
