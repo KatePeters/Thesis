@@ -466,7 +466,7 @@ def pdpbygroup(distractiondict, groupdict):
             pdps_dis.append(distracted_PDP)
             preDPs_dis.append(distracted_preDP)
         pdps_dis_group.append(pdps_dis)
-        med_pdps_dis_group.append(np.mean(pdps_dis))
+        med_pdps_dis_group.append(np.median(pdps_dis))
         preDPs_dis_group.append(preDPs_dis)
     
     
@@ -486,7 +486,7 @@ def pdpbygroup(distractiondict, groupdict):
             pdps_notdis.append(notdistracted_PDP)
             preDPs_notdis.append(notdistracted_preDP)
         pdps_notdis_group.append(pdps_notdis)
-        med_pdps_notdis_group.append(np.mean(pdps_notdis))
+        med_pdps_notdis_group.append(np.median(pdps_notdis))
         preDPs_notdis_group.append(preDPs_notdis)
     
     return pdps_dis_group, med_pdps_dis_group, preDPs_dis_group, \
@@ -692,19 +692,26 @@ discalc_sal_M[0][0][0] # [rat][list][licktimestamp]
 # CALCULATE THE PDP FOR SPECIFIC GROUPS - finds where in the licks the distractor 
 # occurred and then finds the pause before the next lick (ignoring distractors occurring
 # on the final lick in a session)
-# SALINE MALES 
+
+# SALINE MALES - distraction day 
 pdps_dis_sal_M, med_pdps_dis_sal_M, preDPs_dis_sal_M,\
 pdps_notdis_sal_M, med_pdps_notdis_sal_M, preDPs_notdis_sal_M,\
  = pdpbygroup(discalc_sal_M, distraction_sal_M) 
-# PCP MALES
+ 
+ 
+# PCP MALES - distraction day
 pdps_dis_pcp_M, med_pdps_dis_pcp_M, preDPs_dis_pcp_M,\
 pdps_notdis_pcp_M, med_pdps_notdis_pcp_M, preDPs_notdis_pcp_M,\
- = pdpbygroup(discalc_pcp_M, distraction_pcp_M) 
-# SALINE FEMALES
+ = pdpbygroup(discalc_pcp_M, distraction_pcp_M)
+
+ 
+# SALINE FEMALES - distracition day
 pdps_dis_sal_F, med_pdps_dis_sal_F, preDPs_dis_sal_F,\
 pdps_notdis_sal_F, med_pdps_notdis_sal_F, preDPs_notdis_sal_F,\
  = pdpbygroup(discalc_sal_F, distraction_sal_F) 
-# PCP FEMALES 
+ 
+ 
+# PCP FEMALES - distraction day 
 pdps_dis_pcp_F, med_pdps_dis_pcp_F, preDPs_dis_pcp_F,\
 pdps_notdis_pcp_F, med_pdps_notdis_pcp_F, preDPs_notdis_pcp_F,\
  = pdpbygroup(discalc_pcp_F, distraction_pcp_F) 
