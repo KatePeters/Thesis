@@ -697,25 +697,92 @@ discalc_sal_M[0][0][0] # [rat][list][licktimestamp]
 pdps_dis_sal_M, med_pdps_dis_sal_M, preDPs_dis_sal_M,\
 pdps_notdis_sal_M, med_pdps_notdis_sal_M, preDPs_notdis_sal_M,\
  = pdpbygroup(discalc_sal_M, distraction_sal_M) 
- 
+# ISSUES HERE!!! NAN BECAUSE PDPS_MOD_DIS_SAL_M HAS 2 RATS WITH ZERO so
+# med_pdps_mod_dis_sal_M is nan,nan, then fine  
+#pdps_mod_sal_M - PDPs for modelled distraction day, modelled distractors
+pdps_mod_dis_sal_M, med_pdps_mod_dis_sal_M, preDPs_mod_dis_sal_M,\
+pdps_mod_notdis_sal_M, med_pdps_mod_notdis_sal_M, preDPs_mod_notdis_sal_M,\
+= pdpbygroup(mod_dis_sal_M, last_lick_sal_M)
+#pdps_hab1_sal_M
+pdps_hab1_dis_sal_M, med_pdps_hab1_dis_sal_M, preDPs_hab1_dis_sal_M,\
+pdps_hab1_notdis_sal_M, med_pdps_hab1_notdis_sal_M, preDPs_hab1_notdis_sal_M,\
+= pdpbygroup(hab1_dis_sal_M, hab1_sal_M) 
+#pdps_hab2_sal_M
+pdps_hab2_dis_sal_M, med_pdps_hab2_dis_sal_M, preDPs_hab2_dis_sal_M,\
+pdps_hab2_notdis_sal_M, med_pdps_hab2_notdis_sal_M, preDPs_hab2_notdis_sal_M,\
+= pdpbygroup(hab2_dis_sal_M, hab2_sal_M)  
+#pdps_amph_sal_M
+pdps_amph_dis_sal_M, med_pdps_amph_dis_sal_M, preDPs_amph_dis_sal_M,\
+pdps_amph_notdis_sal_M, med_pdps_amph_notdis_sal_M, preDPs_amph_notdis_sal_M,\
+= pdpbygroup(amph_dis_sal_M, amph_sal_M)  
+
  
 # PCP MALES - distraction day
 pdps_dis_pcp_M, med_pdps_dis_pcp_M, preDPs_dis_pcp_M,\
 pdps_notdis_pcp_M, med_pdps_notdis_pcp_M, preDPs_notdis_pcp_M,\
  = pdpbygroup(discalc_pcp_M, distraction_pcp_M)
-
+#pdps_mod_pcp_M
+pdps_mod_dis_pcp_M, med_pdps_mod_dis_pcp_M, preDPs_mod_dis_pcp_M,\
+pdps_mod_notdis_pcp_M, med_pdps_mod_notdis_pcp_M, preDPs_mod_notdis_pcp_M,\
+= pdpbygroup(mod_dis_pcp_M, last_lick_pcp_M)
+#pdps_hab1_pcp_M
+pdps_hab1_dis_pcp_M, med_pdps_hab1_dis_pcp_M, preDPs_hab1_dis_pcp_M,\
+pdps_hab1_notdis_pcp_M, med_pdps_hab1_notdis_pcp_M, preDPs_hab1_notdis_pcp_M,\
+= pdpbygroup(hab1_dis_pcp_M, hab1_pcp_M) 
+#pdps_hab2_pcp_M
+pdps_hab2_dis_pcp_M, med_pdps_hab2_dis_pcp_M, preDPs_hab2_dis_pcp_M,\
+pdps_hab2_notdis_pcp_M, med_pdps_hab2_notdis_pcp_M, preDPs_hab2_notdis_pcp_M,\
+= pdpbygroup(hab2_dis_pcp_M, hab2_pcp_M)  
+#pdps_amph_pcp_M
+pdps_amph_dis_pcp_M, med_pdps_amph_dis_pcp_M, preDPs_amph_dis_pcp_M,\
+pdps_amph_notdis_pcp_M, med_pdps_amph_notdis_pcp_M, preDPs_amph_notdis_pcp_M,\
+= pdpbygroup(amph_dis_pcp_M, amph_pcp_M) 
  
-# SALINE FEMALES - distracition day
+ 
+# SALINE FEMALES - distraction day
 pdps_dis_sal_F, med_pdps_dis_sal_F, preDPs_dis_sal_F,\
 pdps_notdis_sal_F, med_pdps_notdis_sal_F, preDPs_notdis_sal_F,\
  = pdpbygroup(discalc_sal_F, distraction_sal_F) 
- 
+#pdp_mod_sal_F 
+pdps_mod_dis_sal_F, med_pdps_mod_dis_sal_F, preDPs_mod_dis_sal_F,\
+pdps_mod_notdis_sal_F, med_pdps_mod_notdis_sal_F, preDPs_mod_notdis_sal_F,\
+= pdpbygroup(mod_dis_sal_F, last_lick_sal_F)
+#pdps_hab1_sal_F
+pdps_hab1_dis_sal_F, med_pdps_hab1_dis_sal_F, preDPs_hab1_dis_sal_F,\
+pdps_hab1_notdis_sal_F, med_pdps_hab1_notdis_sal_F, preDPs_hab1_notdis_sal_F,\
+= pdpbygroup(hab1_dis_sal_F, hab1_sal_F) 
+#pdps_hab2_sal_F
+pdps_hab2_dis_sal_F, med_pdps_hab2_dis_sal_F, preDPs_hab2_dis_sal_F,\
+pdps_hab2_notdis_sal_F, med_pdps_hab2_notdis_sal_F, preDPs_hab2_notdis_sal_F,\
+= pdpbygroup(hab2_dis_sal_F, hab2_sal_F)  
+#pdps_amph_sal_F
+pdps_amph_dis_sal_F, med_pdps_amph_dis_sal_F, preDPs_amph_dis_sal_F,\
+pdps_amph_notdis_sal_F, med_pdps_amph_notdis_sal_F, preDPs_amph_notdis_sal_F,\
+= pdpbygroup(amph_dis_sal_F, amph_sal_F)
+
  
 # PCP FEMALES - distraction day 
 pdps_dis_pcp_F, med_pdps_dis_pcp_F, preDPs_dis_pcp_F,\
 pdps_notdis_pcp_F, med_pdps_notdis_pcp_F, preDPs_notdis_pcp_F,\
  = pdpbygroup(discalc_pcp_F, distraction_pcp_F) 
-
+ 
+#pdps_mod_pcp_F
+pdps_mod_dis_pcp_F, med_pdps_mod_dis_pcp_F, preDPs_mod_dis_pcp_F,\
+pdps_mod_notdis_pcp_F, med_pdps_mod_notdis_pcp_F, preDPs_mod_notdis_pcp_F,\
+= pdpbygroup(mod_dis_pcp_F, last_lick_pcp_F)
+#pdps_hab1_pcp_F
+pdps_hab1_dis_pcp_F, med_pdps_hab1_dis_pcp_F, preDPs_hab1_dis_pcp_F,\
+pdps_hab1_notdis_pcp_F, med_pdps_hab1_notdis_pcp_F, preDPs_hab1_notdis_pcp_F,\
+= pdpbygroup(hab1_dis_pcp_F, hab1_pcp_F) 
+#pdps_hab2_pcp_F
+pdps_hab2_dis_pcp_F, med_pdps_hab2_dis_pcp_F, preDPs_hab2_dis_pcp_F,\
+pdps_hab2_notdis_pcp_F, med_pdps_hab2_notdis_pcp_F, preDPs_hab2_notdis_pcp_F,\
+= pdpbygroup(hab2_dis_pcp_F, hab2_pcp_F)  
+#pdps_amph_pcp_F
+pdps_amph_dis_pcp_F, med_pdps_amph_dis_pcp_F, preDPs_amph_dis_pcp_F,\
+pdps_amph_notdis_pcp_F, med_pdps_amph_notdis_pcp_F, preDPs_amph_notdis_pcp_F,\
+= pdpbygroup(amph_dis_pcp_F, amph_pcp_F) 
+  
 '''
 # Corelations 
 
