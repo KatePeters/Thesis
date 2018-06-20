@@ -397,3 +397,34 @@ plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/
 #Jungle green --> #249E8D
 #Light blue --> #AFDBD5
 #Lapis lazuli --> #346699
+
+
+## TESTING PDP PLOTS??????
+tenbarcolors = ['#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5','#249E8D','#249E8D','#249E8D','#249E8D','#249E8D']
+dataPDPsM = [[med_pdps_mod_dis_sal_M, med_pdps_dis_sal_M, med_pdps_hab1_dis_sal_M,\
+              med_pdps_hab2_dis_sal_M, med_pdps_amph_dis_sal_M], [med_pdps_mod_dis_pcp_M, med_pdps_dis_pcp_M, med_pdps_hab1_dis_pcp_M,\
+              med_pdps_hab2_dis_pcp_M, med_pdps_amph_dis_pcp_M]]
+
+
+labels = ['mod','dis','hab1','hab2','amph','mod','dis','hab1','hab2','amph']
+ax, barx, barlist, sclist = barscatter(dataPDPsM, transpose=False,paired=True, barfacecolor=tenbarcolors, barfacecoloroption='individual',  ylabel='Mean percent distracted', barlabels=labels, xrotation=45) 
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/figure2b.pdf", bbox_inches='tight')
+
+## TESTING PDP PLOTS?????? female 
+tenbarcolors = ['#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5','#249E8D','#249E8D','#249E8D','#249E8D','#249E8D']
+dataPDPsF = [[med_pdps_mod_dis_sal_F, med_pdps_dis_sal_F, med_pdps_hab1_dis_sal_F,\
+              med_pdps_hab2_dis_sal_F, med_pdps_amph_dis_sal_F], [med_pdps_mod_dis_pcp_F, med_pdps_dis_pcp_F, med_pdps_hab1_dis_pcp_F,\
+              med_pdps_hab2_dis_pcp_F, med_pdps_amph_dis_pcp_F]]
+
+labels = ['mod','dis','hab1','hab2','amph','mod','dis','hab1','hab2','amph']
+ax, barx, barlist, sclist = barscatter(dataPDPsF, transpose=False,paired=True, barfacecolor=tenbarcolors, barfacecoloroption='individual',  ylabel='Mean percent distracted', barlabels=labels, xrotation=45) 
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/figure2b.pdf", bbox_inches='tight')
+
+
+
+
+
+
+
+
+
