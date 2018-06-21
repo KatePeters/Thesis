@@ -342,6 +342,15 @@ plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/
 
 
 
+data needed here: 
+    
+nlicks last day saline, pcp males 
+meanburstlen las day saline, pcp, males
+nbursts last licks day saline pcp males 
+#ax, barx, barlist, sclist = barscatter(dataM, transpose=False, paired=True, barfacecolor=col3, barfacecoloroption='individual',  ylabel='Licks', xlabel='Lick days before distraction', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/figure1a.pdf", bbox_inches='tight')
+
+
 # Figure 1 
 # Done 
 # Bar scatter over 3 days with saline and PCP (males) = 6 bars
