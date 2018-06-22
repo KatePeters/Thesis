@@ -341,14 +341,44 @@ plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/
 # Figure 2 VIOLIN PLOTS FOR LICK PARAMTERS 
 
 
+## Barscatters to replace violin plots here 
+nlicksData =  [[nlicks_sal_M], [nlicks_pcp_M]]
+meanburstlenData = [[all_mean_burst_length_sal_M], [all_mean_burst_length_pcp_M]]
+nburstsData = [[all_n_bursts_sal_M], [all_n_bursts_pcp_M]]
 
-data needed here: 
+ax, barx, barlist, sclist = barscatter(nlicksData, transpose=False, paired=False, barfacecolor=['#FFE5A5','#FFBA08'], barfacecoloroption='individual',  ylabel='nLicks', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/nlicks2barMale.pdf", bbox_inches='tight')
+ax, barx, barlist, sclist = barscatter(meanburstlenData, transpose=False, paired=False, barfacecolor=['#FFE5A5','#FFBA08'], barfacecoloroption='individual',  ylabel='Licks per burst', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/meanburstlen2barMale.pdf", bbox_inches='tight')
+ax, barx, barlist, sclist = barscatter(nburstsData, transpose=False, paired=False, barfacecolor=['#FFE5A5','#FFBA08'], barfacecoloroption='individual',  ylabel='nBursts', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/nburst2barMale.pdf", bbox_inches='tight')
+
+nlicksDataF = [[nlicks_sal_F], [nlicks_pcp_F]]
+meanburstlenDataF = [[all_mean_burst_length_sal_F], [all_mean_burst_length_pcp_F]]
+nburstsDataF = [[all_n_bursts_sal_F], [all_n_bursts_pcp_F]]
     
-nlicks last day saline, pcp males 
-meanburstlen las day saline, pcp, males
-nbursts last licks day saline pcp males 
-#ax, barx, barlist, sclist = barscatter(dataM, transpose=False, paired=True, barfacecolor=col3, barfacecoloroption='individual',  ylabel='Licks', xlabel='Lick days before distraction', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/figure1a.pdf", bbox_inches='tight')
+ax, barx, barlist, sclist = barscatter(nlicksDataF, transpose=False, paired=False, barfacecolor=["#AFDBD5", "#249E8D"], barfacecoloroption='individual',  ylabel='nLicks', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/nlicks2barFemale.pdf", bbox_inches='tight')
+ax, barx, barlist, sclist = barscatter(meanburstlenDataF, transpose=False, paired=False, barfacecolor=["#AFDBD5", "#249E8D"], barfacecoloroption='individual',  ylabel='Licks per burst', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/meanburstlen2barFemale.pdf", bbox_inches='tight')
+ax, barx, barlist, sclist = barscatter(nburstsDataF, transpose=False, paired=False, barfacecolor=["#AFDBD5", "#249E8D"], barfacecoloroption='individual',  ylabel='nBursts', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/nburst2barFemale.pdf", bbox_inches='tight')
+    
+
+
+
+## Colours specified by HEX code
+
+#Selective yellow --> #FFBA08
+#Navajo white --> #FFE5A5
+#Jungle green --> #249E8D
+#Light blue --> #AFDBD5
+#Lapis lazuli --> #346699
+
+
+
+
+
 
 
 # Figure 1 
