@@ -189,7 +189,7 @@ def barscatter(data, transpose = False,
     
     # Label axes
     if ylabel != 'none':
-        plt.ylabel(ylabel)
+        ax.set_ylabel(ylabel)   #### plt changed to ax
     
     if xlabel != 'none':
         plt.xlabel(xlabel, labelpad=30)
@@ -310,6 +310,8 @@ def data2obj2D(data):
     return obj
 
 
+
+import matplotlib as mpl  # import to modify graphs 
 # FIGURE 1a and 1b 
 # Saline and pcp treated rats across the three lick days before distraction 
 # a - Males (n=16 per group)
@@ -334,6 +336,8 @@ labels = ['-3','-2','-1','-3','-2','-1']
 ax, barx, barlist, sclist = barscatter(dataM, transpose=False, paired=True, barfacecolor=col3, barfacecoloroption='individual',  ylabel='Licks', xlabel='Lick days before distraction', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
 plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/figure1a.pdf", bbox_inches='tight')
 
+
+
 col3 = ['#AFDBD5','#AFDBD5','#AFDBD5','#249E8D','#249E8D','#249E8D']
 # Females licking on 3 lick days 
 ax, barx, barlist, sclist = barscatter(dataF, transpose=False, paired=True, barfacecolor=col3, barfacecoloroption='individual',  ylabel='Licks', xlabel='Lick days before distraction', barlabels=labels)#, grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
@@ -353,17 +357,30 @@ plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/
 ax, barx, barlist, sclist = barscatter(nburstsData, transpose=False, paired=False, barfacecolor=['#FFE5A5','#FFBA08'], barfacecoloroption='individual',  ylabel='nBursts', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
 plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/nburst2barMale.pdf", bbox_inches='tight')
 
+
+
+
 nlicksDataF = [[nlicks_sal_F], [nlicks_pcp_F]]
 meanburstlenDataF = [[all_mean_burst_length_sal_F], [all_mean_burst_length_pcp_F]]
 nburstsDataF = [[all_n_bursts_sal_F], [all_n_bursts_pcp_F]]
+ 
+## Initialise figures 
+
+#Ω# Supervisory meeting 
+ ## make sure mpl.  
+mpl.rcParams['figure.subplot.wspace'] = 0.3
+
+figureA, ax = plt.subplots(nrows=1, ncols=3, figsize=(8,3)) ### x,y 
+
+ax[0], barx, barlist, sclist = barscatter(nlicksDataF, ax=ax[0],transpose=False, paired=False, barfacecolor=["#AFDBD5", "#249E8D"], barfacecoloroption='individual',  ylabel='nLicks', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/nlicks2barFemale.pdf", bbox_inches='tight')
+ax[1], barx, barlist, sclist = barscatter(meanburstlenDataF,ax=ax[1], transpose=False, paired=False, barfacecolor=["#AFDBD5", "#249E8D"], barfacecoloroption='individual',  ylabel='Licks per burst', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/meanburstlen2barFemale.pdf", bbox_inches='tight')
+ax[2], barx, barlist, sclist = barscatter(nburstsDataF, ax=ax[2],transpose=False, paired=False, barfacecolor=["#AFDBD5", "#249E8D"], barfacecoloroption='individual',  ylabel='nBursts', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/nburst2barFemale.pdf", bbox_inches='tight')
     
-ax, barx, barlist, sclist = barscatter(nlicksDataF, transpose=False, paired=False, barfacecolor=["#AFDBD5", "#249E8D"], barfacecoloroption='individual',  ylabel='nLicks', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/nlicks2barFemale.pdf", bbox_inches='tight')
-ax, barx, barlist, sclist = barscatter(meanburstlenDataF, transpose=False, paired=False, barfacecolor=["#AFDBD5", "#249E8D"], barfacecoloroption='individual',  ylabel='Licks per burst', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/meanburstlen2barFemale.pdf", bbox_inches='tight')
-ax, barx, barlist, sclist = barscatter(nburstsDataF, transpose=False, paired=False, barfacecolor=["#AFDBD5", "#249E8D"], barfacecoloroption='individual',  ylabel='nBursts', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/nburst2barFemale.pdf", bbox_inches='tight')
-    
+
+#### ax[1].set_ylabel # etc
 
 
 
