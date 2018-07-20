@@ -287,6 +287,7 @@ def discalc_modalities(dictionary, modalitykey, ):
         
         discalc = distractionCalc2(rat[0])
         distracted, notdistracted = distractedOrNot(discalc, rat[0])
+        print(len(distracted), len(notdistracted))
       #  work out percentage and add this too 
         discalcgroup.append([distracted, notdistracted])
     
@@ -316,10 +317,20 @@ def discalc_modalities(dictionary, modalitykey, ):
             elif d in modalitykey['combined3']:
                 dis_type_text.append('combined3')
                 d_combined_count += 1 
-        d_percent_white_noise = d_whitenoise_count / (len(dis_type_text))*100
-        d_percent_tone = d_tone_count / (len(dis_type_text))*100
-        d_percent_combined = d_combined_count / (len(dis_type_text))*100  
-    
+        
+        print(d_whitenoise_count, d_tone_count, d_combined_count)
+        
+### Added 20/07 to fix division by zero 
+        if d_whitenoise_count != 0:
+#            
+            d_percent_white_noise = d_whitenoise_count / (len(dis_type_text))*100
+            d_percent_tone = d_tone_count / (len(dis_type_text))*100
+            d_percent_combined = d_combined_count / (len(dis_type_text))*100 
+        else:
+            d_percent_white_noise = 0 
+            d_percent_tone = 0
+            d_percent_combined = 0
+            
         # Non-distracted trials by modality 
         ndis_numeric = [int(d) for d in ndis_numeric]
         nd_whitenoise_count = 0
@@ -338,7 +349,7 @@ def discalc_modalities(dictionary, modalitykey, ):
                 ndis_type_text.append('combined3')
                 nd_combined_count += 1 
                 
-    
+        print(nd_whitenoise_count, nd_tone_count, nd_combined_count)
         nd_percent_white_noise = nd_whitenoise_count / (len(ndis_type_text))*100
         nd_percent_tone = nd_tone_count / (len(ndis_type_text))*100
         nd_percent_combined =  nd_combined_count / (len(ndis_type_text))*100
@@ -575,17 +586,17 @@ last_lick_sal_M = subsetter(extract_males, ['170417','171006'], 'SAL')
 lick_minus1_sal_M = subsetter(extract_males, ['170416', '171004'], 'SAL')
 lick_minus2_sal_M = subsetter(extract_males, ['170415', '171003'], 'SAL')
 distraction_sal_M = subsetter(extract_males, ['170418','171007'], 'SAL', dis=True)
-hab1_sal_M = subsetter(extract_males, ['170419','171008'], 'SAL')
-hab2_sal_M = subsetter(extract_males, ['170420','171009'], 'SAL')
-amph_sal_M = subsetter(extract_males, ['170423','171012'], 'SAL')
+hab1_sal_M = subsetter(extract_males, ['170419','171008'], 'SAL', dis=True)
+hab2_sal_M = subsetter(extract_males, ['170420','171009'], 'SAL', dis=True)
+amph_sal_M = subsetter(extract_males, ['170423','171012'], 'SAL', dis=True)
 # PCP
 last_lick_pcp_M = subsetter(extract_males, ['170417','171006'], 'PCP')
 lick_minus1_pcp_M = subsetter(extract_males, ['170416', '171004'], 'PCP')
 lick_minus2_pcp_M = subsetter(extract_males, ['170415', '171003'], 'PCP')
 distraction_pcp_M = subsetter(extract_males, ['170418','171007'], 'PCP', dis=True)
-hab1_pcp_M = subsetter(extract_males, ['170419','171008'], 'PCP')
-hab2_pcp_M = subsetter(extract_males, ['170420','171009'], 'PCP')
-amph_pcp_M = subsetter(extract_males, ['170423','171012'], 'PCP')
+hab1_pcp_M = subsetter(extract_males, ['170419','171008'], 'PCP', dis=True)
+hab2_pcp_M = subsetter(extract_males, ['170420','171009'], 'PCP', dis=True)
+amph_pcp_M = subsetter(extract_males, ['170423','171012'], 'PCP', dis=True)
 # FEMALES **********************************************************************
 # SALINE
 last_lick_sal_F = subsetter(extract_females, ['171124'], 'SAL')
@@ -593,18 +604,18 @@ lick_minus1_sal_F = subsetter(extract_females, ['171122'], 'SAL')
 lick_minus2_sal_F = subsetter(extract_females, ['171121'], 'SAL')
 lick_minus3_sal_F = subsetter(extract_females, ['171120'], 'SAL')
 distraction_sal_F = subsetter(extract_females, ['171125'], 'SAL',dis=True)
-hab1_sal_F = subsetter(extract_females, ['171126'], 'SAL')
-hab2_sal_F = subsetter(extract_females, ['171127'], 'SAL')
-amph_sal_F = subsetter(extract_females, ['171128'], 'SAL')
+hab1_sal_F = subsetter(extract_females, ['171126'], 'SAL',dis=True)
+hab2_sal_F = subsetter(extract_females, ['171127'], 'SAL',dis=True)
+amph_sal_F = subsetter(extract_females, ['171128'], 'SAL',dis=True)
 # PCP
 last_lick_pcp_F = subsetter(extract_females, ['171124'], 'PCP')
 lick_minus1_pcp_F = subsetter(extract_females, ['171122'], 'PCP')
 lick_minus2_pcp_F = subsetter(extract_females, ['171121'], 'PCP')
 lick_minus3_pcp_F = subsetter(extract_females, ['171120'], 'PCP')
 distraction_pcp_F = subsetter(extract_females, ['171125'], 'PCP',dis=True)
-hab1_pcp_F = subsetter(extract_females, ['171126'], 'PCP')
-hab2_pcp_F = subsetter(extract_females, ['171127'], 'PCP')
-amph_pcp_F = subsetter(extract_females, ['171128'], 'PCP')
+hab1_pcp_F = subsetter(extract_females, ['171126'], 'PCP',dis=True)
+hab2_pcp_F = subsetter(extract_females, ['171127'], 'PCP',dis=True)
+amph_pcp_F = subsetter(extract_females, ['171128'], 'PCP',dis=True)
  
 # (3) Lick calc for last lick day (by group) for male PCP and SAL, for female PCP and SAL
 # Licking analysis section, just last lick day 
@@ -658,6 +669,18 @@ mean_percent_COMBINED_sal_F = discalc_modalities(distraction_sal_F, modalitykey)
 discalc_pcp_F, percent_dis_whitenoise_pcp_F, percent_dis_tone_pcp_F,\
 percent_dis_combined_pcp_F, mean_percent_WHITENOISE_pcp_F, mean_percent_TONE_pcp_F,\
 mean_percent_COMBINED_pcp_F = discalc_modalities(distraction_pcp_F, modalitykey)
+
+# Habituation day 
+aa,bb,cc,dd,ee,ff,gg = discalc_modalities(hab1_sal_M, modalitykey)
+aa,bb,cc,dd,ee,ff,gg = discalc_modalities(hab2_sal_M, modalitykey)
+aa,bb,cc,dd,ee,ff,gg = discalc_modalities(amph_sal_M, modalitykey)
+# Habituation day 2
+
+# Amphetamine day 
+
+
+
+
 
 # Modelled distractors ˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚
 # Not including modalities just where distractors occur and dis vs notdis
@@ -861,3 +884,62 @@ nlicks_pcp_F, nlicks_minus1_pcp_F, nlicks_minus2_pcp_F = nlicksgrouped(last_lick
 
 ######################## INDIVIDUAL DIFFERENCES #######################
 #sb.jointplot(x=df['nRuns'], y=df['nBursts'], kind='hex')) #or type 'reg' for kernel estimation and regression
+
+################################################################################
+# NOR score data, Males and Females saline and PCP
+
+# Added the data in manually and created variables  
+# MALES SALINE
+# Acquisition
+exploration_left_sal_M = [27.18,26.69,19.61,18.17,16.09,30.06,36.54,38.87,24.76,26.86,34.15,0,30.57,38.28]
+exploration_right_sal_M = [52.44,21.21,33,35.8,37.41,25.45,31.2,15.71,20.07,28.24,27.82,6.97,40.93,14.52]
+# Retention
+exploration_fam_sal_M = [28.8,13.56,27.5,11.81,9.06,14.66,21.8,20.62,5.76,17.1,15.16,0,6.18,17.46]
+exploration_nov_sal_M = [29.5,17.99,28.96,26.71,16.97,31.82,22.29,20.03,29.02,19.79,18.7,25.74,57.62,29.96]
+DI_sal_M = [0.01,0.14,0.03,0.39,0.3,0.37,0.01,-0.01,0.67,0.07,0.1,1,0.81,0.26]
+# MALES PCP
+# Acquisition
+exploration_left_pcp_M = [19.85,29.53,25.52,36.45,19.56,10.28,31.46,12.52,16.28,19.52,27.91,25.59,23.98,29.35,19.89,23.88]
+exploration_right_pcp_M = [30.4,22.96,13.76,18.12,20.22,21.21,24.68,21.6,49.08,25.87,9.76,39.46,11.43,20.13,16.41,27.11]
+# Retention
+exploration_fam_pcp_M = [6.49,7.89,13.81,26.66,29.22,9.28,17.39,18.82,22.95,20.86,11.55,35.84,0.9,13.38,5.68,7.84]
+exploration_nov_pcp_M = [13.32,23.52,35.97,8.81,18.53,9.59,38.83,18.02,22.75,44.65,29.64,24.91,2,27.41,15.21,27.35]
+DI_pcp_M = [0.34,0.5,0.45,-0.5,-0.22,0.02,0.38,-0.02,0,0.36,0.44,-0.18,0.38,0.34,0.46,0.55]
+
+# FEMALES SALINE
+# Acquisition
+exploration_left_sal_F = [15.71,16.69,20.77,19.44,30.25,28.73,20.86,14.02,31.13,17.37,29.88,15.51]
+exploration_right_sal_F = [27.49,18.7,22.91,18.7,41.41,23.47,16.43,15.47,36.04,23.84,42.94,32.35]
+# Retention
+exploration_fam_sal_F = [13.47,26.76,9.17,13.63,15.12,7.13,9.29,8.98,14.19,12.2,14.92,14.53]
+exploration_nov_sal_F = [13.88,27.04,19.13,16.82,22.45,23.01,12.09,28.08,16.4,17.04,26.5,24.03]
+DI_sal_F = [0.02,0.01,0.35,0.1,0.19,0.53,0.13,0.52,0.07,0.17,0.28,0.25]
+
+# FEMALES PCP
+# Acquisition
+exploration_left_pcp_F = [13.01,27.87,15.54,22.77,16.69,24.87,15.75,20.4,14.23,14.28,11.7,17.37]
+exploration_right_pcp_F = [13.83,31.05,40.14,19.66,16.74,15.4,2.02,12.96,23.94,21.65,12.81,11.65]
+# Retention
+exploration_fam_pcp_F = [13.37,27.41,42.4,10.4,14.05,7.33,14.97,1.94,21.93,3.52,6.69,7.63]
+exploration_nov_pcp_F = [25.95,37.09,17.11,11.08,14.53,17.44,8.93,14.44,16.25,10.63,11.04,13.44]
+DI_pcp_F = [0.32,0.15,-0.42,0.03,0.02,0.41,-0.25,0.76,-0.15,0.5,0.25,0.28]
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
