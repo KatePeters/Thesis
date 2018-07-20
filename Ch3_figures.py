@@ -479,8 +479,27 @@ ax, barx, barlist, sclist = barscatter(dataPDPsF, transpose=False,paired=True, b
 
 
 
+''' Deal with this NOR stuff later 
+
+# NOR plots - Normal bar plots with mean and SEM 
+# For DI show all of the data points to show variability 
+
+barcolors = ['#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5','#249E8D','#249E8D','#249E8D','#249E8D','#249E8D']
+dataMnorAcq = [[exploration_left_sal_M, exploration_right_sal_M], [exploration_left_pcp_M, exploration_right_pcp_M]]
+labels = ['salL','salR', 'pcpL', 'pcpR']
+ax, barx, barlist, sclist = barscatter(dataMnorAcq, transpose=False, paired=False, barfacecolor=barcolors, barfacecoloroption='individual',  ylabel='Mean percent distracted', barlabels=labels, xrotation=45) 
+
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/FILENAME.pdf", bbox_inches='tight')
 
 
+
+dataMnorRet
+
+
+
+dataMnorDI 
+
+'''
 
 
 
