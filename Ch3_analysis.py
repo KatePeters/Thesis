@@ -269,7 +269,7 @@ def grouped_lickanalysis(groupdicts):
     return mean_n_bursts, mean_n_runs, mean_mean_IBI, mean_mean_IRI,\
     all_n_bursts, all_n_runs, all_mean_IBI, all_mean_IRI, all_mean_burst_length, all_mean_run_length 
     
-def discalc_modalities(dictionary, modalitykey, ):
+def discalc_modalities(dictionary, modalitykey):
     ''' Calculates distractors, distracted and modalities for dictionary of 
     rats by group for just distraction day only 
     
@@ -318,7 +318,7 @@ def discalc_modalities(dictionary, modalitykey, ):
                 dis_type_text.append('combined3')
                 d_combined_count += 1 
         
-        print(d_whitenoise_count, d_tone_count, d_combined_count)
+        #print(d_whitenoise_count, d_tone_count, d_combined_count)
         
 ### Added 20/07 to fix division by zero 
         if d_whitenoise_count != 0:
@@ -349,19 +349,24 @@ def discalc_modalities(dictionary, modalitykey, ):
                 ndis_type_text.append('combined3')
                 nd_combined_count += 1 
                 
-        print(nd_whitenoise_count, nd_tone_count, nd_combined_count)
+        #print(nd_whitenoise_count, nd_tone_count, nd_combined_count)
         nd_percent_white_noise = nd_whitenoise_count / (len(ndis_type_text))*100
         nd_percent_tone = nd_tone_count / (len(ndis_type_text))*100
         nd_percent_combined =  nd_combined_count / (len(ndis_type_text))*100
+        
+        print(d_percent_white_noise, nd_percent_white_noise)
         
         percent_distracted_whitenoise = d_whitenoise_count / (d_whitenoise_count + nd_whitenoise_count) *100
         percent_distracted_tone = d_tone_count / (d_tone_count + nd_tone_count) *100
         percent_distracted_combined = d_combined_count / (d_combined_count + nd_combined_count) *100  
         
+    # ?    percent_distracted_non_whitenoise = percent_distracted_tone  + percent_distracted_combined
+ 
+        
         percent_dis_whitenoise_group.append(percent_distracted_whitenoise)
         percent_dis_tone_group.append(percent_distracted_tone)
         percent_dis_combined_group.append(percent_distracted_combined)
-      
+        
     mean_percent_WHITENOISE = np.mean(percent_dis_whitenoise_group) # the average percentage of JUST whitenoise trials that rats are distracted on 
     mean_percent_TONE = np.mean(percent_dis_tone_group)
     mean_percent_COMBINED = np.mean(percent_dis_combined_group)
@@ -671,13 +676,40 @@ percent_dis_combined_pcp_F, mean_percent_WHITENOISE_pcp_F, mean_percent_TONE_pcp
 mean_percent_COMBINED_pcp_F = discalc_modalities(distraction_pcp_F, modalitykey)
 
 # Habituation day 
+# SALINE
+discalc_hab1_sal_M, percent_dis_whitenoise_hab1_sal_M, percent_dis_tone_hab1_sal_M,\
+percent_dis_combined_hab1_sal_M, mean_percent_WHITENOISE_hab1_sal_M, mean_percent_TONE_hab1_sal_M,\
+mean_percent_COMBINED_hab1_sal_M = discalc_modalities(hab1_sal_M, modalitykey)
+
+## ••• Need to calculate the mean of ALL others (combined plus tone)
+# remember these are means of all trials for each rat then the main value is 
+# the mean of all rats 
+'''percent_dis_non_whitenoise_hab1_sal_M = percent_dis_tone_hab1_sal_M + percent_dis_combined_hab1_sal_M 
+not correct because not the mean !! --> need to add to function 
+'''
+
+
+#PCP
+discalc_hab1_pcp_M, percent_dis_whitenoise_hab1_pcp_M, percent_dis_tone_hab1_pcp_M,\
+percent_dis_combined_hab1_pcp_M, mean_percent_WHITENOISE_hab1_pcp_M, mean_percent_TONE_hab1_pcp_M,\
+mean_percent_COMBINED_hab1_pcp_M = discalc_modalities(hab1_pcp_M, modalitykey)
+
+
+
+aa,bb,cc,dd,ee,ff,gg = discalc_modalities(hab1_pcp_M, modalitykey)
+
+
+aa,bb,cc,dd,ee,ff,gg = discalc_modalities(hab2_sal_M, modalitykey)
+aa,bb,cc,dd,ee,ff,gg = discalc_modalities(amph_sal_M, modalitykey)
+
+# Habituation day 2
+
+aa,bb,cc,dd,ee,ff,gg = discalc_modalities(hab2_pcp_M, modalitykey)
+aa,bb,cc,dd,ee,ff,gg = discalc_modalities(amph_pcp_M, modalitykey)
+# Amphetamine day 
 aa,bb,cc,dd,ee,ff,gg = discalc_modalities(hab1_sal_M, modalitykey)
 aa,bb,cc,dd,ee,ff,gg = discalc_modalities(hab2_sal_M, modalitykey)
 aa,bb,cc,dd,ee,ff,gg = discalc_modalities(amph_sal_M, modalitykey)
-# Habituation day 2
-
-# Amphetamine day 
-
 
 
 
@@ -808,33 +840,8 @@ pdps_amph_notdis_pcp_F, med_pdps_amph_notdis_pcp_F, preDPs_amph_notdis_pcp_F,\
   
 '''
 # Corelations 
-
-Find mean for each list of pre / post DPs and then correlate and plot 
-using the sb.jointplot(x='Attack', y='Defense', data=df) seaborn joint plots
-(find out how to get distributions too
- 
-sb.jointplot(x=df['nRuns'], y=df['nRuns'], kind='hex')) or type 'reg' for kernel estimation and regression
-
-plt.plot()
-
-How to plot different colours? If values in the plotted points 
-Meet certain condition point should be blue 
-Else it should be black 
-
-OR separate them by condition first and add 2 plots, the blue and black 
-
-for index, value in enumerate(salMdistractors):
-    if value > 1 :
-        add the pdp / predp to this list
-        and add the predp to this list too (of the same index)
-        
-        else:
-            add to this list
-            
-            Not sure if this works yet - 2 variables to compare so do i need
-            both in the list or just one indices???
-
-###################################################################################
+Could have a plot with blue when distracted and grey when not, then correlate with 
+the pre dp and the pdp? 
 '''
 
 ##################################################################
@@ -925,18 +932,158 @@ exploration_nov_pcp_F = [25.95,37.09,17.11,11.08,14.53,17.44,8.93,14.44,16.25,10
 DI_pcp_F = [0.32,0.15,-0.42,0.03,0.02,0.41,-0.25,0.76,-0.15,0.5,0.25,0.28]
    
     
+ 
+
+
+
+   
+## Correlations / regressions 
+# Males SALINE
+# (1) DI score  - nb for males which ones have scores and which do not ? 
+# (2) % distracted on distraction day  
+# (3) Palatability (licks per burst) 
+# (4) % distracted on distraction day 
+
+from scipy import stats
+from scipy.stats.stats import pearsonr
+
+import matplotlib.pyplot as plt
+pearsonr(np.asarray(DI_sal_M), np.asarray(percent_dis_dis_sal_M[2:]))
+pearsonr(all_mean_burst_length_sal_M, percent_dis_dis_sal_M)
+
+
+
+
+
+'''
+
+import matplotlib as mpl 
+
+import seaborn as sn
+
+sn.set_style("darkgrid")
+mpl.rcParams['font.size'] = 14
+# MALES DI VS % DISTRACTED
+slope, intercept, r_value, p_value, std_err = stats.linregress(DI_sal_M, percent_dis_dis_sal_M[2:])
+slope2, intercept2, r_value2, p_value2, std_err2 = stats.linregress(DI_pcp_M, percent_dis_dis_pcp_M)
+## Plot the scatter of Male Saline data 
+plt.plot(DI_sal_M, percent_dis_dis_sal_M[2:],'o', color='darkgrey', label='saline')
+## Add line of best fit for Male Saline data
+plt.plot(np.asarray(DI_sal_M), intercept+slope*np.asarray(DI_sal_M), 'darkgrey', label='saline fitted')
+## Plot scatters for Male PCP
+plt.plot(DI_pcp_M, percent_dis_dis_pcp_M,'o', color='#FFBA08', label='pcp')
+## Plot line of best fit for Male PCP
+plt.plot(np.asarray(DI_pcp_M), intercept2+slope2*np.asarray(DI_pcp_M), '#FFBA08', label='pcp fitted')
+
+plt.legend()
+sn.despine(offset=10, trim=True); 
+plt.xlabel('Discrimination index - NOR', fontsize=14)
+plt.ylabel('Percentage distracted', fontsize=14)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Corr_DIvs%_M.pdf", bbox_inches='tight')
+plt.show()
+print('Linear regression, DI vs Percent distracted - Males')
+print('SALINE')
+print('R squared = ',r_value**2, ', p value = ', p_value)
+print('PCP')
+print('R squared = ',r_value2**2, ', p value = ', p_value2)
+
+
+
+## Palatability MALES vs dis
+slope, intercept, r_value, p_value, std_err = stats.linregress(all_mean_burst_length_sal_M, percent_dis_dis_sal_M)
+slope2, intercept2, r_value2, p_value2, std_err2 = stats.linregress(all_mean_burst_length_pcp_M, percent_dis_dis_pcp_M)
+## Plot the scatter of Male Saline data 
+plt.plot(all_mean_burst_length_sal_M, percent_dis_dis_sal_M,'o', color='darkgrey', label='saline')
+## Add line of best fit for Male Saline data
+plt.plot(np.asarray(all_mean_burst_length_sal_M), intercept+slope*np.asarray(all_mean_burst_length_sal_M), 'darkgrey', label='saline fitted')
+## Plot scatters for Male PCP
+plt.plot(all_mean_burst_length_pcp_M, percent_dis_dis_pcp_M,'o', color= '#FFBA08', label='pcp')
+## Plot line of best fit for Male PCP
+plt.plot(np.asarray(all_mean_burst_length_pcp_M), intercept2+slope2*np.asarray(all_mean_burst_length_pcp_M), '#FFBA08', label='pcp fitted')
+
+plt.legend()
+sn.despine(offset=10, trim=True); 
+
+plt.xlabel('Mean burst length', fontsize=14)
+plt.ylabel('Percentage distracted', fontsize=14)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Corr_Burstvs%_M.pdf", bbox_inches='tight')
+plt.show()
+print('Linear regression, Palatability vs Percent distracted - Males')
+print('SALINE')
+print('R squared = ',r_value**2, ', p value = ', p_value)
+print('PCP')
+print('R squared = ',r_value2**2, ', p value = ', p_value2)
+
+# Females   
+# Females DI VS % DISTRACTED
+slope, intercept, r_value, p_value, std_err = stats.linregress(DI_sal_F, percent_dis_dis_sal_F)
+slope2, intercept2, r_value2, p_value2, std_err2 = stats.linregress(DI_pcp_F, percent_dis_dis_pcp_F)
+## Plot the scatter of Male Saline data 
+plt.plot(DI_sal_F, percent_dis_dis_sal_F,'o', color='darkgrey', label='saline')
+## Add line of best fit for Male Saline data
+plt.plot(np.asarray(DI_sal_F), intercept+slope*np.asarray(DI_sal_F), 'darkgrey', label='saline fitted')
+## Plot scatters for Male PCP
+plt.plot(DI_pcp_F, percent_dis_dis_pcp_F,'o', color='#249E8D', label='pcp')
+## Plot line of best fit for Male PCP
+plt.plot(np.asarray(DI_pcp_F), intercept2+slope2*np.asarray(DI_pcp_F), '#249E8D', label='pcp fitted')
+
+plt.legend()
+sn.despine(offset=10, trim=True); 
+plt.xlabel('Discrimination index - NOR', fontsize=14)
+plt.ylabel('Percentage distracted', fontsize=14)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Corr_DIvs%_F.pdf", bbox_inches='tight')
+plt.show()
+print('Linear regression, DI vs Percent distracted - Females')
+print('SALINE')
+print('R squared = ',r_value**2, ', p value = ', p_value)
+print('PCP')
+print('R squared = ',r_value2**2, ', p value = ', p_value2)
+
+## Palatability FEMALES vs dis
+slope, intercept, r_value, p_value, std_err = stats.linregress(all_mean_burst_length_sal_F, percent_dis_dis_sal_F)
+slope2, intercept2, r_value2, p_value2, std_err2 = stats.linregress(all_mean_burst_length_pcp_F, percent_dis_dis_pcp_F)
+## Plot the scatter of Male Saline data 
+plt.plot(all_mean_burst_length_sal_F, percent_dis_dis_sal_F,'o', color='darkgrey',label='saline')
+## Add line of best fit for Male Saline data
+plt.plot(np.asarray(all_mean_burst_length_sal_F), intercept+slope*np.asarray(all_mean_burst_length_sal_F), 'darkgrey', label='saline fitted')
+## Plot scatters for Male PCP
+plt.plot(all_mean_burst_length_pcp_M, percent_dis_dis_pcp_M,'o', color='#249E8D', label='pcp')
+## Plot line of best fit for Male PCP
+plt.plot(np.asarray(all_mean_burst_length_pcp_F), intercept2+slope2*np.asarray(all_mean_burst_length_pcp_F), '#249E8D', label='pcp fitted')
+
+plt.legend()
+#for spine in plt.gca().spines.values():
+#   spine.set_visible(False)
+#   
+sn.despine(offset=10, trim=True);
+plt.xlabel('Mean burst length', fontsize=14)
+plt.ylabel('Percentage distracted', fontsize=14)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Corr_Burstvs%_F.pdf", bbox_inches='tight')
+plt.show()   
+print('Linear regression, Palatability vs Percent distracted - Females')
+print('SALINE')
+print('R squared = ',r_value**2, ', p value = ', p_value)
+print('PCP')
+print('R squared = ',r_value2**2, ', p value = ', p_value2)   
     
+#FFBA08 male pcp
+#FFE5A5 male saline 
+
+#249E8D female pcp
+#AFDBD5 female saline 
     
+
+
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
+'''    
     
     
     
