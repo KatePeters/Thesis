@@ -269,6 +269,7 @@ def grouped_lickanalysis(groupdicts):
     return mean_n_bursts, mean_n_runs, mean_mean_IBI, mean_mean_IRI,\
     all_n_bursts, all_n_runs, all_mean_IBI, all_mean_IRI, all_mean_burst_length, all_mean_run_length 
     
+
 def discalc_modalities(dictionary, modalitykey):
     ''' Calculates distractors, distracted and modalities for dictionary of 
     rats by group for just distraction day only 
@@ -280,6 +281,7 @@ def discalc_modalities(dictionary, modalitykey):
     percent_dis_whitenoise_group = []
     percent_dis_tone_group = []
     percent_dis_combined_group = []
+    percent_dis_all_non_WN_group = []
     discalcgroup = []
     ## SAL MALES - DISTRACTION DAY ONLY - DISTRACTOR TYPE ANALYSIS INCLUDED
 # Finds distracted or not (corrects for med slipping issue)
@@ -287,7 +289,7 @@ def discalc_modalities(dictionary, modalitykey):
         
         discalc = distractionCalc2(rat[0])
         distracted, notdistracted = distractedOrNot(discalc, rat[0])
-        print(len(distracted), len(notdistracted))
+      #  print(len(distracted), len(notdistracted))
       #  work out percentage and add this too 
         discalcgroup.append([distracted, notdistracted])
     
@@ -317,21 +319,7 @@ def discalc_modalities(dictionary, modalitykey):
             elif d in modalitykey['combined3']:
                 dis_type_text.append('combined3')
                 d_combined_count += 1 
-        
-        #print(d_whitenoise_count, d_tone_count, d_combined_count)
-        
-### Added 20/07 to fix division by zero 
-        if d_whitenoise_count != 0:
-#            
-            d_percent_white_noise = d_whitenoise_count / (len(dis_type_text))*100
-            d_percent_tone = d_tone_count / (len(dis_type_text))*100
-            d_percent_combined = d_combined_count / (len(dis_type_text))*100 
-        else:
-            d_percent_white_noise = 0 
-            d_percent_tone = 0
-            d_percent_combined = 0
-            
-        # Non-distracted trials by modality 
+   # Non-distracted trials by modality 
         ndis_numeric = [int(d) for d in ndis_numeric]
         nd_whitenoise_count = 0
         nd_tone_count = 0
@@ -348,33 +336,48 @@ def discalc_modalities(dictionary, modalitykey):
             elif d in modalitykey['combined3']:
                 ndis_type_text.append('combined3')
                 nd_combined_count += 1 
-                
-        #print(nd_whitenoise_count, nd_tone_count, nd_combined_count)
-        nd_percent_white_noise = nd_whitenoise_count / (len(ndis_type_text))*100
-        nd_percent_tone = nd_tone_count / (len(ndis_type_text))*100
-        nd_percent_combined =  nd_combined_count / (len(ndis_type_text))*100
-        
-        print(d_percent_white_noise, nd_percent_white_noise)
-        
-        percent_distracted_whitenoise = d_whitenoise_count / (d_whitenoise_count + nd_whitenoise_count) *100
-        percent_distracted_tone = d_tone_count / (d_tone_count + nd_tone_count) *100
-        percent_distracted_combined = d_combined_count / (d_combined_count + nd_combined_count) *100  
-        
-    # ?    percent_distracted_non_whitenoise = percent_distracted_tone  + percent_distracted_combined
  
+        #### why nd not d? And should this then == 100% distracted not 0%
+        ## Debug by printing the n distractors and d vs nd for all gorups 
         
+        
+        if nd_whitenoise_count > 1:            
+            percent_distracted_whitenoise = d_whitenoise_count / (d_whitenoise_count + nd_whitenoise_count) *100
+        else:
+            print(nd_whitenoise_count, d_whitenoise_count)
+            percent_distracted_whitenoise = 0 
+## Added non-flexibly as amphetamine rat(s) had no tone distracted trials (should modify to catch all possible instances)       
+        if nd_tone_count > 1:
+            percent_distracted_tone = d_tone_count / (d_tone_count + nd_tone_count) *100
+        else:
+            print(nd_tone_count, d_tone_count)
+            percent_distracted_tone = 0
+        
+        if nd_combined_count > 1:
+            percent_distracted_combined = d_combined_count / (d_combined_count + nd_combined_count) *100  
+            percent_distracted_all_non_WN = (d_tone_count + d_combined_count) / ((d_tone_count + d_combined_count )+ (nd_tone_count + nd_combined_count)) *100  
+                
+        else:
+            print(nd_combined_count, d_combined_count)
+            percent_distracted_combined = 0
+            percent_distracted_all_non_WN = 0
+     
         percent_dis_whitenoise_group.append(percent_distracted_whitenoise)
         percent_dis_tone_group.append(percent_distracted_tone)
         percent_dis_combined_group.append(percent_distracted_combined)
-        
+        percent_dis_all_non_WN_group.append(percent_distracted_all_non_WN)
+    
+     
     mean_percent_WHITENOISE = np.mean(percent_dis_whitenoise_group) # the average percentage of JUST whitenoise trials that rats are distracted on 
     mean_percent_TONE = np.mean(percent_dis_tone_group)
     mean_percent_COMBINED = np.mean(percent_dis_combined_group)
-    
+    mean_percent_ALL_NON_WN = np.mean(percent_dis_all_non_WN_group)
     
     return discalcgroup, percent_dis_whitenoise_group, percent_dis_tone_group, \
-            percent_dis_combined_group, mean_percent_WHITENOISE, mean_percent_TONE, \
-            mean_percent_COMBINED
+            percent_dis_combined_group, percent_dis_all_non_WN_group, mean_percent_WHITENOISE, mean_percent_TONE, \
+            mean_percent_COMBINED, mean_percent_ALL_NON_WN
+
+
 
 def distractionCalc2(licks, pre=1, post=1):
     licks = np.insert(licks, 0, 0)
@@ -679,54 +682,70 @@ mean_percent_COMBINED_pcp_F, mean_percent_ALL_NON_WN_pcp_F = discalc_modalities(
 ##### !!!!!!!!!!!!!!!!!!!!!!!!! ADD THE 2 VARS HERE TO ALL CODE
 #percent_dis_all_non_WN_pcp_F --> both after combined (second mean)
 #mean_percent_ALL_NON_WN_pcp_F
+# Check these all have hab1, hab2, amph in them and 
+# Check the input to function is sal/pcp/m/f correct 
+
  
-# Habituation day 
+# Habituation day (1) 
 # MALES
 # SALINE
 discalc_hab1_sal_M, percent_dis_whitenoise_hab1_sal_M, percent_dis_tone_hab1_sal_M,\
-percent_dis_combined_hab1_sal_M, mean_percent_WHITENOISE_hab1_sal_M, mean_percent_TONE_hab1_sal_M,\
-mean_percent_COMBINED_hab1_sal_M = discalc_modalities(hab1_sal_M, modalitykey)
+percent_dis_combined_hab1_sal_M, percent_dis_all_non_WN_hab1_sal_M, mean_percent_WHITENOISE_hab1_sal_M, mean_percent_TONE_hab1_sal_M,\
+mean_percent_COMBINED_hab1_sal_M, mean_percent_ALL_NON_WN_hab1_sal_M = discalc_modalities(hab1_sal_M, modalitykey)
 #PCP
 discalc_hab1_pcp_M, percent_dis_whitenoise_hab1_pcp_M, percent_dis_tone_hab1_pcp_M,\
-percent_dis_combined_hab1_pcp_M, mean_percent_WHITENOISE_hab1_pcp_M, mean_percent_TONE_hab1_pcp_M,\
-mean_percent_COMBINED_hab1_pcp_M = discalc_modalities(hab1_pcp_M, modalitykey)
-
+percent_dis_combined_hab1_pcp_M, percent_dis_all_non_WN_hab1_pcp_M, mean_percent_WHITENOISE_hab1_pcp_M, mean_percent_TONE_hab1_pcp_M,\
+mean_percent_COMBINED_hab1_pcp_M, mean_percent_ALL_NON_WN_hab1_pcp_M = discalc_modalities(hab1_pcp_M, modalitykey)
 # FEMALES
 # SALINE
+discalc_hab1_sal_F, percent_dis_whitenoise_hab1_sal_F, percent_dis_tone_hab1_sal_F,\
+percent_dis_combined_hab1_sal_F, percent_dis_all_non_WN_hab1_sal_F, mean_percent_WHITENOISE_hab1_sal_F, mean_percent_TONE_hab1_sal_F,\
+mean_percent_COMBINED_hab1_sal_F, mean_percent_ALL_NON_WN_hab1_sal_F = discalc_modalities(hab1_sal_F, modalitykey)
+#PCP
+discalc_hab1_pcp_F, percent_dis_whitenoise_hab1_pcp_F, percent_dis_tone_hab1_pcp_F,\
+percent_dis_combined_hab1_pcp_F, percent_dis_all_non_WN_hab1_pcp_F, mean_percent_WHITENOISE_hab1_pcp_F, mean_percent_TONE_hab1_pcp_F,\
+mean_percent_COMBINED_hab1_pcp_F, mean_percent_ALL_NON_WN_hab1_pcp_F = discalc_modalities(hab1_pcp_F, modalitykey)
 
-# PCP
+# Habituation day (2)
+# MALES
+# SALINE
+discalc_hab2_sal_M, percent_dis_whitenoise_hab2_sal_M, percent_dis_tone_hab2_sal_M,\
+percent_dis_combined_hab2_sal_M, percent_dis_all_non_WN_hab2_sal_M, mean_percent_WHITENOISE_hab2_sal_M, mean_percent_TONE_hab2_sal_M,\
+mean_percent_COMBINED_hab2_sal_M, mean_percent_ALL_NON_WN_hab2_sal_M = discalc_modalities(hab2_sal_M, modalitykey)
+#PCP
+discalc_hab2_pcp_M, percent_dis_whitenoise_hab2_pcp_M, percent_dis_tone_hab2_pcp_M,\
+percent_dis_combined_hab2_pcp_M, percent_dis_all_non_WN_hab2_pcp_M, mean_percent_WHITENOISE_hab2_pcp_M, mean_percent_TONE_hab2_pcp_M,\
+mean_percent_COMBINED_hab2_pcp_M, mean_percent_ALL_NON_WN_hab2_pcp_M = discalc_modalities(hab2_pcp_M, modalitykey)
+# FEMALES
+# SALINE
+discalc_hab2_sal_F, percent_dis_whitenoise_hab2_sal_F, percent_dis_tone_hab2_sal_F,\
+percent_dis_combined_hab2_sal_F, percent_dis_all_non_WN_hab2_sal_F, mean_percent_WHITENOISE_hab2_sal_F, mean_percent_TONE_hab2_sal_F,\
+mean_percent_COMBINED_hab2_sal_F, mean_percent_ALL_NON_WN_hab2_sal_F = discalc_modalities(hab2_sal_F, modalitykey)
+#PCP
+discalc_hab2_pcp_F, percent_dis_whitenoise_hab2_pcp_F, percent_dis_tone_hab2_pcp_F,\
+percent_dis_combined_hab2_pcp_F, percent_dis_all_non_WN_hab2_pcp_F, mean_percent_WHITENOISE_hab2_pcp_F, mean_percent_TONE_hab2_pcp_F,\
+mean_percent_COMBINED_hab2_pcp_F, mean_percent_ALL_NON_WN_hab2_pcp_F = discalc_modalities(hab2_pcp_F, modalitykey)
 
-
-aa,bb,cc,dd,ee,ff,gg,hh,ii = discalc_modalities(hab1_pcp_M, modalitykey)
-
-
-aa,bb,cc,dd,ee,ff,gg = discalc_modalities(hab2_sal_M, modalitykey)
-aa,bb,cc,dd,ee,ff,gg = discalc_modalities(amph_sal_M, modalitykey)
-
-# Habituation day 2
-aa,bb,cc,dd,ee,ff,gg = discalc_modalities(hab2_pcp_M, modalitykey)
-aa,bb,cc,dd,ee,ff,gg = discalc_modalities(amph_pcp_M, modalitykey)
 # Amphetamine day 
-aa,bb,cc,dd,ee,ff,gg = discalc_modalities(hab1_sal_M, modalitykey)
-aa,bb,cc,dd,ee,ff,gg = discalc_modalities(hab2_sal_M, modalitykey)
-aa,bb,cc,dd,ee,ff,gg = discalc_modalities(amph_sal_M, modalitykey)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# MALES
+# SALINE
+discalc_amph_sal_M, percent_dis_whitenoise_amph_sal_M, percent_dis_tone_amph_sal_M,\
+percent_dis_combined_amph_sal_M, percent_dis_all_non_WN_amph_sal_M, mean_percent_WHITENOISE_amph_sal_M, mean_percent_TONE_amph_sal_M,\
+mean_percent_COMBINED_amph_sal_M, mean_percent_ALL_NON_WN_amph_sal_M = discalc_modalities(amph_sal_M, modalitykey)
+#PCP
+discalc_amph_pcp_M, percent_dis_whitenoise_amph_pcp_M, percent_dis_tone_amph_pcp_M,\
+percent_dis_combined_amph_pcp_M, percent_dis_all_non_WN_amph_pcp_M, mean_percent_WHITENOISE_amph_pcp_M, mean_percent_TONE_amph_pcp_M,\
+mean_percent_COMBINED_amph_pcp_M, mean_percent_ALL_NON_WN_amph_pcp_M = discalc_modalities(amph_pcp_M, modalitykey)
+# FEMALES
+# SALINE
+discalc_amph_sal_F, percent_dis_whitenoise_amph_sal_F, percent_dis_tone_amph_sal_F,\
+percent_dis_combined_amph_sal_F, percent_dis_all_non_WN_amph_sal_F, mean_percent_WHITENOISE_amph_sal_F, mean_percent_TONE_amph_sal_F,\
+mean_percent_COMBINED_amph_sal_F, mean_percent_ALL_NON_WN_amph_sal_F = discalc_modalities(amph_sal_F, modalitykey)
+#PCP
+discalc_amph_pcp_F, percent_dis_whitenoise_amph_pcp_F, percent_dis_tone_amph_pcp_F,\
+percent_dis_combined_amph_pcp_F, percent_dis_all_non_WN_amph_pcp_F, mean_percent_WHITENOISE_amph_pcp_F, mean_percent_TONE_amph_pcp_F,\
+mean_percent_COMBINED_amph_pcp_F, mean_percent_ALL_NON_WN_amph_pcp_F = discalc_modalities(amph_pcp_F, modalitykey)
 
 # Modelled distractors ˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚
 # Not including modalities just where distractors occur and dis vs notdis
