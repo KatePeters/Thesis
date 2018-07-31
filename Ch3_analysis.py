@@ -357,26 +357,34 @@ def discalc_modalities(dictionary, modalitykey):
         
         if nd_whitenoise_count > 0:            
             percent_distracted_whitenoise = d_whitenoise_count / (d_whitenoise_count + nd_whitenoise_count) *100
-        else if d_whitenoise_count > 1:
-            print(nd_whitenoise_count, d_whitenoise_count)
+        elif d_whitenoise_count < 1:
+            try:
+                percent_distracted_whitenoise = d_whitenoise_count / (d_whitenoise_count + nd_whitenoise_count) *100
+            except ZeroDivisionError:
+                print('oops')
+                pass
+        elif d_whitenoise_count > 1:
             percent_distracted_whitenoise = 100 
             
         ## what to do if both zero 
-        
-        
-## Added non-flexibly as amphetamine rat(s) had no tone distracted trials (should modify to catch all possible instances)       
         if nd_tone_count > 0:
             percent_distracted_tone = d_tone_count / (d_tone_count + nd_tone_count) *100
-        else:
-            print(nd_tone_count, d_tone_count)
-            percent_distracted_tone = 100
-        
+        elif d_tone_count < 1:
+            try:
+                percent_distracted_tone = d_tone_count / (d_tone_count + nd_tone_count) *100
+            except ZeroDivisionError:
+                print('oopsT')
+                pass
+        elif d_tone_count > 1:
+            percent_distracted_tone = 100 
+
+
+### Still need to implement the fix here (oops C)
         if nd_combined_count > 0:
             percent_distracted_combined = d_combined_count / (d_combined_count + nd_combined_count) *100  
             percent_distracted_all_non_WN = (d_tone_count + d_combined_count) / ((d_tone_count + d_combined_count )+ (nd_tone_count + nd_combined_count)) *100  
                 
         else:
-            print(nd_combined_count, d_combined_count)
             percent_distracted_combined = 100
             percent_distracted_all_non_WN = 100
      
