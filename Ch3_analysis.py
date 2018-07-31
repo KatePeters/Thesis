@@ -659,57 +659,71 @@ modalitykey = {'whitenoise':[1,4], 'tone':[2,5], 'combined3':[3,6]}
 # MALES
 # Saline
 discalc_sal_M, percent_dis_whitenoise_sal_M, percent_dis_tone_sal_M,\
-percent_dis_combined_sal_M, mean_percent_WHITENOISE_sal_M, mean_percent_TONE_sal_M,\
-mean_percent_COMBINED_sal_M = discalc_modalities(distraction_sal_M, modalitykey)
+percent_dis_combined_sal_M, percent_dis_all_non_WN_sal_M, mean_percent_WHITENOISE_sal_M, mean_percent_TONE_sal_M,\
+mean_percent_COMBINED_sal_M, mean_percent_ALL_NON_WN_sal_M = discalc_modalities(distraction_sal_M, modalitykey)
 # PCP
 discalc_pcp_M, percent_dis_whitenoise_pcp_M, percent_dis_tone_pcp_M,\
-percent_dis_combined_pcp_M, mean_percent_WHITENOISE_pcp_M, mean_percent_TONE_pcp_M,\
-mean_percent_COMBINED_pcp_M = discalc_modalities(distraction_pcp_M, modalitykey)
+percent_dis_combined_pcp_M, percent_dis_all_non_WN_pcp_M, mean_percent_WHITENOISE_pcp_M, mean_percent_TONE_pcp_M,\
+mean_percent_COMBINED_pcp_M, mean_percent_ALL_NON_WN_pcp_M = discalc_modalities(distraction_pcp_M, modalitykey)
 # FEMALES
 # Saline 
 discalc_sal_F, percent_dis_whitenoise_sal_F, percent_dis_tone_sal_F,\
-percent_dis_combined_sal_F, mean_percent_WHITENOISE_sal_F, mean_percent_TONE_sal_F,\
-mean_percent_COMBINED_sal_F = discalc_modalities(distraction_sal_F, modalitykey)
+percent_dis_combined_sal_F, percent_dis_all_non_WN_sal_F, mean_percent_WHITENOISE_sal_F, mean_percent_TONE_sal_F,\
+mean_percent_COMBINED_sal_F, mean_percent_ALL_NON_WN_sal_F = discalc_modalities(distraction_sal_F, modalitykey)
 # PCP
 discalc_pcp_F, percent_dis_whitenoise_pcp_F, percent_dis_tone_pcp_F,\
-percent_dis_combined_pcp_F, mean_percent_WHITENOISE_pcp_F, mean_percent_TONE_pcp_F,\
-mean_percent_COMBINED_pcp_F = discalc_modalities(distraction_pcp_F, modalitykey)
+percent_dis_combined_pcp_F, percent_dis_all_non_WN_pcp_F, mean_percent_WHITENOISE_pcp_F, mean_percent_TONE_pcp_F,\
+mean_percent_COMBINED_pcp_F, mean_percent_ALL_NON_WN_pcp_F = discalc_modalities(distraction_pcp_F, modalitykey)
 
+
+##### !!!!!!!!!!!!!!!!!!!!!!!!! ADD THE 2 VARS HERE TO ALL CODE
+#percent_dis_all_non_WN_pcp_F --> both after combined (second mean)
+#mean_percent_ALL_NON_WN_pcp_F
+ 
 # Habituation day 
+# MALES
 # SALINE
 discalc_hab1_sal_M, percent_dis_whitenoise_hab1_sal_M, percent_dis_tone_hab1_sal_M,\
 percent_dis_combined_hab1_sal_M, mean_percent_WHITENOISE_hab1_sal_M, mean_percent_TONE_hab1_sal_M,\
 mean_percent_COMBINED_hab1_sal_M = discalc_modalities(hab1_sal_M, modalitykey)
-
-## ••• Need to calculate the mean of ALL others (combined plus tone)
-# remember these are means of all trials for each rat then the main value is 
-# the mean of all rats 
-'''percent_dis_non_whitenoise_hab1_sal_M = percent_dis_tone_hab1_sal_M + percent_dis_combined_hab1_sal_M 
-not correct because not the mean !! --> need to add to function 
-'''
-
-
 #PCP
 discalc_hab1_pcp_M, percent_dis_whitenoise_hab1_pcp_M, percent_dis_tone_hab1_pcp_M,\
 percent_dis_combined_hab1_pcp_M, mean_percent_WHITENOISE_hab1_pcp_M, mean_percent_TONE_hab1_pcp_M,\
 mean_percent_COMBINED_hab1_pcp_M = discalc_modalities(hab1_pcp_M, modalitykey)
 
+# FEMALES
+# SALINE
+
+# PCP
 
 
-aa,bb,cc,dd,ee,ff,gg = discalc_modalities(hab1_pcp_M, modalitykey)
+aa,bb,cc,dd,ee,ff,gg,hh,ii = discalc_modalities(hab1_pcp_M, modalitykey)
 
 
 aa,bb,cc,dd,ee,ff,gg = discalc_modalities(hab2_sal_M, modalitykey)
 aa,bb,cc,dd,ee,ff,gg = discalc_modalities(amph_sal_M, modalitykey)
 
 # Habituation day 2
-
 aa,bb,cc,dd,ee,ff,gg = discalc_modalities(hab2_pcp_M, modalitykey)
 aa,bb,cc,dd,ee,ff,gg = discalc_modalities(amph_pcp_M, modalitykey)
 # Amphetamine day 
 aa,bb,cc,dd,ee,ff,gg = discalc_modalities(hab1_sal_M, modalitykey)
 aa,bb,cc,dd,ee,ff,gg = discalc_modalities(hab2_sal_M, modalitykey)
 aa,bb,cc,dd,ee,ff,gg = discalc_modalities(amph_sal_M, modalitykey)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
