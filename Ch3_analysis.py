@@ -16,7 +16,7 @@ All functions and imports are at the beginning and no others are required
 A separate PLOTTING script should be run second to produce chapter figures            
 
 Imports:
-    numpy as np  
+    numpy=np, stats, pearsonr, plt, pml, sn  
 Functions: 
     MetaExtractor(),subsetter(),medfilereader(),asnumeric(),lickanalysis()
     lickCalc(),grouped_lickanalysis(),discalc_modalities(),distractionCalc2()
@@ -25,6 +25,11 @@ Functions:
 
 # Imports
 import numpy as np
+from scipy import stats
+from scipy.stats.stats import pearsonr
+import matplotlib.pyplot as plt
+import matplotlib as mpl 
+import seaborn as sn
 # Required functions in order of occurrence 
 def MetaExtractor (metafile):
     f = open(metafile, 'r')
@@ -728,13 +733,6 @@ percent_dis_combined_pcp_F, percent_dis_all_non_WN_pcp_F, mean_percent_WHITENOIS
 mean_percent_COMBINED_pcp_F, mean_percent_ALL_NON_WN_pcp_F = discalc_modalities(distraction_pcp_F, modalitykey)
 
 
-##### !!!!!!!!!!!!!!!!!!!!!!!!! ADD THE 2 VARS HERE TO ALL CODE
-#percent_dis_all_non_WN_pcp_F --> both after combined (second mean)
-#mean_percent_ALL_NON_WN_pcp_F
-# Check these all have hab1, hab2, amph in them and 
-# Check the input to function is sal/pcp/m/f correct 
-
- 
 # Habituation day (1) 
 # MALES
 # SALINE
@@ -776,7 +774,6 @@ percent_dis_combined_hab2_pcp_F, percent_dis_all_non_WN_hab2_pcp_F, mean_percent
 mean_percent_COMBINED_hab2_pcp_F, mean_percent_ALL_NON_WN_hab2_pcp_F = discalc_modalities(hab2_pcp_F, modalitykey)
 
 # Amphetamine day 
-
 # MALES
 # SALINE
 discalc_amph_sal_M, percent_dis_whitenoise_amph_sal_M, percent_dis_tone_amph_sal_M,\
@@ -919,12 +916,6 @@ pdps_hab2_notdis_pcp_F, med_pdps_hab2_notdis_pcp_F, preDPs_hab2_notdis_pcp_F,\
 pdps_amph_dis_pcp_F, med_pdps_amph_dis_pcp_F, preDPs_amph_dis_pcp_F,\
 pdps_amph_notdis_pcp_F, med_pdps_amph_notdis_pcp_F, preDPs_amph_notdis_pcp_F,\
 = pdpbygroup(amph_dis_pcp_F, amph_pcp_F) 
-  
-'''
-# Corelations 
-Could have a plot with blue when distracted and grey when not, then correlate with 
-the pre dp and the pdp? 
-'''
 
 ##################################################################
 # Percentage distracted    ##################################################################
@@ -971,9 +962,6 @@ nlicks_pcp_M, nlicks_minus1_pcp_M, nlicks_minus2_pcp_M = nlicksgrouped(last_lick
 nlicks_sal_F, nlicks_minus1_sal_F, nlicks_minus2_sal_F = nlicksgrouped(last_lick_sal_F, lick_minus1_sal_F, lick_minus2_sal_F)
 nlicks_pcp_F, nlicks_minus1_pcp_F, nlicks_minus2_pcp_F = nlicksgrouped(last_lick_pcp_F, lick_minus1_pcp_F, lick_minus2_pcp_F)
 
-######################## INDIVIDUAL DIFFERENCES #######################
-#sb.jointplot(x=df['nRuns'], y=df['nBursts'], kind='hex')) #or type 'reg' for kernel estimation and regression
-
 ################################################################################
 # NOR score data, Males and Females saline and PCP
 
@@ -1013,29 +1001,13 @@ exploration_fam_pcp_F = [13.37,27.41,42.4,10.4,14.05,7.33,14.97,1.94,21.93,3.52,
 exploration_nov_pcp_F = [25.95,37.09,17.11,11.08,14.53,17.44,8.93,14.44,16.25,10.63,11.04,13.44]
 DI_pcp_F = [0.32,0.15,-0.42,0.03,0.02,0.41,-0.25,0.76,-0.15,0.5,0.25,0.28]
    
-    
- 
-
-
-
-   
-## Correlations / regressions 
+## Correlations / regressions --------- Calculates regresison co-efficients and
+# makes all plots (seaborn is imported so this is not in plotting script)
 # Males SALINE
 # (1) DI score  - nb for males which ones have scores and which do not ? 
 # (2) % distracted on distraction day  
 # (3) Palatability (licks per burst) 
 # (4) % distracted on distraction day 
-
-from scipy import stats
-from scipy.stats.stats import pearsonr
-
-import matplotlib.pyplot as plt
-pearsonr(np.asarray(DI_sal_M), np.asarray(percent_dis_dis_sal_M[2:]))
-pearsonr(all_mean_burst_length_sal_M, percent_dis_dis_sal_M)
-
-
-
-
 
 '''
 
@@ -1161,10 +1133,7 @@ print('R squared = ',r_value2**2, ', p value = ', p_value2)
 
 #249E8D female pcp
 #AFDBD5 female saline 
-    
-
-
-    
+   
 '''    
     
     
