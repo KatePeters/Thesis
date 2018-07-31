@@ -286,6 +286,7 @@ def discalc_modalities(dictionary, modalitykey):
     ## SAL MALES - DISTRACTION DAY ONLY - DISTRACTOR TYPE ANALYSIS INCLUDED
 # Finds distracted or not (corrects for med slipping issue)
     for rat in dictionary:
+        print('a')
         
         discalc = distractionCalc2(rat[0])
         distracted, notdistracted = distractedOrNot(discalc, rat[0])
@@ -337,8 +338,6 @@ def discalc_modalities(dictionary, modalitykey):
                 ndis_type_text.append('combined3')
                 nd_combined_count += 1 
  
-        #### why nd not d? And should this then == 100% distracted not 0%
-        ## Debug by printing the n distractors and d vs nd for all gorups 
 ## DEBUGGING SECTION        
 
 # Not an issue if there are zero distracted trials, because calculates 0%
@@ -351,10 +350,8 @@ def discalc_modalities(dictionary, modalitykey):
 #            print('x', d_tone_count, nd_tone_count)
 #        if d_combined_count < 1:
 #            print('z', d_combined_count, nd_combined_count)
-        
-        ## Add in a check of the d count (if both zero then zero should exclude)
-        ## if zero dis and some nondis then 100% not and vice versa 
-        
+ 
+# WHITENOISE        
         if nd_whitenoise_count > 0:            
             percent_distracted_whitenoise = d_whitenoise_count / (d_whitenoise_count + nd_whitenoise_count) *100
         elif d_whitenoise_count < 1:
@@ -362,10 +359,10 @@ def discalc_modalities(dictionary, modalitykey):
                 percent_distracted_whitenoise = d_whitenoise_count / (d_whitenoise_count + nd_whitenoise_count) *100
             except ZeroDivisionError:
                 print('oops')
-                pass
+                percent_distracted_whitenoise = -1
         elif d_whitenoise_count > 1:
             percent_distracted_whitenoise = 100 
-            
+# TONE            
         ## what to do if both zero 
         if nd_tone_count > 0:
             percent_distracted_tone = d_tone_count / (d_tone_count + nd_tone_count) *100
@@ -374,26 +371,52 @@ def discalc_modalities(dictionary, modalitykey):
                 percent_distracted_tone = d_tone_count / (d_tone_count + nd_tone_count) *100
             except ZeroDivisionError:
                 print('oopsT')
-                pass
+                percent_distracted_tone = -1
         elif d_tone_count > 1:
             percent_distracted_tone = 100 
 
-
-### Still need to implement the fix here (oops C)
+# COMBINED        
         if nd_combined_count > 0:
             percent_distracted_combined = d_combined_count / (d_combined_count + nd_combined_count) *100  
+
+        elif d_combined_count < 1:
+            try:
+                percent_distracted_combined = d_combined_count / (d_combined_count + nd_combined_count) *100  
+            except ZeroDivisionError:
+                print('oopsC')
+                percent_distracted_combined = -1
+        elif d_combined_count > 1:
+            percent_distracted_combined = 100 
+
+# NON WHITE NOISE
+
+        if nd_combined_count > 0 or nd_tone_count > 0:
             percent_distracted_all_non_WN = (d_tone_count + d_combined_count) / ((d_tone_count + d_combined_count )+ (nd_tone_count + nd_combined_count)) *100  
                 
-        else:
-            percent_distracted_combined = 100
+        elif d_combined_count < 1 and d_tone_count < 1:
+            print('all less')
+            try:
+                percent_distracted_all_non_WN = (d_tone_count + d_combined_count) / ((d_tone_count + d_combined_count )+ (nd_tone_count + nd_combined_count)) *100  
+            except ZeroDivisionError:
+                print('oopsNWN')
+                percent_distracted_all_non_WN = -1     
+        elif d_combined_count or d_tone_count > 1:
             percent_distracted_all_non_WN = 100
      
+      
         percent_dis_whitenoise_group.append(percent_distracted_whitenoise)
         percent_dis_tone_group.append(percent_distracted_tone)
         percent_dis_combined_group.append(percent_distracted_combined)
         percent_dis_all_non_WN_group.append(percent_distracted_all_non_WN)
     
-     
+## Removing the occurrences of -1 which were added to account for zero distractors
+    
+    percent_dis_whitenoise_group = [x for x in percent_dis_whitenoise_group if x != -1]
+    percent_dis_tone_group = [x for x in percent_dis_tone_group if x != -1]
+    percent_dis_combined_group = [x for x in percent_dis_combined_group if x != -1]
+    percent_dis_all_non_WN_group = [x for x in percent_dis_all_non_WN_group if x != -1]       
+
+        
     mean_percent_WHITENOISE = np.mean(percent_dis_whitenoise_group) # the average percentage of JUST whitenoise trials that rats are distracted on 
     mean_percent_TONE = np.mean(percent_dis_tone_group)
     mean_percent_COMBINED = np.mean(percent_dis_combined_group)
