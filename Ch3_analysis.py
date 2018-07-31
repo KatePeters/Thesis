@@ -339,28 +339,46 @@ def discalc_modalities(dictionary, modalitykey):
  
         #### why nd not d? And should this then == 100% distracted not 0%
         ## Debug by printing the n distractors and d vs nd for all gorups 
+## DEBUGGING SECTION        
+
+# Not an issue if there are zero distracted trials, because calculates 0%
+# without problem, will be an issue if both 0 dis and 0 non-dis (because no 
+# trials of that modality, need to exclude)
+         
+#        if d_whitenoise_count < 1:
+#            print('y', d_whitenoise_count, nd_whitenoise_count)
+#        if d_tone_count < 1:
+#            print('x', d_tone_count, nd_tone_count)
+#        if d_combined_count < 1:
+#            print('z', d_combined_count, nd_combined_count)
         
+        ## Add in a check of the d count (if both zero then zero should exclude)
+        ## if zero dis and some nondis then 100% not and vice versa 
         
-        if nd_whitenoise_count > 1:            
+        if nd_whitenoise_count > 0:            
             percent_distracted_whitenoise = d_whitenoise_count / (d_whitenoise_count + nd_whitenoise_count) *100
-        else:
+        else if d_whitenoise_count > 1:
             print(nd_whitenoise_count, d_whitenoise_count)
-            percent_distracted_whitenoise = 0 
+            percent_distracted_whitenoise = 100 
+            
+        ## what to do if both zero 
+        
+        
 ## Added non-flexibly as amphetamine rat(s) had no tone distracted trials (should modify to catch all possible instances)       
-        if nd_tone_count > 1:
+        if nd_tone_count > 0:
             percent_distracted_tone = d_tone_count / (d_tone_count + nd_tone_count) *100
         else:
             print(nd_tone_count, d_tone_count)
-            percent_distracted_tone = 0
+            percent_distracted_tone = 100
         
-        if nd_combined_count > 1:
+        if nd_combined_count > 0:
             percent_distracted_combined = d_combined_count / (d_combined_count + nd_combined_count) *100  
             percent_distracted_all_non_WN = (d_tone_count + d_combined_count) / ((d_tone_count + d_combined_count )+ (nd_tone_count + nd_combined_count)) *100  
                 
         else:
             print(nd_combined_count, d_combined_count)
-            percent_distracted_combined = 0
-            percent_distracted_all_non_WN = 0
+            percent_distracted_combined = 100
+            percent_distracted_all_non_WN = 100
      
         percent_dis_whitenoise_group.append(percent_distracted_whitenoise)
         percent_dis_tone_group.append(percent_distracted_tone)
