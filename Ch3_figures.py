@@ -40,18 +40,15 @@ fig1, ax1, barlist1, sc1 = jmf.barscatter(data)
 for i in barlist1[1].get_children():
     i.set_color('g')
 """
-
-
-#New barscatter
-
-def barscatter(data, transpose = False,
+def barscatter(data, transpose = False, unequal=False,
                 groupwidth = .75,
                 barwidth = .9,
                 paired = False,
+                spaced = False,
                 barfacecoloroption = 'same', # other options 'between' or 'individual'
                 barfacecolor = ['white'],
                 baredgecoloroption = 'same',
-                baredgecolor = ['black'],
+                baredgecolor = [''],
                 baralpha = 1,
                 scatterfacecoloroption = 'same',
                 scatterfacecolor = ['white'],
@@ -66,16 +63,25 @@ def barscatter(data, transpose = False,
                 grouplabel = 'auto',
                 itemlabel = 'none',
                 barlabels = [],
+                barlabeloffset=0.1,
+                grouplabeloffset=0.2,
                 yaxisparams = 'auto',
                 show_legend = 'none',
-                xrotation = 0,
+                xrotation=0,
                 legendloc='upper right',
                 ax=[]):
-#
-    print(np.shape(data))
+
+    if unequal == True:
+        dims = np.ndim(data)
+        data_obj = np.ndarray((np.shape(data)), dtype=np.object)
+        for i1, dim1 in enumerate(data):
+            for i2, dim2 in enumerate(dim1):
+                data_obj[i1][i2] = np.array(dim2, dtype=np.object)
+        data = data_obj
+    
     if type(data) != np.ndarray or data.dtype != np.object:
         dims = np.shape(data)
-        if len(dims) == 2:
+        if len(dims) == 2 or len(dims) == 1:
             data = data2obj1D(data)
 
         elif len(dims) == 3:
@@ -164,10 +170,17 @@ def barscatter(data, transpose = False,
         for x, Yarray, scf, sce  in zip(xvals.flatten(), data.flatten(),
                                         scfacecolorArray, scedgecolorArray):
             for y in Yarray:
-                sclist.append(ax.scatter(x, y, s = scattersize,
-                         c = scf,
-                         edgecolors = sce,
-                         zorder=20))
+                if spaced == True:
+                    sclist.append(ax.scatter(x+np.random.random(size=1)*barallocation, y, s = scattersize,
+                             c = scf,
+                             edgecolors = sce,
+                             zorder=20))
+                else:
+                     sclist.append(ax.scatter(x, y, s = scattersize,
+                                     c = scf,
+                                     edgecolors = sce,
+                                     zorder=20))
+
     elif grouped == True:
         for x, Yarray, scf, sce in zip(xvals, data, scfacecolorArray, scedgecolorArray):
             for y in np.transpose(Yarray.tolist()):
@@ -189,11 +202,10 @@ def barscatter(data, transpose = False,
     
     # Label axes
     if ylabel != 'none':
-        ax.set_ylabel(ylabel)   #### plt changed to ax
+        plt.ylabel(ylabel)
     
     if xlabel != 'none':
-        plt.xlabel(xlabel, labelpad=30)
-        
+        plt.xlabel(xlabel)
     
     # Set range and tick values for Y axis
     if yaxisparams != 'auto':
@@ -201,25 +213,32 @@ def barscatter(data, transpose = False,
         plt.yticks(yaxisparams[1])
        
     # X ticks
-    plt.tick_params(
+    ax.tick_params(
         axis='x',          # changes apply to the x-axis
         which='both',      # both major and minor ticks are affected
         bottom='off',      # ticks along the bottom edge are off
         top='off') # labels along the bottom edge are off
-    
+
     if grouplabel == 'auto':
         plt.tick_params(labelbottom='off')
     else:
-        plt.xticks(range(1,nGroups+1), grouplabel)
+        if len(barlabels) > 0:
+            plt.tick_params(labelbottom='off')
+            yrange = ax.get_ylim()[1] - ax.get_ylim()[0]
+            offset = ax.get_ylim()[0] - yrange*grouplabeloffset
+            for idx, label in enumerate(grouplabel):
+                ax.text(idx+1, offset, label, va='top', ha='center')
+        else:
+            plt.xticks(range(1,nGroups+1), grouplabel)
         
     if len(barlabels) > 0:
         if len(barlabels) != len(barx):
             print('Wrong number of bar labels for number of bars!')
         else:
             yrange = ax.get_ylim()[1] - ax.get_ylim()[0]
-            offset = ax.get_ylim()[0] - yrange/25
+            offset = ax.get_ylim()[0] - yrange*barlabeloffset
             for x, label in zip(barx, barlabels):
-                ax.text(x, offset, label, va='top', ha='center', rotation=xrotation)
+                ax.text(x, offset, label, va='top', ha='center',rotation=xrotation)
     
     # Hide the right and top spines and set bottom to zero
     ax.spines['right'].set_visible(False)
@@ -250,8 +269,7 @@ def barscatter(data, transpose = False,
 # work out how to export or save as pdf, tiff, eps etc
 # work out how to return handles to scatters so can be altered outside of function
 # make help doc
-# make html file to show usage using ijupyter
-
+# make html file to show usage using ijupyt
       
 def setcolors(coloroption, colors, barspergroup, nGroups, data, paired_scatter = False):
             
@@ -333,32 +351,40 @@ col3 = ['#FFE5A5','#FFE5A5','#FFE5A5','#FFBA08','#FFBA08','#FFBA08']
 dataF = [[nlicks_minus2_sal_F,nlicks_minus1_sal_F, nlicks_sal_F], [nlicks_minus2_pcp_F,nlicks_minus1_pcp_F, nlicks_pcp_F]]
 labels = ['-3','-2','-1','-3','-2','-1']
 # Males licking on 3 lick days 
-ax, barx, barlist, sclist = barscatter(dataM, transpose=False, paired=True, barfacecolor=col3, barfacecoloroption='individual',  ylabel='Licks', xlabel='Lick days before distraction', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/figure1a.pdf", bbox_inches='tight')
+figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,4)) ### x,y
+ax, barx, barlist, sclist = barscatter(dataM, transpose=False, ax=ax,paired=True, barfacecolor=col3, barfacecoloroption='individual',  ylabel='Licks', xlabel='Lick days before distraction', barlabels=labels, itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax.xaxis.labelpad = 40
+plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/LickDays_M.pdf", bbox_inches='tight')
 
 
 
 col3 = ['#AFDBD5','#AFDBD5','#AFDBD5','#249E8D','#249E8D','#249E8D']
 # Females licking on 3 lick days 
-ax, barx, barlist, sclist = barscatter(dataF, transpose=False, paired=True, barfacecolor=col3, barfacecoloroption='individual',  ylabel='Licks', xlabel='Lick days before distraction', barlabels=labels)#, grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/figure1b.pdf", bbox_inches='tight')
-# Figure 2 VIOLIN PLOTS FOR LICK PARAMTERS 
+figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,4)) 
+ax, barx, barlist, sclist = barscatter(dataF, transpose=False, ax=ax,paired=True, barfacecolor=col3, barfacecoloroption='individual',  ylabel='Licks', xlabel='Lick days before distraction', barlabels=labels, barlabeloffset=0.05)#, grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax.xaxis.labelpad = 40
+plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/LickDays_F.pdf", bbox_inches='tight')
 
-
+# This section has been replaced with panel figures of all paramters
 ## Barscatters to replace violin plots here 
-nlicksData =  [[nlicks_sal_M], [nlicks_pcp_M]]
-meanburstlenData = [[all_mean_burst_length_sal_M], [all_mean_burst_length_pcp_M]]
-nburstsData = [[all_n_bursts_sal_M], [all_n_bursts_pcp_M]]
+#nlicksData =  [[nlicks_sal_M], [nlicks_pcp_M]]
+#meanburstlenData = [[all_mean_burst_length_sal_M], [all_mean_burst_length_pcp_M]]
+#nburstsData = [[all_n_bursts_sal_M], [all_n_bursts_pcp_M]]
+#ax, barx, barlist, sclist = barscatter(nlicksData, transpose=False, paired=False, barfacecolor=['#FFE5A5','#FFBA08'], barfacecoloroption='individual',  ylabel='nLicks', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/nlicks2barMale.pdf", bbox_inches='tight')
+#ax, barx, barlist, sclist = barscatter(meanburstlenData, transpose=False, paired=False, barfacecolor=['#FFE5A5','#FFBA08'], barfacecoloroption='individual',  ylabel='Licks per burst', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/meanburstlen2barMale.pdf", bbox_inches='tight')
+#ax, barx, barlist, sclist = barscatter(nburstsData, transpose=False, paired=False, barfacecolor=['#FFE5A5','#FFBA08'], barfacecoloroption='individual',  ylabel='nBursts', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/nburst2barMale.pdf", bbox_inches='tight')
+#
+#
+#
 
-ax, barx, barlist, sclist = barscatter(nlicksData, transpose=False, paired=False, barfacecolor=['#FFE5A5','#FFBA08'], barfacecoloroption='individual',  ylabel='nLicks', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/nlicks2barMale.pdf", bbox_inches='tight')
-ax, barx, barlist, sclist = barscatter(meanburstlenData, transpose=False, paired=False, barfacecolor=['#FFE5A5','#FFBA08'], barfacecoloroption='individual',  ylabel='Licks per burst', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/meanburstlen2barMale.pdf", bbox_inches='tight')
-ax, barx, barlist, sclist = barscatter(nburstsData, transpose=False, paired=False, barfacecolor=['#FFE5A5','#FFBA08'], barfacecoloroption='individual',  ylabel='nBursts', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/nburst2barMale.pdf", bbox_inches='tight')
 
-
-
+## Licking paramters
+nlicksDataM = [[nlicks_sal_M], [nlicks_pcp_M]]
+meanburstlenDataM = [[all_mean_burst_length_sal_M], [all_mean_burst_length_pcp_M]]
+nburstsDataM = [[all_n_bursts_sal_M], [all_n_bursts_pcp_M]]
 
 nlicksDataF = [[nlicks_sal_F], [nlicks_pcp_F]]
 meanburstlenDataF = [[all_mean_burst_length_sal_F], [all_mean_burst_length_pcp_F]]
@@ -368,17 +394,62 @@ nburstsDataF = [[all_n_bursts_sal_F], [all_n_bursts_pcp_F]]
 
 #Ω# Supervisory meeting 
  ## make sure mpl.  
-mpl.rcParams['figure.subplot.wspace'] = 0.3
+#Males
+mpl.rcParams['figure.subplot.wspace'] = 0.6
+mpl.rcParams['figure.subplot.right'] = 1
+mpl.rcParams['font.size'] = 14
+figureA, ax = plt.subplots(nrows=1, ncols=3, figsize=(8,4)) ### x,y 
 
-figureA, ax = plt.subplots(nrows=1, ncols=3, figsize=(8,3)) ### x,y 
+figureA.tight_layout(pad=3, w_pad=3, h_pad=1.0)
 
-ax[0], barx, barlist, sclist = barscatter(nlicksDataF, ax=ax[0],transpose=False, paired=False, barfacecolor=["#AFDBD5", "#249E8D"], barfacecoloroption='individual',  ylabel='nLicks', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/nlicks2barFemale.pdf", bbox_inches='tight')
-ax[1], barx, barlist, sclist = barscatter(meanburstlenDataF,ax=ax[1], transpose=False, paired=False, barfacecolor=["#AFDBD5", "#249E8D"], barfacecoloroption='individual',  ylabel='Licks per burst', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/meanburstlen2barFemale.pdf", bbox_inches='tight')
-ax[2], barx, barlist, sclist = barscatter(nburstsDataF, ax=ax[2],transpose=False, paired=False, barfacecolor=["#AFDBD5", "#249E8D"], barfacecoloroption='individual',  ylabel='nBursts', barlabels=labels, itemlabel=['1','2']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/nburst2barFemale.pdf", bbox_inches='tight')
-    
+labels = []
+ax[0], barx, barlist, sclist = barscatter(nlicksDataM, ax=ax[0],transpose=False, paired=False, barfacecolor=['#FFE5A5','#FFBA08'], barfacecoloroption='individual',  ylabel='nLicks', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[1], barx, barlist, sclist = barscatter(meanburstlenDataM,ax=ax[1], transpose=False, paired=False, barfacecolor=['#FFE5A5','#FFBA08'], barfacecoloroption='individual',  ylabel='Licks per burst', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[2], barx, barlist, sclist = barscatter(nburstsDataM, ax=ax[2],transpose=False, paired=False, barfacecolor=['#FFE5A5','#FFBA08'], barfacecoloroption='individual',  ylabel='nBursts', barlabels=labels, show_legend='within', itemlabel=['SAL', 'PCP'], baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[0].set_ylabel('Licks')
+ax[1].set_ylabel('Mean burst length')
+ax[2].set_ylabel('Mean number of bursts')
+
+ax[0].set_xticks([])
+ax[0].set_ylim([0,4000])
+ax[1].set_xticks([])
+ax[1].set_ylim([0,25])
+ax[2].set_xticks([])
+ax[2].set_ylim(0,1200)
+
+ax[0].spines['bottom'].set_visible(False)
+
+
+
+plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/LickParams_M.pdf", bbox_inches='tight')
+
+
+
+#Females    
+mpl.rcParams['figure.subplot.wspace'] = 0.6
+figureB, ax = plt.subplots(nrows=1, ncols=3, figsize=(8,4)) ### x,y 
+figureB.tight_layout(pad=3, w_pad=3, h_pad=1.0)
+ax[0], barx, barlist, sclist = barscatter(nlicksDataF, ax=ax[0],transpose=False, paired=False, barfacecolor=["#AFDBD5", "#249E8D"], barfacecoloroption='individual',  ylabel='nLicks', barlabels=labels, itemlabel=['1','2'],baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[1], barx, barlist, sclist = barscatter(meanburstlenDataF,ax=ax[1], transpose=False, paired=False, barfacecolor=["#AFDBD5", "#249E8D"], barfacecoloroption='individual',  ylabel='Licks per burst', barlabels=labels, itemlabel=['1','2'],baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[2], barx, barlist, sclist = barscatter(nburstsDataF, ax=ax[2],transpose=False, paired=False, barfacecolor=["#AFDBD5", "#249E8D"], barfacecoloroption='individual',  ylabel='nBursts', barlabels=labels, itemlabel=['1','2'],baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+
+ax[0].set_ylabel('Licks')
+ax[1].set_ylabel('Mean burst length')
+ax[2].set_ylabel('Mean number of bursts')
+
+#Change these limits and add in the barcolour removal parameter
+ax[0].set_xticks([])
+ax[0].set_ylim([0,6000])
+ax[1].set_xticks([])
+ax[1].set_ylim([0,25])
+ax[2].set_xticks([])
+ax[2].set_ylim(0,500)
+
+ax[0].spines['bottom'].set_visible(False)
+
+
+plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/LickParams_F.pdf", bbox_inches='tight')
+
 
 #### ax[1].set_ylabel # etc
 
@@ -394,31 +465,6 @@ ax[2], barx, barlist, sclist = barscatter(nburstsDataF, ax=ax[2],transpose=False
 
 
 
-
-
-
-
-# Figure 1 
-# Done 
-# Bar scatter over 3 days with saline and PCP (males) = 6 bars
-# Bar scatter over 3 days with saline and PCP (females) = 6 bars
-
-# Add significance stars (Python or manualy) to show if there are difs
-    # last time I ran analysis NOT significant, but not compared all cohorts
-    
-
-# Figure 2
-# mostly done - tinkering needed and figure out what the issue with seaborn is 
-# Lick analysis violin plots for saline vs pcp 
-# Violin plots to show no difference 
-    # Back this up with stats
-    # What stats? MANOVA with just sal and pcp as the IV? 
-    # Look up in Field how to do this in SPSS
-
-
-# Figure 3 =======================================================================
-
-# Barscatter percentage distracted
 # Males, pcp/sal 
 # Females pcp/sal 
 # SALINE
@@ -431,9 +477,12 @@ dataMdis = [[percent_dis_modelled_sal_M,percent_dis_dis_sal_M,\
 
 tenbarcolors = ['#FFE5A5','#FFE5A5','#FFE5A5','#FFE5A5','#FFE5A5','#FFBA08','#FFBA08','#FFBA08','#FFBA08','#FFBA08']
 labels = ['mod','dis','hab1','hab2','amph','mod','dis','hab1','hab2','amph']
-ax, barx, barlist, sclist = barscatter(dataMdis, transpose=False, paired=True, barfacecolor=tenbarcolors, barfacecoloroption='individual',  ylabel='Mean percent distracted',  barlabels=labels, xrotation=45) 
-plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/figure2a.pdf", bbox_inches='tight')
-            
+ax, barx, barlist, sclist = barscatter(dataMdis, transpose=False, paired=True, barfacecolor=tenbarcolors, barfacecoloroption='individual',scatterlinecolor = 'lightgrey',  ylabel='Mean percent distracted',  barlabels=labels, itemlabel=labels,xrotation=45, barlabeloffset=0.05) 
+
+ax.spines['bottom'].set_visible(False)
+
+plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/PercentDisM.pdf", bbox_inches='tight')
+           
 #
 tenbarcolors = ['#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5','#249E8D','#249E8D','#249E8D','#249E8D','#249E8D']
 dataFdis = [[percent_dis_modelled_sal_F,percent_dis_dis_sal_F,\
@@ -443,8 +492,10 @@ dataFdis = [[percent_dis_modelled_sal_F,percent_dis_dis_sal_F,\
          percent_dis_hab2_pcp_F,percent_dis_amph_pcp_F]]
 
 labels = ['mod','dis','hab1','hab2','amph','mod','dis','hab1','hab2','amph']
-ax, barx, barlist, sclist = barscatter(dataFdis, transpose=False,paired=True, barfacecolor=tenbarcolors, barfacecoloroption='individual',  ylabel='Mean percent distracted', barlabels=labels, xrotation=45) 
-plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/figure2b.pdf", bbox_inches='tight')
+ax, barx, barlist, sclist = barscatter(dataFdis, transpose=False,paired=True, barfacecolor=tenbarcolors, barfacecoloroption='individual', scatterlinecolor = 'lightgrey', ylabel='Mean percent distracted', barlabels=labels, xrotation=45, barlabeloffset=0.05) 
+ax.spines['bottom'].set_visible(False)
+
+plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/PercentDisF.pdf", bbox_inches='tight')
 
 ## Colours specified by HEX code
 
@@ -463,7 +514,7 @@ dataPDPsM = [[med_pdps_mod_dis_sal_M, med_pdps_dis_sal_M, med_pdps_hab1_dis_sal_
 
 
 labels = ['mod','dis','hab1','hab2','amph','mod','dis','hab1','hab2','amph']
-ax, barx, barlist, sclist = barscatter(dataPDPsM, transpose=False,paired=True, barfacecolor=tenbarcolors, barfacecoloroption='individual',  ylabel='Mean percent distracted', barlabels=labels, xrotation=45) 
+ax, barx, barlist, sclist = barscatter(dataPDPsM, transpose=False,paired=True, barfacecolor=tenbarcolors, barfacecoloroption='individual',  ylabel='Mean percent distracted', barlabels=labels)#, xrotation=45) 
 #plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/figure2b.pdf", bbox_inches='tight')
 
 ## TESTING PDP PLOTS?????? female 
@@ -473,33 +524,95 @@ dataPDPsF = [[med_pdps_mod_dis_sal_F, med_pdps_dis_sal_F, med_pdps_hab1_dis_sal_
               med_pdps_hab2_dis_pcp_F, med_pdps_amph_dis_pcp_F]]
 
 labels = ['mod','dis','hab1','hab2','amph','mod','dis','hab1','hab2','amph']
-ax, barx, barlist, sclist = barscatter(dataPDPsF, transpose=False,paired=True, barfacecolor=tenbarcolors, barfacecoloroption='individual',  ylabel='Mean percent distracted', barlabels=labels, xrotation=45) 
+ax, barx, barlist, sclist = barscatter(dataPDPsF, transpose=False,paired=True, barfacecolor=tenbarcolors, barfacecoloroption='individual',  ylabel='Mean percent distracted', barlabels=labels)#,xrotation=45) 
 #plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/figure2b.pdf", bbox_inches='tight')
 
 
 
+## NOR plots - Normal bar plots with mean and SEM 
+## For DI show all of the data points to show variability 
 
-''' Deal with this NOR stuff later 
 
-# NOR plots - Normal bar plots with mean and SEM 
-# For DI show all of the data points to show variability 
-
-barcolors = ['#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5','#249E8D','#249E8D','#249E8D','#249E8D','#249E8D']
+### MAKE THESE INTO A MULTIPANEL FIGURE WITH ALL 3 ON ONE LINE
+## MALES
+# Acquisition
+barcolors = ['#FFE5A5','#FFE5A5','#FFBA08','#FFBA08']
 dataMnorAcq = [[exploration_left_sal_M, exploration_right_sal_M], [exploration_left_pcp_M, exploration_right_pcp_M]]
 labels = ['salL','salR', 'pcpL', 'pcpR']
-ax, barx, barlist, sclist = barscatter(dataMnorAcq, transpose=False, paired=False, barfacecolor=barcolors, barfacecoloroption='individual',  ylabel='Mean percent distracted', barlabels=labels, xrotation=45) 
+ax, barx, barlist, sclist = barscatter(dataMnorAcq, transpose=False, paired=True, barfacecolor=barcolors, barfacecoloroption='individual',  ylabel='Time (s)', barlabels=labels, unequal=True) 
+# Retention 
+barcolors = ['#FFE5A5','#FFE5A5','#FFBA08','#FFBA08']
+dataMnorRet = [[exploration_fam_sal_M, exploration_nov_sal_M],[exploration_fam_pcp_M, exploration_nov_pcp_M]]
+labels = ['salF','salN', 'pcpF', 'pcpN']
+ax, barx, barlist, sclist = barscatter(dataMnorRet, transpose=False, paired=True, barfacecolor=barcolors, barfacecoloroption='individual',  ylabel='Time (s)', barlabels=labels, unequal=True) 
+
+# Discrimination index 
+barcolors = ['#FFE5A5','#FFBA08']
+dataMdi = [[DI_sal_M],[DI_pcp_M]]
+labels = ['sal','pcp']
+ax, barx, barlist, sclist = barscatter(dataMdi, transpose=False, paired=True, barfacecolor=barcolors, barfacecoloroption='individual',  ylabel='DI', barlabels=labels, unequal=True) 
+
+
+#*******************************
+
+## FEMALES
+# ACQUISITION
+barcolors = ['#AFDBD5','#AFDBD5','#249E8D','#249E8D']
+dataFnorAcq = [[exploration_left_sal_F, exploration_right_sal_F], [exploration_left_pcp_F, exploration_right_pcp_F]]
+labels = ['salL','salR', 'pcpL', 'pcpR']
+ax, barx, barlist, sclist = barscatter(dataFnorAcq, transpose=False, paired=True, barfacecolor=barcolors, barfacecoloroption='individual',  ylabel='Time (s)', barlabels=labels) 
+# RETENTION
+barcolors = ['#AFDBD5','#AFDBD5','#249E8D','#249E8D']
+dataFnorRet = [[exploration_fam_sal_F, exploration_nov_sal_F],[exploration_fam_pcp_F, exploration_nov_pcp_F]]
+labels = ['salF','salN', 'pcpF', 'pcpN']
+ax, barx, barlist, sclist = barscatter(dataFnorRet, transpose=False, paired=True, barfacecolor=barcolors, barfacecoloroption='individual',  ylabel='Time (s)', barlabels=labels) 
+# DISCRIMINATION INDEX 
+barcolors = ['#AFDBD5','#249E8D']
+dataFdi = [[DI_sal_F],[DI_pcp_F]]
+labels = ['sal','pcp']
+ax, barx, barlist, sclist = barscatter(dataFdi, transpose=False, paired=True, barfacecolor=barcolors, barfacecoloroption='individual',  ylabel='DI', barlabels=labels, itemlabel=['1','2']) 
+
 
 #plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/FILENAME.pdf", bbox_inches='tight')
 
 
 
-dataMnorRet
+## FIX THESE PROBLEMS HERE 
+
+## Multipanel Males NOR
+mpl.rcParams['figure.subplot.wspace'] = 0.3
+figureB, ax = plt.subplots(nrows=1, ncols=3, figsize=(10,4)) ### x,y 
+figureB.tight_layout(pad=3, w_pad=3, h_pad=1.0)
+
+# Set out the different colours here and add manually in each call of bar scatter
+barcolors = ['#FFE5A5','#FFE5A5','#FFBA08','#FFBA08']
+labels = ['','','','']
+ax[0], barx, barlist, sclist = barscatter(dataMnorAcq, ax=ax[0], transpose=False, paired=False, barfacecolor=barcolors, barfacecoloroption='individual',  ylabel='Time (s)', barlabels=labels, unequal=True) 
+ax[1], barx, barlist, sclist = barscatter(dataMnorRet, ax=ax[1], transpose=False, paired=False, barfacecolor=barcolors, barfacecoloroption='individual',  ylabel='Time (s)', barlabels=labels, unequal=True) 
+barcolors = ['#FFE5A5','#FFBA08']
+ax[2], barx, barlist, sclist = barscatter(dataMdi, ax=ax[2],transpose=False, paired=False, barfacecolor=barcolors, barfacecoloroption='individual',  ylabel='Discrimination Index', barlabels=labels, unequal=True) 
+
+# Multipanel Females NOR
+barcolors = ['#AFDBD5','#AFDBD5','#249E8D','#249E8D']
+mpl.rcParams['figure.subplot.wspace'] = 0.3
+figureC, ax = plt.subplots(nrows=1, ncols=3, figsize=(10,4)) ### x,y 
+figureC.tight_layout(pad=3, w_pad=3, h_pad=1.0)
+ax[0], barx, barlist, sclist = barscatter(dataFnorAcq, ax=ax[0], transpose=False, paired=False, barfacecolor=barcolors, barfacecoloroption='individual',  ylabel='Time (s)', barlabels=labels) 
+ax[1], barx, barlist, sclist = barscatter(dataFnorRet, ax=ax[1], transpose=False, paired=False, barfacecolor=barcolors, barfacecoloroption='individual',  ylabel='Time (s)', barlabels=labels) 
+barcolors =  ['#AFDBD5','#249E8D']
+ax[2], barx, barlist, sclist = barscatter(dataFdi, ax=ax[2], transpose=False, paired=False, barfacecolor=barcolors, barfacecoloroption='individual',  ylabel='Discrimination Index', barlabels=labels) 
+
+## POST editing 
+ax[0].set_ylabel('Time (s)')
+ax[1].set_ylabel('Time (s)')
+ax[2].set_ylabel('Discrimination index')
+#Change these limits and add in the barcolour removal parameter
+ax[0].set_xticks([])
+ax[1].set_xticks([])
+ax[2].set_xticks([])
+
+ax[0].spines['bottom'].set_visible(False)
 
 
-
-dataMnorDI 
-
-'''
-
-
-
+# Add this arg to all plots 
+baredgecolor = ['']
