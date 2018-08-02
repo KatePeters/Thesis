@@ -618,41 +618,49 @@ baredgecolor = ['']
 
 ### Percent distracted with modalities separate to compare WN with NWN
 # White noise vs non whitenoise distractors across dis,hab1,hab2,amph
-dataM_whitenoise_sal = [[percent_dis_whitenoise_sal_M, percent_dis_all_non_WN_sal_M],\
-                        [percent_dis_whitenoise_hab1_sal_M, percent_dis_all_non_WN_hab1_sal_M],\
-                        [percent_dis_whitenoise_hab2_sal_M, percent_dis_all_non_WN_hab2_sal_M],\
-                        [percent_dis_whitenoise_amph_sal_M, percent_dis_all_non_WN_amph_sal_M]]
+#dataM_whitenoise_sal = [[percent_dis_whitenoise_sal_M, percent_dis_all_non_WN_sal_M],\
+#                        [percent_dis_whitenoise_hab1_sal_M, percent_dis_all_non_WN_hab1_sal_M],\
+#                        [percent_dis_whitenoise_hab2_sal_M, percent_dis_all_non_WN_hab2_sal_M],\
+#                        [percent_dis_whitenoise_amph_sal_M, percent_dis_all_non_WN_amph_sal_M]]
+#
+#dataM_whitenoise_pcp = [[percent_dis_whitenoise_pcp_M, percent_dis_all_non_WN_pcp_M],\
+#                        [percent_dis_whitenoise_hab1_pcp_M, percent_dis_all_non_WN_hab1_pcp_M],\
+#                        [percent_dis_whitenoise_hab2_pcp_M, percent_dis_all_non_WN_hab2_pcp_M],\
+#                        [percent_dis_whitenoise_amph_pcp_M, percent_dis_all_non_WN_amph_pcp_M]]
+#
+#dataF_whitenoise_sal = [[percent_dis_whitenoise_sal_F, percent_dis_all_non_WN_sal_F],\
+#                        [percent_dis_whitenoise_hab1_sal_F, percent_dis_all_non_WN_hab1_sal_F],\
+#                        [percent_dis_whitenoise_hab2_sal_F, percent_dis_all_non_WN_hab2_sal_F],\
+#                        [percent_dis_whitenoise_amph_sal_F, percent_dis_all_non_WN_amph_sal_F]]
+#
+#dataF_whitenoise_pcp = [[percent_dis_whitenoise_pcp_F, percent_dis_all_non_WN_pcp_F],\
+#                        [percent_dis_whitenoise_hab1_pcp_F, percent_dis_all_non_WN_hab1_pcp_F],\
+#                        [percent_dis_whitenoise_hab2_pcp_F, percent_dis_all_non_WN_hab2_pcp_F],\
+#                        [percent_dis_whitenoise_amph_pcp_F, percent_dis_all_non_WN_amph_pcp_F]]
+
+
+# !!!! Remember here legend is different, dark yellow is WHITE NOISE light is NON-WHITENOISE
+dataM_whitenoise_dis = [[percent_dis_whitenoise_sal_M, percent_dis_all_non_WN_sal_M], [percent_dis_whitenoise_pcp_M, percent_dis_all_non_WN_pcp_M]]
+#dataM_whitenoise_hab1 = [[percent_dis_whitenoise_hab1_sal_M, percent_dis_all_non_WN_hab1_sal_M],[percent_dis_whitenoise_hab1_pcp_M, percent_dis_all_non_WN_hab1_pcp_M]]
+#dataM_whitenoise_hab2 = [[percent_dis_whitenoise_hab2_sal_M, percent_dis_all_non_WN_hab2_sal_M],[percent_dis_whitenoise_hab2_pcp_M, percent_dis_all_non_WN_hab2_pcp_M]]
+#dataM_whitenoise_amph = [[percent_dis_whitenoise_amph_sal_M, percent_dis_all_non_WN_amph_sal_M],[percent_dis_whitenoise_amph_pcp_M, percent_dis_all_non_WN_amph_pcp_M]]
+
+cols = ['#FFBA08','#FFE5A5','#FFBA08','#FFE5A5']
+ax, barx, barlist, sclist = barscatter(dataM_whitenoise_dis, transpose=False,paired=True, barfacecolor=cols, barfacecoloroption='individual',  ylabel='Mean percent distracted', xrotation=45, unequal=False) 
+
+# Show these in the supplemental or appendix if needed, can make a 4 by PCP, by distractor plot if needed 
+#ax, barx, barlist, sclist = barscatter(dataM_whitenoise_hab1, transpose=False,paired=True, barfacecolor=cols, barfacecoloroption='individual',  ylabel='Mean percent distracted', xrotation=45, unequal=False) 
+#ax, barx, barlist, sclist = barscatter(dataM_whitenoise_hab2, transpose=False,paired=True, barfacecolor=cols, barfacecoloroption='individual',  ylabel='Mean percent distracted', xrotation=45, unequal=False) 
+#ax, barx, barlist, sclist = barscatter(dataM_whitenoise_amph, transpose=False,paired=True, barfacecolor=cols, barfacecoloroption='individual',  ylabel='Mean percent distracted', xrotation=45, unequal=True) 
+
+# !!!! Remember here legend is different, dark teal is WHITE NOISE light is NON-WHITENOISE
+# FEMALES barcolors =  ['#AFDBD5','#249E8D']
+dataF_whitenoise_dis = [[percent_dis_whitenoise_sal_F, percent_dis_all_non_WN_sal_F], [percent_dis_whitenoise_pcp_F, percent_dis_all_non_WN_pcp_F]]
+cols =  ['#249E8D','#AFDBD5','#249E8D','#AFDBD5']
+ax, barx, barlist, sclist = barscatter(dataF_whitenoise_dis, transpose=False,paired=True, barfacecolor=cols, barfacecoloroption='individual',  ylabel='Mean percent distracted', xrotation=45, unequal=False) 
 
 
 
-
-
-labels = ['1','2','1','2','1','2','1','2']
-ax, barx, barlist, sclist = barscatter(dataM_whitenoise_pcp, transpose=False,paired=False, barfacecolor=tenbarcolors, barfacecoloroption='individual',  ylabel='Mean percent distracted', xrotation=45, unequal=True) 
-
-
-
-
-
-
-
-dataM_whitenoise_pcp = [[percent_dis_whitenoise_pcp_M, percent_dis_all_non_WN_pcp_M],\
-                        [percent_dis_whitenoise_hab1_pcp_M, percent_dis_all_non_WN_hab1_pcp_M],\
-                        [percent_dis_whitenoise_hab2_pcp_M, percent_dis_all_non_WN_hab2_pcp_M],\
-                        [percent_dis_whitenoise_amph_pcp_M, percent_dis_all_non_WN_amph_pcp_M]]
-
-
-
-dataF_whitenoise_sal = [[percent_dis_whitenoise_sal_F, percent_dis_all_non_WN_sal_F],\
-                        [percent_dis_whitenoise_hab1_sal_F, percent_dis_all_non_WN_hab1_sal_F],\
-                        [percent_dis_whitenoise_hab2_sal_F, percent_dis_all_non_WN_hab2_sal_F],\
-                        [percent_dis_whitenoise_amph_sal_F, percent_dis_all_non_WN_amph_sal_F]]
-
-
-
-dataF_whitenoise_pcp = [[percent_dis_whitenoise_pcp_F, percent_dis_all_non_WN_pcp_F],\
-                        [percent_dis_whitenoise_hab1_pcp_F, percent_dis_all_non_WN_hab1_pcp_F],\
-                        [percent_dis_whitenoise_hab2_pcp_F, percent_dis_all_non_WN_hab2_pcp_F],\
-                        [percent_dis_whitenoise_amph_pcp_F, percent_dis_all_non_WN_amph_pcp_F]]
-
-
+## nice colors 
+cols = ['mediumblue','dodgerblue','forestgreen','palegreen']
+cols = ['darkorange', 'peachpuff', 'darkorchid','plum']
