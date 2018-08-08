@@ -597,6 +597,35 @@ def nlicksgrouped(licklist1, licklist2, licklist3):
 
 
     return lick, lickminus1, lickminus2   
+
+def cumulativelickFig(ax, firstlick, normed=True, color='g', log=True, ylabel='none', xlabel='none', title='none'):
+    sorted_data = np.sort(firstlick)
+    yvals = np.arange(len(sorted_data)+1)
+    
+    if normed == True:
+        nlicks = len(sorted_data)
+        yvals =yvals/nlicks
+        
+    a = ax.step(np.concatenate([sorted_data, sorted_data[[-1]]]),
+             yvals, color=color)
+    
+    if log == True:
+        ax.set_xscale('log', basex=10) # option in funcion as True or False (log setting)
+        ax.set_xlim([0.1, 1000])
+        
+        # Label axes
+#    if ylabel != 'none':
+#        plt.ylabel(ylabel, fontsize=14)
+#    
+#    if xlabel != 'none':
+#        plt.xlabel(xlabel)
+#        
+#    if title != 'none':
+#        plt.title(title, fontsize=14)
+#        
+    return ax, a
+
+
  
 #############################################################################
 #############################################################################
