@@ -1135,9 +1135,282 @@ print('R squared = ',r_value2**2, ', p value = ', p_value2)
 #AFDBD5 female saline 
    
 '''    
-    
-    
-    
+# ****************************************************************************
+# ****************************************************************************
+
+### Cumulative licking plots - Post distraction pauses for DPCP animals 
+## Code taken from the THPH1 and 2 analysis 
+
+# Plot settings, font / size / styles
+Calibri = {'fontname':'Calibri'}
+Size = {'fontsize': 22}
+label_size = 18
+plt.rcParams['xtick.labelsize'] = label_size 
+plt.rcParams['ytick.labelsize'] = label_size 
+plt.rcParams['lines.linewidth'] = 2
+
+
+# CUMULATIVE PDPS plots 
+
+## SALINE, MALES, LAST LICK DAY AND DISTRACTION DAY PDPS ALL 
+fig = plt.figure()
+plt.title('Lickday SAL_M', **Calibri, **Size)
+ax = fig.add_subplot(111)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+
+# Plots all for lick day with average
+###### Issue that on modelled day, no distracted trials so len(pdps) was 0
+## For loop to combine distracted and non distracted (as separated these in func)
+## MODELLED SAL MALES 
+all_pdps_mod_sal_M = []
+for index, pdplists in enumerate(pdps_mod_dis_sal_M):    
+    C = pdps_mod_dis_sal_M[index] + pdps_mod_notdis_sal_M[index]
+    all_pdps_mod_sal_M.append(C)
+# Plots all for MODELLED day with average 
+for index, licklist in enumerate(all_pdps_mod_sal_M):
+    plot = cumulativelickFig(ax, all_pdps_mod_sal_M[index], normed=True, color='lightgrey', log=True)
+avg = [item for rat in all_pdps_mod_sal_M for item in rat] 
+cumulativelickFig(ax, avg, normed=True, color='dimgrey', log=True)
+
+## Distraction day SAL MALES  
+# CUMULATIVE PDPS
+fig = plt.figure()
+plt.title('Distraction SAL_M', **Calibri, **Size)
+ax = fig.add_subplot(111)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+  
+all_pdps_sal_M = []
+for index, pdplists in enumerate(pdps_dis_sal_M):    
+    C = pdps_dis_sal_M[index] + pdps_notdis_sal_M[index]
+    all_pdps_sal_M.append(C)
+# Plots all for MODELLED day with average 
+for index, licklist in enumerate(all_pdps_sal_M):
+    plot = cumulativelickFig(ax, all_pdps_sal_M[index], normed=True, color='lightgrey', log=True)
+avg = [item for rat in all_pdps_sal_M for item in rat] 
+cumulativelickFig(ax, avg, normed=True, color='gold', log=True)
+#avg2 = [item for rat in pdps_dis_sal_M for item in rat] 
+#cumulativelickFig(ax, avg2, normed=True, color='green', log=True)
+#avg3 = [item for rat in pdps_notdis_sal_M for item in rat] 
+#cumulativelickFig(ax, avg3, normed=True, color='blue', log=True)
+
+fig = plt.figure()
+plt.title('Lickday PCP_M', **Calibri, **Size)
+ax = fig.add_subplot(111)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+  
+## MODELLED PCP MALES 
+all_pdps_mod_pcp_M = []
+for index, pdplists in enumerate(pdps_mod_dis_pcp_M):    
+    C = pdps_mod_dis_pcp_M[index] + pdps_mod_notdis_pcp_M[index]
+    all_pdps_mod_pcp_M.append(C)
+# Plots all for MODELLED day with average 
+for index, licklist in enumerate(all_pdps_mod_pcp_M):
+    plot = cumulativelickFig(ax, all_pdps_mod_pcp_M[index], normed=True, color='lightgrey', log=True)
+avg = [item for rat in all_pdps_mod_pcp_M for item in rat] 
+cumulativelickFig(ax, avg, normed=True, color='black', log=True)
+
+## Distraction day PCP MALES  
+# CUMULATIVE PDPS
+fig = plt.figure()
+plt.title('Distraction PCP_M', **Calibri, **Size)
+ax = fig.add_subplot(111)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+  
+all_pdps_pcp_M = []
+for index, pdplists in enumerate(pdps_dis_pcp_M):    
+    C = pdps_dis_pcp_M[index] + pdps_notdis_pcp_M[index]
+    all_pdps_pcp_M.append(C)
+# Plots all for MODELLED day with average 
+for index, licklist in enumerate(all_pdps_pcp_M):
+    plot = cumulativelickFig(ax, all_pdps_pcp_M[index], normed=True, color='lightgrey', log=True)
+avg = [item for rat in all_pdps_pcp_M for item in rat] 
+cumulativelickFig(ax, avg, normed=True, color='orange', log=True)
+
+
+
+### All four lines on one graph no individual rats at all 
+
+fig = plt.figure()
+plt.title('PDPs by day and group', **Calibri, **Size)
+ax = fig.add_subplot(111)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+  
+
+avg = [item for rat in all_pdps_mod_sal_M for item in rat] 
+avg1 = [item for rat in all_pdps_sal_M for item in rat] 
+avg2 = [item for rat in all_pdps_mod_pcp_M for item in rat] 
+avg3 = [item for rat in all_pdps_pcp_M for item in rat] 
+
+
+cumulativelickFig(ax, avg, normed=True, color='dimgrey', log=True)
+cumulativelickFig(ax, avg1, normed=True, color='gold', log=True)
+cumulativelickFig(ax, avg2, normed=True, color='black', log=True) 
+cumulativelickFig(ax, avg3, normed=True, color='orange', log=True)
+
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Aug  2 16:32:14 2018
+
+@author: u1490431
+"""
+
+# CUMULATIVE PDPS plots 
+
+## SALINE, FEMALES -  LAST LICK DAY AND DISTRACTION DAY PDPS ALL 
+fig = plt.figure()
+plt.title('Lickday SAL_F', **Calibri, **Size)
+ax = fig.add_subplot(111)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+
+# Plots all for lick day with average
+###### Issue that on modelled day, no distracted trials so len(pdps) was 0
+## For loop to combine distracted and non distracted (as separated these in func)
+## MODELLED SAL MALES 
+all_pdps_mod_sal_F = []
+for index, pdplists in enumerate(pdps_mod_dis_sal_F):    
+    C = pdps_mod_dis_sal_F[index] + pdps_mod_notdis_sal_F[index]
+    all_pdps_mod_sal_F.append(C)
+# Plots all for MODELLED day with average 
+for index, licklist in enumerate(all_pdps_mod_sal_F):
+    plot = cumulativelickFig(ax, all_pdps_mod_sal_F[index], normed=True, color='lightgrey', log=True)
+avg = [item for rat in all_pdps_mod_sal_F for item in rat] 
+cumulativelickFig(ax, avg, normed=True, color='dimgrey', log=True)
+
+################################################################################################## 
+
+## Distraction day SAL MALES  
+# CUMULATIVE PDPS
+fig = plt.figure()
+plt.title('Distraction SAL_F', **Calibri, **Size)
+ax = fig.add_subplot(111)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+  
+all_pdps_sal_F = []
+for index, pdplists in enumerate(pdps_dis_sal_F):    
+    C = pdps_dis_sal_F[index] + pdps_notdis_sal_F[index]
+    all_pdps_sal_F.append(C)
+# Plots all for MODELLED day with average 
+for index, licklist in enumerate(all_pdps_sal_F):
+    plot = cumulativelickFig(ax, all_pdps_sal_F[index], normed=True, color='lightgrey', log=True)
+avg = [item for rat in all_pdps_sal_F for item in rat] 
+cumulativelickFig(ax, avg, normed=True, color='darkturquoise', log=True)
+
+#############
+#######################################################################
+
+## Distraction day males SAL - Distracted vs Not distracted
+fig = plt.figure()
+plt.title('Dis vs Not dis M', **Calibri, **Size)
+ax = fig.add_subplot(111)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+avg = [item for rat in pdps_dis_sal_M for item in rat] 
+cumulativelickFig(ax, avg, normed=True, color='darkgrey', log=True)
+avg1 = [item for rat in pdps_notdis_sal_M for item in rat] 
+cumulativelickFig(ax, avg1, normed=True, color='darkgrey', log=True)
+## DIstraciton day males PCP - Distracted vs Not distracted
+avg2 = [item for rat in pdps_dis_pcp_M for item in rat] 
+cumulativelickFig(ax, avg2, normed=True, color='gold', log=True)
+avg3 = [item for rat in pdps_notdis_pcp_M for item in rat] 
+cumulativelickFig(ax, avg3, normed=True, color='gold', log=True)
+
+
+
+## MODELLED PCP MALES ################################################# 
+fig = plt.figure()
+plt.title('Lickday PCP_F', **Calibri, **Size)
+ax = fig.add_subplot(111)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+  
+all_pdps_mod_pcp_F = []
+for index, pdplists in enumerate(pdps_mod_dis_pcp_F):    
+    C = pdps_mod_dis_pcp_F[index] + pdps_mod_notdis_pcp_F[index]
+    all_pdps_mod_pcp_F.append(C)
+# Plots all for MODELLED day with average 
+for index, licklist in enumerate(all_pdps_mod_pcp_F):
+    plot = cumulativelickFig(ax, all_pdps_mod_pcp_F[index], normed=True, color='lightgrey', log=True)
+avg = [item for rat in all_pdps_mod_pcp_F for item in rat] 
+cumulativelickFig(ax, avg, normed=True, color='black', log=True)
+
+## Distraction day PCP MALES #################################################  
+# CUMULATIVE PDPS
+fig = plt.figure()
+plt.title('Distraction PCP_F', **Calibri, **Size)
+ax = fig.add_subplot(111)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+  
+all_pdps_pcp_F = []
+for index, pdplists in enumerate(pdps_dis_pcp_F):    
+    C = pdps_dis_pcp_F[index] + pdps_notdis_pcp_F[index]
+    all_pdps_pcp_F.append(C)
+# Plots all for MODELLED day with average 
+for index, licklist in enumerate(all_pdps_pcp_F):
+    plot = cumulativelickFig(ax, all_pdps_pcp_F[index], normed=True, color='lightgrey', log=True)
+avg = [item for rat in all_pdps_pcp_F for item in rat] 
+cumulativelickFig(ax, avg, normed=True, color='dodgerblue', log=True)
+
+
+
+### All four lines on one graph no individual rats at all 
+
+fig = plt.figure()
+plt.title('PDPs by day and group F', **Calibri, **Size)
+ax = fig.add_subplot(111)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+avg = [item for rat in all_pdps_mod_sal_F for item in rat] 
+avg1 = [item for rat in all_pdps_sal_F for item in rat] 
+avg2 = [item for rat in all_pdps_mod_pcp_F for item in rat] 
+avg3 = [item for rat in all_pdps_pcp_F for item in rat] 
+cumulativelickFig(ax, avg, normed=True, color='dimgrey', log=True)
+cumulativelickFig(ax, avg1, normed=True, color='darkturquoise', log=True)
+cumulativelickFig(ax, avg2, normed=True, color='black', log=True) 
+cumulativelickFig(ax, avg3, normed=True, color='dodgerblue', log=True)
+
+
+
+#############
+#######################################################################
+
+## Distraction day males SAL - Distracted vs Not distracted
+fig = plt.figure()
+plt.title('Dis vs Not dis F', **Calibri, **Size)
+ax = fig.add_subplot(111)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+avg = [item for rat in pdps_dis_sal_F for item in rat] 
+cumulativelickFig(ax, avg, normed=True, color='darkgrey', log=True)
+avg1 = [item for rat in pdps_notdis_sal_F for item in rat] 
+cumulativelickFig(ax, avg1, normed=True, color='darkgrey', log=True)
+## DIstraciton day males PCP - Distracted vs Not distracted
+avg2 = [item for rat in pdps_dis_pcp_F for item in rat] 
+cumulativelickFig(ax, avg2, normed=True, color='c', log=True)
+avg3 = [item for rat in pdps_notdis_pcp_F for item in rat] 
+cumulativelickFig(ax, avg3, normed=True, color='c', log=True)
+
+
+#
+#fig8 = plt.figure()
+##plt.title('Cumulative PDP', **Calibri, **Size)
+#ax8 = fig8.add_subplot(111)
+#ax8.spines['right'].set_visible(False)
+#ax8.spines['top'].set_visible(False)
+#ax8.set(ylabel = 'Probability')
+#ax8.yaxis.label.set_size(16)
+#ax8.set(xlabel = 'log post-distraction pause (s)')
+#ax8.xaxis.label.set_size(16)
+#
+#    
     
     
     
