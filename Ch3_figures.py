@@ -111,7 +111,7 @@ def barscatter(data, transpose = False, unequal=False,
         
         for i in range(np.shape(data)[0]):
             for j in range(np.shape(data)[1]):
-                barMeans[i][j] = np.mean(data[i][j])
+                barMeans[i][j] = np.nanmean(data[i][j])
                 items[i][j] = len(data[i][j])
         
     else:
@@ -119,7 +119,7 @@ def barscatter(data, transpose = False, unequal=False,
         barspergroup = 1
         
         for i in range(np.shape(data)[0]):
-            barMeans[i] = np.mean(data[i])
+            barMeans[i] = np.nanmean(data[i])
             items[i] = len(data[i])
     
     # Calculate x values for bars and scatters
@@ -637,7 +637,7 @@ baredgecolor = ['']
 #                        [percent_dis_whitenoise_hab1_pcp_F, percent_dis_all_non_WN_hab1_pcp_F],\
 #                        [percent_dis_whitenoise_hab2_pcp_F, percent_dis_all_non_WN_hab2_pcp_F],\
 #                        [percent_dis_whitenoise_amph_pcp_F, percent_dis_all_non_WN_amph_pcp_F]]
-
+#
 
 # !!!! Remember here legend is different, dark yellow is WHITE NOISE light is NON-WHITENOISE
 dataM_whitenoise_dis = [[percent_dis_whitenoise_sal_M, percent_dis_all_non_WN_sal_M], [percent_dis_whitenoise_pcp_M, percent_dis_all_non_WN_pcp_M]]
@@ -647,6 +647,7 @@ dataM_whitenoise_dis = [[percent_dis_whitenoise_sal_M, percent_dis_all_non_WN_sa
 
 cols = ['#FFBA08','#FFE5A5','#FFBA08','#FFE5A5']
 ax, barx, barlist, sclist = barscatter(dataM_whitenoise_dis, transpose=False,paired=True, barfacecolor=cols, barfacecoloroption='individual',  ylabel='Mean percent distracted', xrotation=45, unequal=False) 
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Cumulative_F_S_P_disvsnot.pdf", bbox_inches='tight')
 
 # Show these in the supplemental or appendix if needed, can make a 4 by PCP, by distractor plot if needed 
 #ax, barx, barlist, sclist = barscatter(dataM_whitenoise_hab1, transpose=False,paired=True, barfacecolor=cols, barfacecoloroption='individual',  ylabel='Mean percent distracted', xrotation=45, unequal=False) 
@@ -658,9 +659,96 @@ ax, barx, barlist, sclist = barscatter(dataM_whitenoise_dis, transpose=False,pai
 dataF_whitenoise_dis = [[percent_dis_whitenoise_sal_F, percent_dis_all_non_WN_sal_F], [percent_dis_whitenoise_pcp_F, percent_dis_all_non_WN_pcp_F]]
 cols =  ['#249E8D','#AFDBD5','#249E8D','#AFDBD5']
 ax, barx, barlist, sclist = barscatter(dataF_whitenoise_dis, transpose=False,paired=True, barfacecolor=cols, barfacecoloroption='individual',  ylabel='Mean percent distracted', xrotation=45, unequal=False) 
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Cumulative_F_S_P_disvsnot.pdf", bbox_inches='tight')
 
 
 
 ## nice colors 
 cols = ['mediumblue','dodgerblue','forestgreen','palegreen']
 cols = ['darkorange', 'peachpuff', 'darkorchid','plum']
+
+
+## NEW SUBSETTING FOR WHITENOISE DIS,HAB and NONWN DIS, HAB
+# TEXT = dataMdishabSal = [[whitenoise sal dis, whitenoise saline hab1], [nonwhitenoise sal hab, nonwhitenoise sal hab]]
+
+dataMdishabSal =[[percent_dis_whitenoise_sal_M,percent_dis_whitenoise_hab1_sal_M],[percent_dis_all_non_WN_sal_M,percent_dis_all_non_WN_hab1_sal_M]]
+cols =  ['#249E8D','#249E8D','#AFDBD5','#AFDBD5',]
+labels = ['dis','hab', 'dis', 'hab']
+ax, barx, barlist, sclist = barscatter(dataMdishabSal, transpose=False,paired=True, barfacecolor=cols, barfacecoloroption='individual',  ylabel='Mean percent distracted', xrotation=45, unequal=False, barlabels=labels) 
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Cumulative_F_S_P_disvsnot.pdf", bbox_inches='tight')
+ax.spines['bottom'].set_visible(False)
+
+dataMdishabPcp =[[percent_dis_whitenoise_pcp_M,percent_dis_whitenoise_hab1_pcp_M],[percent_dis_all_non_WN_pcp_M,percent_dis_all_non_WN_hab1_pcp_M]]
+labels = ['dis','hab', 'dis', 'hab']
+cols =  ['#249E8D','#249E8D','#AFDBD5','#AFDBD5']
+ax, barx, barlist, sclist = barscatter(dataMdishabPcp, transpose=False,paired=True, barfacecolor=cols, barfacecoloroption='individual',  ylabel='Mean percent distracted', xrotation=45, unequal=False, barlabels=labels) 
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Cumulative_F_S_P_disvsnot.pdf", bbox_inches='tight')
+
+
+dataFdishabSal =[[percent_dis_whitenoise_sal_F,percent_dis_whitenoise_hab1_sal_F],[percent_dis_all_non_WN_sal_F,percent_dis_all_non_WN_hab1_sal_F]]
+labels = ['dis','hab', 'dis', 'hab']
+cols = ['#FFBA08','#FFBA08','#FFE5A5','#FFE5A5']
+ax, barx, barlist, sclist = barscatter(dataFdishabSal, transpose=False,paired=True, barfacecolor=cols, barfacecoloroption='individual',  ylabel='Mean percent distracted', xrotation=45, unequal=False, barlabels=labels) 
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Cumulative_F_S_P_disvsnot.pdf", bbox_inches='tight')
+
+dataFdishabPcp =[[percent_dis_whitenoise_pcp_F,percent_dis_whitenoise_hab1_pcp_F],[percent_dis_all_non_WN_pcp_F,percent_dis_all_non_WN_hab1_pcp_F]]
+labels = ['dis','hab', 'dis', 'hab']
+cols = ['#FFBA08','#FFBA08','#FFE5A5','#FFE5A5']
+ax, barx, barlist, sclist = barscatter(dataFdishabPcp, transpose=False,paired=True, barfacecolor=cols, barfacecoloroption='individual',  ylabel='Mean percent distracted', xrotation=45, unequal=False, barlabels=labels) 
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Cumulative_F_S_P_disvsnot.pdf", bbox_inches='tight')
+
+
+### All on single plots looks good 
+### Try putting saline and pcp on the same plot 
+
+dataMdishabSal_Pcp =[[percent_dis_whitenoise_sal_M,percent_dis_whitenoise_hab1_sal_M],[percent_dis_all_non_WN_sal_M,percent_dis_all_non_WN_hab1_sal_M],[percent_dis_whitenoise_pcp_M,percent_dis_whitenoise_hab1_pcp_M],[percent_dis_all_non_WN_pcp_M,percent_dis_all_non_WN_hab1_pcp_M]]
+cols =  ['#249E8D','#249E8D','#AFDBD5','#AFDBD5','mediumblue', 'mediumblue','dodgerblue','dodgerblue']
+labels = ['dis','hab', 'dis', 'hab','dis','hab', 'dis', 'hab']
+ax, barx, barlist, sclist = barscatter(dataMdishabSal_Pcp, transpose=False,paired=True, barfacecolor=cols, barfacecoloroption='individual',  ylabel='Mean percent distracted', xrotation=45, unequal=False, barlabels=labels) 
+ax.spines['bottom'].set_visible(False)
+plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/WhiteNoise_Male.pdf", bbox_inches='tight')
+
+dataFdishabSal_Pcp =[[percent_dis_whitenoise_sal_F,percent_dis_whitenoise_hab1_sal_F],[percent_dis_all_non_WN_sal_F,percent_dis_all_non_WN_hab1_sal_F],[percent_dis_whitenoise_pcp_F,percent_dis_whitenoise_hab1_pcp_F],[percent_dis_all_non_WN_pcp_F,percent_dis_all_non_WN_hab1_pcp_F]]
+labels = ['dis','hab', 'dis', 'hab','dis','hab', 'dis', 'hab']
+cols = ['#FFBA08','#FFBA08','#FFE5A5','#FFE5A5', 'darkorange','darkorange','peachpuff','peachpuff']
+ax, barx, barlist, sclist = barscatter(dataFdishabSal_Pcp, transpose=False,paired=True, barfacecolor=cols, barfacecoloroption='individual',  ylabel='Mean percent distracted', xrotation=45, unequal=False, barlabels=labels) 
+ax.spines['bottom'].set_visible(False)
+plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/WhiteNoise_Female.pdf", bbox_inches='tight')
+
+
+## PDP plots with just days 1 and 2
+
+## TESTING PDP PLOTS?????? with TRANSFORMED DATA (log(pdp))
+col = ['#FFE5A5','#FFE5A5','#FFE5A5','#FFE5A5','#FFE5A5','#FFBA08','#FFBA08','#FFBA08','#FFBA08','#FFBA08']
+dataPDPsM = [[np.log(med_pdps_mod_dis_sal_M), np.log(med_pdps_dis_sal_M), np.log(med_pdps_hab1_dis_sal_M), np.log(med_pdps_hab2_dis_sal_M), np.log(med_pdps_amph_dis_sal_M)], [np.log(med_pdps_mod_dis_pcp_M), np.log(med_pdps_dis_pcp_M), np.log(med_pdps_hab1_dis_pcp_M), np.log(med_pdps_hab2_dis_pcp_M), np.log(med_pdps_amph_dis_pcp_M)]]
+labels = ['mod','dis','hab1','hab2','amph','mod','dis','hab1','hab2','amph']
+ax, barx, barlist, sclist = barscatter(dataPDPsM, transpose=False,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(median PDP)', barlabels=labels, xrotation=45) 
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/figure2b.pdf", bbox_inches='tight')
+ax.spines['bottom'].set_visible(False)
+
+
+
+col = ['#249E8D','#249E8D','#249E8D','#249E8D','#249E8D','#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5']
+
+dataPDPsF = [[np.log(med_pdps_mod_dis_sal_F), np.log(med_pdps_dis_sal_F), np.log(med_pdps_hab1_dis_sal_F), np.log(med_pdps_hab2_dis_sal_F), np.log(med_pdps_amph_dis_sal_F)], [np.log(med_pdps_mod_dis_pcp_F), np.log(med_pdps_dis_pcp_F), np.log(med_pdps_hab1_dis_pcp_F), np.log(med_pdps_hab2_dis_pcp_F), np.log(med_pdps_amph_dis_pcp_F)]]
+labels = ['mod','dis','hab1','hab2','amph','mod','dis','hab1','hab2','amph']
+ax, barx, barlist, sclist = barscatter(dataPDPsM, transpose=False,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(median PDP)', barlabels=labels, xrotation=45) 
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/figure2b.pdf", bbox_inches='tight')
+ax.spines['bottom'].set_visible(False)
+
+
+
+
+
+
+## TESTING PDP PLOTS?????? female 
+col = ['#249E8D','#249E8D','#249E8D','#249E8D','#249E8D','#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5']
+
+dataPDPsF = [[med_pdps_mod_dis_sal_F, med_pdps_dis_sal_F, med_pdps_hab1_dis_sal_F,\
+              med_pdps_hab2_dis_sal_F, med_pdps_amph_dis_sal_F], [med_pdps_mod_dis_pcp_F, med_pdps_dis_pcp_F, med_pdps_hab1_dis_pcp_F,\
+              med_pdps_hab2_dis_pcp_F, med_pdps_amph_dis_pcp_F]]
+
+labels = ['mod','dis','hab1','hab2','amph','mod','dis','hab1','hab2','amph']
+ax, barx, barlist, sclist = barscatter(dataPDPsF, transpose=False,paired=True, barfacecolor=cols, barfacecoloroption='individual',  ylabel='Median PDP', barlabels=labels)#,xrotation=45) 
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/figure2b.pdf", bbox_inches='tight')
+

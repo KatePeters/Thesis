@@ -29,7 +29,7 @@ from scipy import stats
 from scipy.stats.stats import pearsonr
 import matplotlib.pyplot as plt
 import matplotlib as mpl 
-import seaborn as sn
+#import seaborn as sn
 # Required functions in order of occurrence 
 def MetaExtractor (metafile):
     f = open(metafile, 'r')
@@ -562,9 +562,28 @@ def pdpbygroup(distractiondict, groupdict):
         med_pdps_notdis_group.append(np.median(pdps_notdis))
         preDPs_notdis_group.append(preDPs_notdis)
     
+    
     return pdps_dis_group, med_pdps_dis_group, preDPs_dis_group, \
         pdps_notdis_group, med_pdps_notdis_group, preDPs_notdis_group
       
+''' Function calculates the median values for ALL pdps, 
+    not separated by distracted or not distracted, but as one list
+'''
+
+def pdp_median_calc(pdp_dis_list, pdp_not_dis_list): # mostly variables from pdps by group func
+    
+    all_pdps = []
+    all_pdps_median = []
+    for index, val in enumerate(pdp_dis_list):
+        ongoing_all_PDPs = pdp_dis_list[index] + pdp_not_dis_list[index]
+        all_pdps.append(ongoing_all_PDPs)
+        median = np.mean(ongoing_all_PDPs)
+        all_pdps_median.append(median)    
+        
+    return all_pdps, all_pdps_median
+
+
+
 def percentdisgroup(distractiondict):
     ''' Discalc_sal_M == distractiondict '''
     
@@ -856,6 +875,7 @@ discalc_sal_M[0][0][0] # [rat][list][licktimestamp]
 # occurred and then finds the pause before the next lick (ignoring distractors occurring
 # on the final lick in a session)
 
+
 # SALINE MALES - distraction day 
 pdps_dis_sal_M, med_pdps_dis_sal_M, preDPs_dis_sal_M,\
 pdps_notdis_sal_M, med_pdps_notdis_sal_M, preDPs_notdis_sal_M,\
@@ -879,7 +899,7 @@ pdps_amph_dis_sal_M, med_pdps_amph_dis_sal_M, preDPs_amph_dis_sal_M,\
 pdps_amph_notdis_sal_M, med_pdps_amph_notdis_sal_M, preDPs_amph_notdis_sal_M,\
 = pdpbygroup(amph_dis_sal_M, amph_sal_M)  
 
- 
+################################################################################### 
 # PCP MALES - distraction day
 pdps_dis_pcp_M, med_pdps_dis_pcp_M, preDPs_dis_pcp_M,\
 pdps_notdis_pcp_M, med_pdps_notdis_pcp_M, preDPs_notdis_pcp_M,\
@@ -900,8 +920,7 @@ pdps_hab2_notdis_pcp_M, med_pdps_hab2_notdis_pcp_M, preDPs_hab2_notdis_pcp_M,\
 pdps_amph_dis_pcp_M, med_pdps_amph_dis_pcp_M, preDPs_amph_dis_pcp_M,\
 pdps_amph_notdis_pcp_M, med_pdps_amph_notdis_pcp_M, preDPs_amph_notdis_pcp_M,\
 = pdpbygroup(amph_dis_pcp_M, amph_pcp_M) 
- 
- 
+  
 # SALINE FEMALES - distraction day
 pdps_dis_sal_F, med_pdps_dis_sal_F, preDPs_dis_sal_F,\
 pdps_notdis_sal_F, med_pdps_notdis_sal_F, preDPs_notdis_sal_F,\
@@ -928,7 +947,6 @@ pdps_amph_notdis_sal_F, med_pdps_amph_notdis_sal_F, preDPs_amph_notdis_sal_F,\
 pdps_dis_pcp_F, med_pdps_dis_pcp_F, preDPs_dis_pcp_F,\
 pdps_notdis_pcp_F, med_pdps_notdis_pcp_F, preDPs_notdis_pcp_F,\
  = pdpbygroup(discalc_pcp_F, distraction_pcp_F) 
- 
 #pdps_mod_pcp_F
 pdps_mod_dis_pcp_F, med_pdps_mod_dis_pcp_F, preDPs_mod_dis_pcp_F,\
 pdps_mod_notdis_pcp_F, med_pdps_mod_notdis_pcp_F, preDPs_mod_notdis_pcp_F,\
@@ -945,6 +963,44 @@ pdps_hab2_notdis_pcp_F, med_pdps_hab2_notdis_pcp_F, preDPs_hab2_notdis_pcp_F,\
 pdps_amph_dis_pcp_F, med_pdps_amph_dis_pcp_F, preDPs_amph_dis_pcp_F,\
 pdps_amph_notdis_pcp_F, med_pdps_amph_notdis_pcp_F, preDPs_amph_notdis_pcp_F,\
 = pdpbygroup(amph_dis_pcp_F, amph_pcp_F) 
+
+
+#### PDPs all - not separated by distracted and not distracted 
+## Medians for all 
+
+# SALINE MALES
+all_pdps_dis_sal_M , all_pdps_median_dis_sal_M = pdp_median_calc(pdps_dis_sal_M, pdps_notdis_sal_M)
+all_pdps_mod_sal_M , all_pdps_median_mod_sal_M = pdp_median_calc(pdps_mod_dis_sal_M, pdps_mod_notdis_sal_M)
+all_pdps_hab1_sal_M , all_pdps_median_hab1_sal_M = pdp_median_calc(pdps_hab1_dis_sal_M, pdps_hab1_notdis_sal_M)
+all_pdps_hab2_sal_M , all_pdps_median_hab2_sal_M = pdp_median_calc(pdps_hab2_dis_sal_M, pdps_hab2_notdis_sal_M)
+all_pdps_amph_sal_M , all_pdps_median_amph_sal_M = pdp_median_calc(pdps_amph_dis_sal_M, pdps_amph_notdis_sal_M)
+# PCP MALES 
+all_pdps_dis_pcp_M , all_pdps_median_dis_pcp_M = pdp_median_calc(pdps_dis_pcp_M, pdps_notdis_pcp_M)
+all_pdps_mod_pcp_M , all_pdps_median_mod_pcp_M = pdp_median_calc(pdps_mod_dis_pcp_M, pdps_mod_notdis_pcp_M)
+all_pdps_hab1_pcp_M , all_pdps_median_hab1_pcp_M = pdp_median_calc(pdps_hab1_dis_pcp_M, pdps_hab1_notdis_pcp_M)
+all_pdps_hab2_pcp_M , all_pdps_median_hab2_pcp_M = pdp_median_calc(pdps_hab2_dis_pcp_M, pdps_hab2_notdis_pcp_M)
+all_pdps_amph_pcp_M , all_pdps_median_amph_pcp_M = pdp_median_calc(pdps_amph_dis_pcp_M, pdps_amph_notdis_pcp_M)
+# SALINE FEMALES
+all_pdps_dis_sal_F , all_pdps_median_dis_sal_F = pdp_median_calc(pdps_dis_sal_F, pdps_notdis_sal_F)
+all_pdps_mod_sal_F , all_pdps_median_mod_sal_F = pdp_median_calc(pdps_mod_dis_sal_F, pdps_mod_notdis_sal_F)
+all_pdps_hab1_sal_F , all_pdps_median_hab1_sal_F = pdp_median_calc(pdps_hab1_dis_sal_F, pdps_hab1_notdis_sal_F)
+all_pdps_hab2_sal_F , all_pdps_median_hab2_sal_F = pdp_median_calc(pdps_hab2_dis_sal_F, pdps_hab2_notdis_sal_F)
+all_pdps_amph_sal_F , all_pdps_median_amph_sal_F = pdp_median_calc(pdps_amph_dis_sal_F, pdps_amph_notdis_sal_F)
+# PCP FEMALES
+all_pdps_dis_pcp_F , all_pdps_median_dis_pcp_F = pdp_median_calc(pdps_dis_pcp_F, pdps_notdis_pcp_F)
+all_pdps_mod_pcp_F , all_pdps_median_mod_pcp_F = pdp_median_calc(pdps_mod_dis_pcp_F, pdps_mod_notdis_pcp_F)
+all_pdps_hab1_pcp_F , all_pdps_median_hab1_pcp_F = pdp_median_calc(pdps_hab1_dis_pcp_F, pdps_hab1_notdis_pcp_F)
+all_pdps_hab2_pcp_F , all_pdps_median_hab2_pcp_F = pdp_median_calc(pdps_hab2_dis_pcp_F, pdps_hab2_notdis_pcp_F)
+all_pdps_amph_pcp_F , all_pdps_median_amph_pcp_F = pdp_median_calc(pdps_amph_dis_pcp_F, pdps_amph_notdis_pcp_F)
+
+## TEST PLOT DATA -- NICE LIST COMPREHENSION 
+data = [all_pdps_median_mod_sal_M,all_pdps_median_dis_sal_M,all_pdps_median_hab1_sal_M,all_pdps_median_hab2_sal_M,all_pdps_median_amph_sal_M]
+logdata = [log(x) for x in data]
+labels = ['mod','dis','hab1','hab2','amph','mod','dis','hab1','hab2','amph']
+ax, barx, barlist, sclist = barscatter(logdata, transpose=False,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(median PDP)', barlabels=labels, xrotation=45, scatterlinecolor = 'lightgrey') 
+ax.spines['bottom'].set_visible(False)
+
+
 
 ##################################################################
 # Percentage distracted    ##################################################################
@@ -1170,6 +1226,10 @@ print('R squared = ',r_value2**2, ', p value = ', p_value2)
 ### Cumulative licking plots - Post distraction pauses for DPCP animals 
 ## Code taken from the THPH1 and 2 analysis 
 
+#import seaborn as sn
+
+#sn.set_style("white")
+
 # Plot settings, font / size / styles
 Calibri = {'fontname':'Calibri'}
 Size = {'fontsize': 22}
@@ -1183,7 +1243,7 @@ plt.rcParams['lines.linewidth'] = 2
 
 ## SALINE, MALES, LAST LICK DAY AND DISTRACTION DAY PDPS ALL 
 fig = plt.figure()
-plt.title('Lickday SAL_M', **Calibri, **Size)
+#plt.title('Lickday SAL_M', **Calibri, **Size)
 ax = fig.add_subplot(111)
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
@@ -1201,11 +1261,18 @@ for index, licklist in enumerate(all_pdps_mod_sal_M):
     plot = cumulativelickFig(ax, all_pdps_mod_sal_M[index], normed=True, color='lightgrey', log=True)
 avg = [item for rat in all_pdps_mod_sal_M for item in rat] 
 cumulativelickFig(ax, avg, normed=True, color='dimgrey', log=True)
+ax.set(ylabel = 'Probability')
+ax.yaxis.label.set_size(16)
+ax.set(xlabel = 'post-distraction pause log(s)')
+ax.xaxis.label.set_size(16)
+#
+
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Cumulative_M_sal_mod.pdf", bbox_inches='tight')
 
 ## Distraction day SAL MALES  
 # CUMULATIVE PDPS
 fig = plt.figure()
-plt.title('Distraction SAL_M', **Calibri, **Size)
+#plt.title('Distraction SAL_M', **Calibri, **Size)
 ax = fig.add_subplot(111)
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
@@ -1223,9 +1290,18 @@ cumulativelickFig(ax, avg, normed=True, color='gold', log=True)
 #cumulativelickFig(ax, avg2, normed=True, color='green', log=True)
 #avg3 = [item for rat in pdps_notdis_sal_M for item in rat] 
 #cumulativelickFig(ax, avg3, normed=True, color='blue', log=True)
+ax.set(ylabel = 'Probability')
+ax.yaxis.label.set_size(16)
+ax.set(xlabel = 'post-distraction pause log(s)')
+ax.xaxis.label.set_size(16)
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Cumulative_M_sal_dis.pdf", bbox_inches='tight')
+
+#
+
+
 
 fig = plt.figure()
-plt.title('Lickday PCP_M', **Calibri, **Size)
+#plt.title('Lickday PCP_M', **Calibri, **Size)
 ax = fig.add_subplot(111)
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
@@ -1240,11 +1316,18 @@ for index, licklist in enumerate(all_pdps_mod_pcp_M):
     plot = cumulativelickFig(ax, all_pdps_mod_pcp_M[index], normed=True, color='lightgrey', log=True)
 avg = [item for rat in all_pdps_mod_pcp_M for item in rat] 
 cumulativelickFig(ax, avg, normed=True, color='black', log=True)
+ax.set(ylabel = 'Probability')
+ax.yaxis.label.set_size(16)
+ax.set(xlabel = 'post-distraction pause log(s)')
+ax.xaxis.label.set_size(16)
+#
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Cumulative_M_pcp_mod.pdf", bbox_inches='tight')
+
 
 ## Distraction day PCP MALES  
 # CUMULATIVE PDPS
 fig = plt.figure()
-plt.title('Distraction PCP_M', **Calibri, **Size)
+#plt.title('Distraction PCP_M', **Calibri, **Size)
 ax = fig.add_subplot(111)
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
@@ -1259,12 +1342,17 @@ for index, licklist in enumerate(all_pdps_pcp_M):
 avg = [item for rat in all_pdps_pcp_M for item in rat] 
 cumulativelickFig(ax, avg, normed=True, color='orange', log=True)
 
-
+ax.set(ylabel = 'Probability')
+ax.yaxis.label.set_size(16)
+ax.set(xlabel = 'post-distraction pause log(s)')
+ax.xaxis.label.set_size(16)
+#
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Cumulative_M_pcp_dis.pdf", bbox_inches='tight')
 
 ### All four lines on one graph no individual rats at all 
 
 fig = plt.figure()
-plt.title('PDPs by day and group', **Calibri, **Size)
+#plt.title('PDPs by day and group', **Calibri, **Size)
 ax = fig.add_subplot(111)
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
@@ -1280,20 +1368,20 @@ cumulativelickFig(ax, avg, normed=True, color='dimgrey', log=True)
 cumulativelickFig(ax, avg1, normed=True, color='gold', log=True)
 cumulativelickFig(ax, avg2, normed=True, color='black', log=True) 
 cumulativelickFig(ax, avg3, normed=True, color='orange', log=True)
+ax.set(ylabel = 'Probability')
+ax.yaxis.label.set_size(16)
+ax.set(xlabel = 'post-distraction pause log(s)')
+ax.xaxis.label.set_size(16)
 
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Aug  2 16:32:14 2018
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Cumulative_M_spmd.pdf", bbox_inches='tight')
+#
 
-@author: u1490431
-"""
 
 # CUMULATIVE PDPS plots 
 
 ## SALINE, FEMALES -  LAST LICK DAY AND DISTRACTION DAY PDPS ALL 
 fig = plt.figure()
-plt.title('Lickday SAL_F', **Calibri, **Size)
+#plt.title('Lickday SAL_F', **Calibri, **Size)
 ax = fig.add_subplot(111)
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
@@ -1311,13 +1399,19 @@ for index, licklist in enumerate(all_pdps_mod_sal_F):
     plot = cumulativelickFig(ax, all_pdps_mod_sal_F[index], normed=True, color='lightgrey', log=True)
 avg = [item for rat in all_pdps_mod_sal_F for item in rat] 
 cumulativelickFig(ax, avg, normed=True, color='dimgrey', log=True)
+ax.set(ylabel = 'Probability')
+ax.yaxis.label.set_size(16)
+ax.set(xlabel = 'post-distraction pause log(s)')
+ax.xaxis.label.set_size(16)
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Cumulative_F_sal_mod.pdf", bbox_inches='tight')
 
+#
 ################################################################################################## 
 
-## Distraction day SAL MALES  
+## Distraction day SAL FEMALES  
 # CUMULATIVE PDPS
 fig = plt.figure()
-plt.title('Distraction SAL_F', **Calibri, **Size)
+#plt.title('Distraction SAL_F', **Calibri, **Size)
 ax = fig.add_subplot(111)
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
@@ -1326,18 +1420,30 @@ all_pdps_sal_F = []
 for index, pdplists in enumerate(pdps_dis_sal_F):    
     C = pdps_dis_sal_F[index] + pdps_notdis_sal_F[index]
     all_pdps_sal_F.append(C)
-# Plots all for MODELLED day with average 
+
 for index, licklist in enumerate(all_pdps_sal_F):
     plot = cumulativelickFig(ax, all_pdps_sal_F[index], normed=True, color='lightgrey', log=True)
 avg = [item for rat in all_pdps_sal_F for item in rat] 
 cumulativelickFig(ax, avg, normed=True, color='darkturquoise', log=True)
+ax.set(ylabel = 'Probability')
+ax.yaxis.label.set_size(16)
+ax.set(xlabel = 'post-distraction pause log(s)')
+ax.xaxis.label.set_size(16)
+
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Cumulative_F_sal_dis.pdf", bbox_inches='tight')
+#
+
+
+
+
+
 
 #############
 #######################################################################
 
 ## Distraction day males SAL - Distracted vs Not distracted
 fig = plt.figure()
-plt.title('Dis vs Not dis M', **Calibri, **Size)
+#plt.title('Dis vs Not dis M', **Calibri, **Size)
 ax = fig.add_subplot(111)
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
@@ -1350,12 +1456,18 @@ avg2 = [item for rat in pdps_dis_pcp_M for item in rat]
 cumulativelickFig(ax, avg2, normed=True, color='gold', log=True)
 avg3 = [item for rat in pdps_notdis_pcp_M for item in rat] 
 cumulativelickFig(ax, avg3, normed=True, color='gold', log=True)
+ax.set(ylabel = 'Probability')
+ax.yaxis.label.set_size(16)
+ax.set(xlabel = 'post-distraction pause log(s)')
+ax.xaxis.label.set_size(16)
+#
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Cumulative_M_S_P_disvsnot.pdf", bbox_inches='tight')
 
 
 
-## MODELLED PCP MALES ################################################# 
+## MODELLED PCP FEMALES ################################################# 
 fig = plt.figure()
-plt.title('Lickday PCP_F', **Calibri, **Size)
+#plt.title('Lickday PCP_F', **Calibri, **Size)
 ax = fig.add_subplot(111)
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
@@ -1369,11 +1481,20 @@ for index, licklist in enumerate(all_pdps_mod_pcp_F):
     plot = cumulativelickFig(ax, all_pdps_mod_pcp_F[index], normed=True, color='lightgrey', log=True)
 avg = [item for rat in all_pdps_mod_pcp_F for item in rat] 
 cumulativelickFig(ax, avg, normed=True, color='black', log=True)
+ax.set(ylabel = 'Probability')
+ax.yaxis.label.set_size(16)
+ax.set(xlabel = 'post-distraction pause log(s)')
+ax.xaxis.label.set_size(16)
+#
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Cumulative_F_pcp_mod.pdf", bbox_inches='tight')
+
+
+
 
 ## Distraction day PCP MALES #################################################  
 # CUMULATIVE PDPS
 fig = plt.figure()
-plt.title('Distraction PCP_F', **Calibri, **Size)
+#plt.title('Distraction PCP_F', **Calibri, **Size)
 ax = fig.add_subplot(111)
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
@@ -1387,13 +1508,18 @@ for index, licklist in enumerate(all_pdps_pcp_F):
     plot = cumulativelickFig(ax, all_pdps_pcp_F[index], normed=True, color='lightgrey', log=True)
 avg = [item for rat in all_pdps_pcp_F for item in rat] 
 cumulativelickFig(ax, avg, normed=True, color='dodgerblue', log=True)
-
+ax.set(ylabel = 'Probability')
+ax.yaxis.label.set_size(16)
+ax.set(xlabel = 'post-distraction pause log(s)')
+ax.xaxis.label.set_size(16)
+#
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Cumulative_F_pcp_dis.pdf", bbox_inches='tight')
 
 
 ### All four lines on one graph no individual rats at all 
 
 fig = plt.figure()
-plt.title('PDPs by day and group F', **Calibri, **Size)
+#plt.title('PDPs by day and group F', **Calibri, **Size)
 ax = fig.add_subplot(111)
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
@@ -1405,7 +1531,12 @@ cumulativelickFig(ax, avg, normed=True, color='dimgrey', log=True)
 cumulativelickFig(ax, avg1, normed=True, color='darkturquoise', log=True)
 cumulativelickFig(ax, avg2, normed=True, color='black', log=True) 
 cumulativelickFig(ax, avg3, normed=True, color='dodgerblue', log=True)
-
+ax.set(ylabel = 'Probability')
+ax.yaxis.label.set_size(16)
+ax.set(xlabel = 'post-distraction pause log(s)')
+ax.xaxis.label.set_size(16)
+#
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Cumulative_F_spmd.pdf", bbox_inches='tight')
 
 
 #############
@@ -1413,7 +1544,7 @@ cumulativelickFig(ax, avg3, normed=True, color='dodgerblue', log=True)
 
 ## Distraction day males SAL - Distracted vs Not distracted
 fig = plt.figure()
-plt.title('Dis vs Not dis F', **Calibri, **Size)
+#plt.title('Dis vs Not dis F', **Calibri, **Size)
 ax = fig.add_subplot(111)
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
@@ -1426,8 +1557,10 @@ avg2 = [item for rat in pdps_dis_pcp_F for item in rat]
 cumulativelickFig(ax, avg2, normed=True, color='c', log=True)
 avg3 = [item for rat in pdps_notdis_pcp_F for item in rat] 
 cumulativelickFig(ax, avg3, normed=True, color='c', log=True)
-
-
+ax.set(ylabel = 'Probability')
+ax.yaxis.label.set_size(16)
+ax.set(xlabel = 'post-distraction pause log(s)')
+ax.xaxis.label.set_size(16)
 #
 #fig8 = plt.figure()
 ##plt.title('Cumulative PDP', **Calibri, **Size)
@@ -1435,11 +1568,10 @@ cumulativelickFig(ax, avg3, normed=True, color='c', log=True)
 #ax8.spines['right'].set_visible(False)
 #ax8.spines['top'].set_visible(False)
 #ax8.set(ylabel = 'Probability')
-#ax8.yaxis.label.set_size(16)
+#ax8.yaxis.label.set_size(14)
 #ax8.set(xlabel = 'log post-distraction pause (s)')
 #ax8.xaxis.label.set_size(16)
-#
-#    
-    
+   
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Cumulative_F_S_P_disvsnot.pdf", bbox_inches='tight')
     
     
