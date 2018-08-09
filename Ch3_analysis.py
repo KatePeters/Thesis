@@ -570,17 +570,17 @@ def pdpbygroup(distractiondict, groupdict):
     not separated by distracted or not distracted, but as one list
 '''
 
-def pdp_median_calc(pdp_dis_list, pdp_not_dis_list): # mostly variables from pdps by group func
+def pdp_mean_calc(pdp_dis_list, pdp_not_dis_list): # mostly variables from pdps by group func
     
     all_pdps = []
-    all_pdps_median = []
+    all_pdps_mean = []
     for index, val in enumerate(pdp_dis_list):
         ongoing_all_PDPs = pdp_dis_list[index] + pdp_not_dis_list[index]
         all_pdps.append(ongoing_all_PDPs)
-        median = np.mean(ongoing_all_PDPs)
-        all_pdps_median.append(median)    
+        mean = np.mean(ongoing_all_PDPs)
+        all_pdps_mean.append(mean)    
         
-    return all_pdps, all_pdps_median
+    return all_pdps, all_pdps_mean
 
 
 
@@ -968,38 +968,56 @@ pdps_amph_notdis_pcp_F, med_pdps_amph_notdis_pcp_F, preDPs_amph_notdis_pcp_F,\
 #### PDPs all - not separated by distracted and not distracted 
 ## Medians for all 
 
-# SALINE MALES
-all_pdps_dis_sal_M , all_pdps_median_dis_sal_M = pdp_median_calc(pdps_dis_sal_M, pdps_notdis_sal_M)
-all_pdps_mod_sal_M , all_pdps_median_mod_sal_M = pdp_median_calc(pdps_mod_dis_sal_M, pdps_mod_notdis_sal_M)
-all_pdps_hab1_sal_M , all_pdps_median_hab1_sal_M = pdp_median_calc(pdps_hab1_dis_sal_M, pdps_hab1_notdis_sal_M)
-all_pdps_hab2_sal_M , all_pdps_median_hab2_sal_M = pdp_median_calc(pdps_hab2_dis_sal_M, pdps_hab2_notdis_sal_M)
-all_pdps_amph_sal_M , all_pdps_median_amph_sal_M = pdp_median_calc(pdps_amph_dis_sal_M, pdps_amph_notdis_sal_M)
+# SALINE MALES - DONE 
+all_pdps_dis_sal_M , all_pdps_mean_dis_sal_M = pdp_mean_calc(pdps_dis_sal_M, pdps_notdis_sal_M)
+all_pdps_mod_sal_M , all_pdps_mean_mod_sal_M = pdp_mean_calc(pdps_mod_dis_sal_M, pdps_mod_notdis_sal_M)
+all_pdps_hab1_sal_M , all_pdps_mean_hab1_sal_M = pdp_mean_calc(pdps_hab1_dis_sal_M, pdps_hab1_notdis_sal_M)
+all_pdps_hab2_sal_M , all_pdps_mean_hab2_sal_M = pdp_mean_calc(pdps_hab2_dis_sal_M, pdps_hab2_notdis_sal_M)
+all_pdps_amph_sal_M , all_pdps_mean_amph_sal_M = pdp_mean_calc(pdps_amph_dis_sal_M, pdps_amph_notdis_sal_M)
 # PCP MALES 
-all_pdps_dis_pcp_M , all_pdps_median_dis_pcp_M = pdp_median_calc(pdps_dis_pcp_M, pdps_notdis_pcp_M)
-all_pdps_mod_pcp_M , all_pdps_median_mod_pcp_M = pdp_median_calc(pdps_mod_dis_pcp_M, pdps_mod_notdis_pcp_M)
-all_pdps_hab1_pcp_M , all_pdps_median_hab1_pcp_M = pdp_median_calc(pdps_hab1_dis_pcp_M, pdps_hab1_notdis_pcp_M)
-all_pdps_hab2_pcp_M , all_pdps_median_hab2_pcp_M = pdp_median_calc(pdps_hab2_dis_pcp_M, pdps_hab2_notdis_pcp_M)
-all_pdps_amph_pcp_M , all_pdps_median_amph_pcp_M = pdp_median_calc(pdps_amph_dis_pcp_M, pdps_amph_notdis_pcp_M)
+all_pdps_dis_pcp_M , all_pdps_mean_dis_pcp_M = pdp_mean_calc(pdps_dis_pcp_M, pdps_notdis_pcp_M)
+all_pdps_mod_pcp_M , all_pdps_mean_mod_pcp_M = pdp_mean_calc(pdps_mod_dis_pcp_M, pdps_mod_notdis_pcp_M)
+all_pdps_hab1_pcp_M , all_pdps_mean_hab1_pcp_M = pdp_mean_calc(pdps_hab1_dis_pcp_M, pdps_hab1_notdis_pcp_M)
+all_pdps_hab2_pcp_M , all_pdps_mean_hab2_pcp_M = pdp_mean_calc(pdps_hab2_dis_pcp_M, pdps_hab2_notdis_pcp_M)
+all_pdps_amph_pcp_M , all_pdps_mean_amph_pcp_M = pdp_mean_calc(pdps_amph_dis_pcp_M, pdps_amph_notdis_pcp_M)
 # SALINE FEMALES
-all_pdps_dis_sal_F , all_pdps_median_dis_sal_F = pdp_median_calc(pdps_dis_sal_F, pdps_notdis_sal_F)
-all_pdps_mod_sal_F , all_pdps_median_mod_sal_F = pdp_median_calc(pdps_mod_dis_sal_F, pdps_mod_notdis_sal_F)
-all_pdps_hab1_sal_F , all_pdps_median_hab1_sal_F = pdp_median_calc(pdps_hab1_dis_sal_F, pdps_hab1_notdis_sal_F)
-all_pdps_hab2_sal_F , all_pdps_median_hab2_sal_F = pdp_median_calc(pdps_hab2_dis_sal_F, pdps_hab2_notdis_sal_F)
-all_pdps_amph_sal_F , all_pdps_median_amph_sal_F = pdp_median_calc(pdps_amph_dis_sal_F, pdps_amph_notdis_sal_F)
+all_pdps_dis_sal_F , all_pdps_mean_dis_sal_F = pdp_mean_calc(pdps_dis_sal_F, pdps_notdis_sal_F)
+all_pdps_mod_sal_F , all_pdps_mean_mod_sal_F = pdp_mean_calc(pdps_mod_dis_sal_F, pdps_mod_notdis_sal_F)
+all_pdps_hab1_sal_F , all_pdps_mean_hab1_sal_F = pdp_mean_calc(pdps_hab1_dis_sal_F, pdps_hab1_notdis_sal_F)
+all_pdps_hab2_sal_F , all_pdps_mean_hab2_sal_F = pdp_mean_calc(pdps_hab2_dis_sal_F, pdps_hab2_notdis_sal_F)
+all_pdps_amph_sal_F , all_pdps_mean_amph_sal_F = pdp_mean_calc(pdps_amph_dis_sal_F, pdps_amph_notdis_sal_F)
 # PCP FEMALES
-all_pdps_dis_pcp_F , all_pdps_median_dis_pcp_F = pdp_median_calc(pdps_dis_pcp_F, pdps_notdis_pcp_F)
-all_pdps_mod_pcp_F , all_pdps_median_mod_pcp_F = pdp_median_calc(pdps_mod_dis_pcp_F, pdps_mod_notdis_pcp_F)
-all_pdps_hab1_pcp_F , all_pdps_median_hab1_pcp_F = pdp_median_calc(pdps_hab1_dis_pcp_F, pdps_hab1_notdis_pcp_F)
-all_pdps_hab2_pcp_F , all_pdps_median_hab2_pcp_F = pdp_median_calc(pdps_hab2_dis_pcp_F, pdps_hab2_notdis_pcp_F)
-all_pdps_amph_pcp_F , all_pdps_median_amph_pcp_F = pdp_median_calc(pdps_amph_dis_pcp_F, pdps_amph_notdis_pcp_F)
+all_pdps_dis_pcp_F , all_pdps_mean_dis_pcp_F = pdp_mean_calc(pdps_dis_pcp_F, pdps_notdis_pcp_F)
+all_pdps_mod_pcp_F , all_pdps_mean_mod_pcp_F = pdp_mean_calc(pdps_mod_dis_pcp_F, pdps_mod_notdis_pcp_F)
+all_pdps_hab1_pcp_F , all_pdps_mean_hab1_pcp_F = pdp_mean_calc(pdps_hab1_dis_pcp_F, pdps_hab1_notdis_pcp_F)
+all_pdps_hab2_pcp_F , all_pdps_mean_hab2_pcp_F = pdp_mean_calc(pdps_hab2_dis_pcp_F, pdps_hab2_notdis_pcp_F)
+all_pdps_amph_pcp_F , all_pdps_mean_amph_pcp_F = pdp_mean_calc(pdps_amph_dis_pcp_F, pdps_amph_notdis_pcp_F)
 
 ## TEST PLOT DATA -- NICE LIST COMPREHENSION 
-data = [all_pdps_median_mod_sal_M,all_pdps_median_dis_sal_M,all_pdps_median_hab1_sal_M,all_pdps_median_hab2_sal_M,all_pdps_median_amph_sal_M]
-logdata = [log(x) for x in data]
-labels = ['mod','dis','hab1','hab2','amph','mod','dis','hab1','hab2','amph']
+data = [all_pdps_mean_mod_sal_M,all_pdps_mean_dis_sal_M,all_pdps_mean_hab1_sal_M,all_pdps_mean_hab2_sal_M,all_pdps_mean_amph_sal_M]
+logdata = [np.log(x) for x in data]
+labels = ['mod', 'dis','hab1','hab2','amph']
 ax, barx, barlist, sclist = barscatter(logdata, transpose=False,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(median PDP)', barlabels=labels, xrotation=45, scatterlinecolor = 'lightgrey') 
 ax.spines['bottom'].set_visible(False)
 
+data = [all_pdps_mean_mod_pcp_M,all_pdps_mean_dis_pcp_M,all_pdps_mean_hab1_pcp_M,all_pdps_mean_hab2_pcp_M,all_pdps_mean_amph_pcp_M]
+logdata = [np.log(x) for x in data]
+labels = ['mod', 'dis','hab1','hab2','amph']
+ax, barx, barlist, sclist = barscatter(logdata, transpose=False,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(median PDP)', barlabels=labels, xrotation=45, scatterlinecolor = 'lightgrey') 
+ax.spines['bottom'].set_visible(False)
+
+data = [all_pdps_mean_mod_sal_F,all_pdps_mean_dis_sal_F,all_pdps_mean_hab1_sal_F,all_pdps_mean_hab2_sal_F,all_pdps_mean_amph_sal_F]
+logdata = [np.log(x) for x in data]
+labels = ['mod', 'dis','hab1','hab2','amph']
+ax, barx, barlist, sclist = barscatter(logdata, transpose=False,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(median PDP)', barlabels=labels, xrotation=45, scatterlinecolor = 'lightgrey') 
+ax.spines['bottom'].set_visible(False)
+
+
+data = [all_pdps_mean_mod_pcp_F,all_pdps_mean_dis_pcp_F,all_pdps_mean_hab1_pcp_F,all_pdps_mean_hab2_pcp_F,all_pdps_mean_amph_pcp_F]
+logdata = [np.log(x) for x in data]
+labels = ['mod', 'dis','hab1','hab2','amph']
+ax, barx, barlist, sclist = barscatter(logdata, transpose=False,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(median PDP)', barlabels=labels, xrotation=45, scatterlinecolor = 'lightgrey') 
+ax.spines['bottom'].set_visible(False)
 
 
 ##################################################################

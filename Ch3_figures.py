@@ -722,8 +722,8 @@ plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/
 col = ['#FFE5A5','#FFE5A5','#FFE5A5','#FFE5A5','#FFE5A5','#FFBA08','#FFBA08','#FFBA08','#FFBA08','#FFBA08']
 dataPDPsM = [[np.log(med_pdps_mod_dis_sal_M), np.log(med_pdps_dis_sal_M), np.log(med_pdps_hab1_dis_sal_M), np.log(med_pdps_hab2_dis_sal_M), np.log(med_pdps_amph_dis_sal_M)], [np.log(med_pdps_mod_dis_pcp_M), np.log(med_pdps_dis_pcp_M), np.log(med_pdps_hab1_dis_pcp_M), np.log(med_pdps_hab2_dis_pcp_M), np.log(med_pdps_amph_dis_pcp_M)]]
 labels = ['mod','dis','hab1','hab2','amph','mod','dis','hab1','hab2','amph']
-ax, barx, barlist, sclist = barscatter(dataPDPsM, transpose=False,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(median PDP)', barlabels=labels, xrotation=45) 
-#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/figure2b.pdf", bbox_inches='tight')
+ax, barx, barlist, sclist = barscatter(dataPDPsM, transpose=False,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(median PDP)', barlabels=labels, xrotation=45, scatterlinecolor = 'lightgrey') 
+plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/PDPs_Males.pdf", bbox_inches='tight')
 ax.spines['bottom'].set_visible(False)
 
 
@@ -732,23 +732,9 @@ col = ['#249E8D','#249E8D','#249E8D','#249E8D','#249E8D','#AFDBD5','#AFDBD5','#A
 
 dataPDPsF = [[np.log(med_pdps_mod_dis_sal_F), np.log(med_pdps_dis_sal_F), np.log(med_pdps_hab1_dis_sal_F), np.log(med_pdps_hab2_dis_sal_F), np.log(med_pdps_amph_dis_sal_F)], [np.log(med_pdps_mod_dis_pcp_F), np.log(med_pdps_dis_pcp_F), np.log(med_pdps_hab1_dis_pcp_F), np.log(med_pdps_hab2_dis_pcp_F), np.log(med_pdps_amph_dis_pcp_F)]]
 labels = ['mod','dis','hab1','hab2','amph','mod','dis','hab1','hab2','amph']
-ax, barx, barlist, sclist = barscatter(dataPDPsM, transpose=False,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(median PDP)', barlabels=labels, xrotation=45) 
-#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/figure2b.pdf", bbox_inches='tight')
+ax, barx, barlist, sclist = barscatter(dataPDPsF, transpose=False,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(median PDP)', barlabels=labels, xrotation=45, scatterlinecolor = 'lightgrey') 
+plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/PDPs_Females.pdf", bbox_inches='tight')
 ax.spines['bottom'].set_visible(False)
 
 
-
-
-
-
-## TESTING PDP PLOTS?????? female 
-col = ['#249E8D','#249E8D','#249E8D','#249E8D','#249E8D','#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5']
-
-dataPDPsF = [[med_pdps_mod_dis_sal_F, med_pdps_dis_sal_F, med_pdps_hab1_dis_sal_F,\
-              med_pdps_hab2_dis_sal_F, med_pdps_amph_dis_sal_F], [med_pdps_mod_dis_pcp_F, med_pdps_dis_pcp_F, med_pdps_hab1_dis_pcp_F,\
-              med_pdps_hab2_dis_pcp_F, med_pdps_amph_dis_pcp_F]]
-
-labels = ['mod','dis','hab1','hab2','amph','mod','dis','hab1','hab2','amph']
-ax, barx, barlist, sclist = barscatter(dataPDPsF, transpose=False,paired=True, barfacecolor=cols, barfacecoloroption='individual',  ylabel='Median PDP', barlabels=labels)#,xrotation=45) 
-#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/figure2b.pdf", bbox_inches='tight')
 
