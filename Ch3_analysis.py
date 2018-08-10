@@ -993,31 +993,7 @@ all_pdps_hab1_pcp_F , all_pdps_mean_hab1_pcp_F = pdp_mean_calc(pdps_hab1_dis_pcp
 all_pdps_hab2_pcp_F , all_pdps_mean_hab2_pcp_F = pdp_mean_calc(pdps_hab2_dis_pcp_F, pdps_hab2_notdis_pcp_F)
 all_pdps_amph_pcp_F , all_pdps_mean_amph_pcp_F = pdp_mean_calc(pdps_amph_dis_pcp_F, pdps_amph_notdis_pcp_F)
 
-## TEST PLOT DATA -- NICE LIST COMPREHENSION 
-data = [all_pdps_mean_mod_sal_M,all_pdps_mean_dis_sal_M,all_pdps_mean_hab1_sal_M,all_pdps_mean_hab2_sal_M,all_pdps_mean_amph_sal_M]
-logdata = [np.log(x) for x in data]
-labels = ['mod', 'dis','hab1','hab2','amph']
-ax, barx, barlist, sclist = barscatter(logdata, transpose=False,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(median PDP)', barlabels=labels, xrotation=45, scatterlinecolor = 'lightgrey') 
-ax.spines['bottom'].set_visible(False)
 
-data = [all_pdps_mean_mod_pcp_M,all_pdps_mean_dis_pcp_M,all_pdps_mean_hab1_pcp_M,all_pdps_mean_hab2_pcp_M,all_pdps_mean_amph_pcp_M]
-logdata = [np.log(x) for x in data]
-labels = ['mod', 'dis','hab1','hab2','amph']
-ax, barx, barlist, sclist = barscatter(logdata, transpose=False,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(median PDP)', barlabels=labels, xrotation=45, scatterlinecolor = 'lightgrey') 
-ax.spines['bottom'].set_visible(False)
-
-data = [all_pdps_mean_mod_sal_F,all_pdps_mean_dis_sal_F,all_pdps_mean_hab1_sal_F,all_pdps_mean_hab2_sal_F,all_pdps_mean_amph_sal_F]
-logdata = [np.log(x) for x in data]
-labels = ['mod', 'dis','hab1','hab2','amph']
-ax, barx, barlist, sclist = barscatter(logdata, transpose=False,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(median PDP)', barlabels=labels, xrotation=45, scatterlinecolor = 'lightgrey') 
-ax.spines['bottom'].set_visible(False)
-
-
-data = [all_pdps_mean_mod_pcp_F,all_pdps_mean_dis_pcp_F,all_pdps_mean_hab1_pcp_F,all_pdps_mean_hab2_pcp_F,all_pdps_mean_amph_pcp_F]
-logdata = [np.log(x) for x in data]
-labels = ['mod', 'dis','hab1','hab2','amph']
-ax, barx, barlist, sclist = barscatter(logdata, transpose=False,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(median PDP)', barlabels=labels, xrotation=45, scatterlinecolor = 'lightgrey') 
-ax.spines['bottom'].set_visible(False)
 
 
 ##################################################################
