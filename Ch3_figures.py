@@ -195,7 +195,7 @@ def barscatter(data, transpose = False, unequal=False,
         for n,_ in enumerate(data[0]):
             y = [y[n-1] for y in data]
             sclist.append(ax.plot(xvals, y, '-o', markersize = scattersize/10,
-                         color = 'grey',
+                         color = scatterlinecolor,
                          linewidth=linewidth,
                          markerfacecolor = scfacecolorArray[0],
                          markeredgecolor = scedgecolorArray[0],
@@ -716,25 +716,51 @@ ax.spines['bottom'].set_visible(False)
 plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/WhiteNoise_Female.pdf", bbox_inches='tight')
 
 
-## PDP plots with just days 1 and 2
 
-## TESTING PDP PLOTS?????? with TRANSFORMED DATA (log(pdp))
-col = ['#FFE5A5','#FFE5A5','#FFE5A5','#FFE5A5','#FFE5A5','#FFBA08','#FFBA08','#FFBA08','#FFBA08','#FFBA08']
-dataPDPsM = [[np.log(med_pdps_mod_dis_sal_M), np.log(med_pdps_dis_sal_M), np.log(med_pdps_hab1_dis_sal_M), np.log(med_pdps_hab2_dis_sal_M), np.log(med_pdps_amph_dis_sal_M)], [np.log(med_pdps_mod_dis_pcp_M), np.log(med_pdps_dis_pcp_M), np.log(med_pdps_hab1_dis_pcp_M), np.log(med_pdps_hab2_dis_pcp_M), np.log(med_pdps_amph_dis_pcp_M)]]
-labels = ['mod','dis','hab1','hab2','amph','mod','dis','hab1','hab2','amph']
-ax, barx, barlist, sclist = barscatter(dataPDPsM, transpose=False,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(median PDP)', barlabels=labels, xrotation=45, scatterlinecolor = 'lightgrey') 
-plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/PDPs_Males.pdf", bbox_inches='tight')
+### Plots using MEANS not medians 
+## TEST PLOT DATA -- NICE LIST COMPREHENSION 
+col = ['#FFE5A5','#FFE5A5','#FFE5A5','#FFE5A5','#FFE5A5']     
+data = [all_pdps_mean_mod_sal_M,all_pdps_mean_dis_sal_M,all_pdps_mean_hab1_sal_M,all_pdps_mean_hab2_sal_M,all_pdps_mean_amph_sal_M]
+logdata = [np.log(x) for x in data]
+labels = ['mod', 'dis','hab1','hab2','amph']
+ax, barx, barlist, sclist = barscatter(logdata, transpose=False,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(median PDP)', barlabels=labels, xrotation=45, scatterlinecolor = 'lightgrey') 
 ax.spines['bottom'].set_visible(False)
 
-
-
-col = ['#249E8D','#249E8D','#249E8D','#249E8D','#249E8D','#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5']
-
-dataPDPsF = [[np.log(med_pdps_mod_dis_sal_F), np.log(med_pdps_dis_sal_F), np.log(med_pdps_hab1_dis_sal_F), np.log(med_pdps_hab2_dis_sal_F), np.log(med_pdps_amph_dis_sal_F)], [np.log(med_pdps_mod_dis_pcp_F), np.log(med_pdps_dis_pcp_F), np.log(med_pdps_hab1_dis_pcp_F), np.log(med_pdps_hab2_dis_pcp_F), np.log(med_pdps_amph_dis_pcp_F)]]
-labels = ['mod','dis','hab1','hab2','amph','mod','dis','hab1','hab2','amph']
-ax, barx, barlist, sclist = barscatter(dataPDPsF, transpose=False,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(median PDP)', barlabels=labels, xrotation=45, scatterlinecolor = 'lightgrey') 
-plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/PDPs_Females.pdf", bbox_inches='tight')
+col = ['#FFBA08','#FFBA08','#FFBA08','#FFBA08','#FFBA08']
+data = [all_pdps_mean_mod_pcp_M,all_pdps_mean_dis_pcp_M,all_pdps_mean_hab1_pcp_M,all_pdps_mean_hab2_pcp_M,all_pdps_mean_amph_pcp_M]
+logdata = [np.log(x) for x in data]
+labels = ['mod', 'dis','hab1','hab2','amph']
+ax, barx, barlist, sclist = barscatter(logdata, transpose=False,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(median PDP)', barlabels=labels, xrotation=45, scatterlinecolor = 'lightgrey') 
 ax.spines['bottom'].set_visible(False)
 
+col = ['#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5']
+data = [all_pdps_mean_mod_sal_F,all_pdps_mean_dis_sal_F,all_pdps_mean_hab1_sal_F,all_pdps_mean_hab2_sal_F,all_pdps_mean_amph_sal_F]
+logdata = [np.log(x) for x in data]
+labels = ['mod', 'dis','hab1','hab2','amph']
+ax, barx, barlist, sclist = barscatter(logdata, transpose=False,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(median PDP)', barlabels=labels, xrotation=45, scatterlinecolor = 'lightgrey') 
+ax.spines['bottom'].set_visible(False)
+
+col = ['#249E8D','#249E8D','#249E8D','#249E8D','#249E8D']
+data = [all_pdps_mean_mod_pcp_F,all_pdps_mean_dis_pcp_F,all_pdps_mean_hab1_pcp_F,all_pdps_mean_hab2_pcp_F,all_pdps_mean_amph_pcp_F]
+logdata = [np.log(x) for x in data]
+labels = ['mod', 'dis','hab1','hab2','amph']
+ax, barx, barlist, sclist = barscatter(logdata, transpose=False,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(median PDP)', barlabels=labels, xrotation=45, scatterlinecolor = 'lightgrey') 
+ax.spines['bottom'].set_visible(False)
+
+# On the same plot
+col = ['#FFE5A5','#FFE5A5','#FFE5A5','#FFE5A5','#FFE5A5','#FFBA08','#FFBA08','#FFBA08','#FFBA08','#FFBA08']     
+data = [[np.log(all_pdps_mean_mod_sal_M),np.log(all_pdps_mean_dis_sal_M),np.log(all_pdps_mean_hab1_sal_M),np.log(all_pdps_mean_hab2_sal_M),np.log(all_pdps_mean_amph_sal_M)], [np.log(all_pdps_mean_mod_pcp_M),np.log(all_pdps_mean_dis_pcp_M),np.log(all_pdps_mean_hab1_pcp_M),np.log(all_pdps_mean_hab2_pcp_M),np.log(all_pdps_mean_amph_pcp_M)]]
+labels = ['mod', 'dis','hab1','hab2','amph','mod', 'dis','hab1','hab2','amph']
+ax, barx, barlist, sclist = barscatter(data, transpose=False,paired=False, scattersize=40, barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(mean PDP)', barlabels=labels, xrotation=45, scatterlinecolor = 'lightgrey') 
+ax.spines['bottom'].set_visible(False)
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/PDPs_Males_All.pdf", bbox_inches='tight')
+
+
+col = ['#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5','#AFDBD5','#249E8D','#249E8D','#249E8D','#249E8D','#249E8D']
+data = [[np.log(all_pdps_mean_mod_sal_F),np.log(all_pdps_mean_dis_sal_F),np.log(all_pdps_mean_hab1_sal_F),np.log(all_pdps_mean_hab2_sal_F),np.log(all_pdps_mean_amph_sal_F)], [np.log(all_pdps_mean_mod_pcp_F),np.log(all_pdps_mean_dis_pcp_F),np.log(all_pdps_mean_hab1_pcp_F),np.log(all_pdps_mean_hab2_pcp_F),np.log(all_pdps_mean_amph_pcp_F)]]
+labels = ['mod', 'dis','hab1','hab2','amph','mod', 'dis','hab1','hab2','amph']
+ax, barx, barlist, sclist = barscatter(data, transpose=False,paired=False,scattersize=40 ,barfacecolor=col, barfacecoloroption='individual',  ylabel='Log(mean PDP)', barlabels=labels, xrotation=45, scatterlinecolor = 'lightgrey') 
+ax.spines['bottom'].set_visible(False)
+#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/PDPs_Females_All.pdf", bbox_inches='tight')
 
 
