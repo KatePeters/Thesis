@@ -539,20 +539,26 @@ ax, barx, barlist, sclist = barscatter(dataPDPsF, transpose=False,paired=True, b
 # Acquisition
 barcolors = ['#FFE5A5','#FFE5A5','#FFBA08','#FFBA08']
 dataMnorAcq = [[exploration_left_sal_M, exploration_right_sal_M], [exploration_left_pcp_M, exploration_right_pcp_M]]
-labels = ['salL','salR', 'pcpL', 'pcpR']
+labels = ['left','right', 'left', 'right']
 ax, barx, barlist, sclist = barscatter(dataMnorAcq, transpose=False, paired=True, barfacecolor=barcolors, barfacecoloroption='individual',  ylabel='Time (s)', barlabels=labels, unequal=True) 
+ax.spines['bottom'].set_visible(False)
+plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/NOR_acq_M.pdf", bbox_inches='tight')
+
 # Retention 
 barcolors = ['#FFE5A5','#FFE5A5','#FFBA08','#FFBA08']
 dataMnorRet = [[exploration_fam_sal_M, exploration_nov_sal_M],[exploration_fam_pcp_M, exploration_nov_pcp_M]]
-labels = ['salF','salN', 'pcpF', 'pcpN']
+labels = ['familiar','novel', 'familiar', 'novel']
 ax, barx, barlist, sclist = barscatter(dataMnorRet, transpose=False, paired=True, barfacecolor=barcolors, barfacecoloroption='individual',  ylabel='Time (s)', barlabels=labels, unequal=True) 
+ax.spines['bottom'].set_visible(False)
+plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/NOR_ret_M.pdf", bbox_inches='tight')
 
 # Discrimination index 
 barcolors = ['#FFE5A5','#FFBA08']
 dataMdi = [[DI_sal_M],[DI_pcp_M]]
 labels = ['sal','pcp']
 ax, barx, barlist, sclist = barscatter(dataMdi, transpose=False, paired=True, barfacecolor=barcolors, barfacecoloroption='individual',  ylabel='DI', barlabels=labels, unequal=True) 
-
+ax.spines['bottom'].set_visible(False)
+plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/NOR_DI_M.pdf", bbox_inches='tight')
 
 #*******************************
 
@@ -560,21 +566,26 @@ ax, barx, barlist, sclist = barscatter(dataMdi, transpose=False, paired=True, ba
 # ACQUISITION
 barcolors = ['#AFDBD5','#AFDBD5','#249E8D','#249E8D']
 dataFnorAcq = [[exploration_left_sal_F, exploration_right_sal_F], [exploration_left_pcp_F, exploration_right_pcp_F]]
-labels = ['salL','salR', 'pcpL', 'pcpR']
+labels = ['left','right', 'left', 'right']
 ax, barx, barlist, sclist = barscatter(dataFnorAcq, transpose=False, paired=True, barfacecolor=barcolors, barfacecoloroption='individual',  ylabel='Time (s)', barlabels=labels) 
+ax.spines['bottom'].set_visible(False)
+plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/NOR_acq_F.pdf", bbox_inches='tight')
+
 # RETENTION
 barcolors = ['#AFDBD5','#AFDBD5','#249E8D','#249E8D']
 dataFnorRet = [[exploration_fam_sal_F, exploration_nov_sal_F],[exploration_fam_pcp_F, exploration_nov_pcp_F]]
-labels = ['salF','salN', 'pcpF', 'pcpN']
+labels = ['familiar','novel', 'familiar', 'novel']
 ax, barx, barlist, sclist = barscatter(dataFnorRet, transpose=False, paired=True, barfacecolor=barcolors, barfacecoloroption='individual',  ylabel='Time (s)', barlabels=labels) 
+ax.spines['bottom'].set_visible(False)
+plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/NOR_ret_F.pdf", bbox_inches='tight')
+
 # DISCRIMINATION INDEX 
 barcolors = ['#AFDBD5','#249E8D']
 dataFdi = [[DI_sal_F],[DI_pcp_F]]
 labels = ['sal','pcp']
 ax, barx, barlist, sclist = barscatter(dataFdi, transpose=False, paired=True, barfacecolor=barcolors, barfacecoloroption='individual',  ylabel='DI', barlabels=labels, itemlabel=['1','2']) 
-
-
-#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/FILENAME.pdf", bbox_inches='tight')
+ax.spines['bottom'].set_visible(False)
+plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/NOR_DI_F.pdf", bbox_inches='tight')
 
 
 
@@ -702,7 +713,7 @@ ax, barx, barlist, sclist = barscatter(dataFdishabPcp, transpose=False,paired=Tr
 ### Try putting saline and pcp on the same plot 
 
 dataMdishabSal_Pcp =[[percent_dis_whitenoise_sal_M,percent_dis_whitenoise_hab1_sal_M],[percent_dis_all_non_WN_sal_M,percent_dis_all_non_WN_hab1_sal_M],[percent_dis_whitenoise_pcp_M,percent_dis_whitenoise_hab1_pcp_M],[percent_dis_all_non_WN_pcp_M,percent_dis_all_non_WN_hab1_pcp_M]]
-cols =  ['#249E8D','#249E8D','#AFDBD5','#AFDBD5','mediumblue', 'mediumblue','dodgerblue','dodgerblue']
+cols = ['#FFBA08','#FFBA08','#FFE5A5','#FFE5A5', 'darkorange','darkorange','peachpuff','peachpuff']
 labels = ['dis','hab', 'dis', 'hab','dis','hab', 'dis', 'hab']
 ax, barx, barlist, sclist = barscatter(dataMdishabSal_Pcp, transpose=False,paired=True, barfacecolor=cols, barfacecoloroption='individual',  ylabel='Mean percent distracted', xrotation=45, unequal=False, barlabels=labels) 
 ax.spines['bottom'].set_visible(False)
@@ -710,7 +721,7 @@ plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/
 
 dataFdishabSal_Pcp =[[percent_dis_whitenoise_sal_F,percent_dis_whitenoise_hab1_sal_F],[percent_dis_all_non_WN_sal_F,percent_dis_all_non_WN_hab1_sal_F],[percent_dis_whitenoise_pcp_F,percent_dis_whitenoise_hab1_pcp_F],[percent_dis_all_non_WN_pcp_F,percent_dis_all_non_WN_hab1_pcp_F]]
 labels = ['dis','hab', 'dis', 'hab','dis','hab', 'dis', 'hab']
-cols = ['#FFBA08','#FFBA08','#FFE5A5','#FFE5A5', 'darkorange','darkorange','peachpuff','peachpuff']
+cols =  ['#249E8D','#249E8D','#AFDBD5','#AFDBD5','mediumblue', 'mediumblue','dodgerblue','dodgerblue']
 ax, barx, barlist, sclist = barscatter(dataFdishabSal_Pcp, transpose=False,paired=True, barfacecolor=cols, barfacecoloroption='individual',  ylabel='Mean percent distracted', xrotation=45, unequal=False, barlabels=labels) 
 ax.spines['bottom'].set_visible(False)
 plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/WhiteNoise_Female.pdf", bbox_inches='tight')
