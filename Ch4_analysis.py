@@ -272,6 +272,39 @@ def snipper(data, timelock, fs = 1, t2sMap = [], preTrial=10, trialLength=30,
               
     return snips, pps
 
+def makerandomevents(minTime, maxTime, spacing = 77, n=100):
+    events = []
+    total = maxTime-minTime
+    start = 0
+    for i in np.arange(0,n):
+        if start > total:
+            start = start - total
+        events.append(start)
+        start = start + spacing
+    events = [i+minTime for i in events]
+    return events
+
+def med_abs_dev(data, b=1.4826):
+    median = np.median(data)
+    devs = [abs(i-median) for i in data]
+    mad = np.median(devs)*b
+                   
+    return mad
+
+def findnoise(data, background, t2sMap = [], fs = 1, bins=0, method='sd'):
+    
+    bgSnips, _ = snipper(data, background, t2sMap=t2sMap, fs=fs, bins=bins)
+    
+    if method == 'sum':
+        bgSum = [np.sum(abs(i)) for i in bgSnips]
+        bgMAD = med_abs_dev(bgSum)
+        bgMean = np.mean(bgSum)
+    elif method == 'sd':
+        bgSD = [np.std(i) for i in bgSnips]
+        bgMAD = med_abs_dev(bgSD)
+        bgMean = np.mean(bgSD)
+   
+    return bgMAD, bgMean
 # Distracted or not peaks
 # Manuall add the lists here 
 # Start with THPH1 and 2 lick days
@@ -307,28 +340,43 @@ TDTfilepath = '/Volumes/KP_HARD_DRI/All_Matlab_Converts/BIG CONVERSION 14 AUG 20
 # LICKING ANALYSIS **************************************************************************
 # Loop through files and calculate burst and run lengths
 # Assign empty lists for storing arrays of burst/run lengths
+
+# Lengths, all burst or run lengths here NOT
 allBursts = []
+allBurstsTimes = []
 allRuns = []
+allRunTimes = []
+
 allRunIndices = []
 allrILIs = []
 allbILIs = []
+allRatBlue = []
+allRatUV = []
+allRatFS = []
+allRatLicks = []
 
 for filename in TDTfiles_thph_lick:
     
     file = TDTfilepath + filename
     ratdata = loadmatfile(file)
+    allRatBlue.append(ratdata['blue'])
+    allRatUV.append(ratdata['uv'])
+    allRatFS.append(ratdata['fs'])
+    allRatLicks.append(ratdata['licks'])
     burstanalysis = lickCalc(ratdata['licks'], offset=ratdata['licks_off'])
-    burstList = burstanalysis['bLicks'] # type, array 
-    runList = burstanalysis['rLicks'] # type array
-#    indexRunList = burstanalysis['rInd'] 
-    runILIs = burstanalysis['rILIs']
-    burstILIs = burstanalysis['bILIs']
-    
+    burstList = burstanalysis['bLicks'] # n licks per burst 
+    runList = burstanalysis['rLicks'] # n licks per run
+    burstListTimes = burstanalysis['bStart'] # Actual times of start of runs  
+    runListTimes = burstanalysis['rStart'] # Actual times of start of bursts 
+
+
     allBursts.append(burstList)
     allRuns.append(runList)
+    allRunTimes.append(runListTimes)
+    allBurstsTimes.append(burstListTimes)
 #    allRunIndices.append(indexRunList)
-    allrILIs.append(runILIs)
-    allbILIs.append(burstILIs)
+#    allrILIs.append(runILIs)
+#    allbILIs.append(burstILIs)
     
 # Make the list of lists into one long list for histogram 
 MergedBurstList = list(itertools.chain.from_iterable(allBursts)) 
@@ -343,24 +391,117 @@ medrunlen = round(np.median(MergedRunList))
 ##  Make the snips 
 
 
+blueMeansBurst = []
+uvMeansBurst = []
+blueMeansRuns = []
+uvMeansRuns = []
+
+for i, val in enumerate(allRunTimes):
+    
+    # make a blue and uv snip for all 14, and noise remover / index
+    blueSnips, ppsBlue = snipper(allRatBlue[i], allRunTimes[i], fs=allRatFS[i], bins=300)
+    uvSnips, ppsUV = snipper(allRatUV[i], allRunTimes[i], fs=allRatFS[i], bins=300)
+
+    randevents = makerandomevents(allRatBlue[i][300], allRatBlue[i][-300])
+    bgMad, bgMean = findnoise(allRatBlue[i], randevents, fs=allRatFS[i], method='sum', bins=300)
+    threshold = 1
+    sigSum = [np.sum(abs(i)) for i in blueSnips]
+    noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
+
+#     Might not need the noise index, this is just for trials fig 
+    
+    fig = plt.figure()
+    ax = plt.subplot(1,1,1)
+    ax.set_ylim([-0.03, 0.03])
+    #ax.set_ylim([-0.05, 0.05])
+    trialsMultShadedFig(ax, [uvSnips,blueSnips], ppsBlue, eventText='First Lick in Run')
+    plt.text(250,0.03, '{}'.format(len(allRunTimes[i])) + ' Runs' )
+    
+    fig2 = plt.figure()
+    ax2 = plt.subplot(1,1,1)
+    ax2.set_ylim([-0.2, 0.2])
+    trialsFig(ax2, blueSnips, uvSnips, ppsBlue, eventText='First Lick in Run', noiseindex=noiseindex) #, )
+    plt.text(250,0.2, '{}'.format(len(allRunTimes[i])) + ' Runs' )
+
+ # these four lines used later to define means plot (made after runs)
+    blueMean = np.mean(blueSnips, axis=0)
+    blueMeansRuns.append(blueMean)
+    uvMean = np.mean(uvSnips, axis=0)
+    uvMeansRuns.append(uvMean)
+    
 # All runs and all bursts (representative rat, etc.)
 # Then segregate by long and short (for all rats quartiles not for each rat)
 
+# Get the correct allignment from the snipper, that uses the times taken from where? 
+uvMeans_all_run = []
+blueMeans_all_run = []
 
+## Mean of ALL runs and ALL rats on multishaded figure
 
+#linecolor=['purple', 'blue'], errorcolor=['thistle', 'lightblue']
 
-
-
-
-
-
-
-
-
-
+fig = plt.figure()
+ax = plt.subplot(1,1,1)
+ax.set_ylim([-0.03, 0.03])
+#ax.set_ylim([-0.05, 0.05])
+trialsMultShadedFig(ax, [np.asarray(uvMeansRuns),np.asarray(blueMeansRuns)], ppsBlue, eventText='First Lick in Run', linecolor = ['black','green'], errorcolor = ['lightgray','lightgreen'])
+plt.text(250,0.03, '{}'.format(len(allRunTimes[i])) + ' Runs' ) ## Edit this to be all
 
 
 '''
+
+# Makes tonnes of individual plots             
+# Individual rats might look odd as low Ns, but mean of mean will be better 
+# Repeat this with bursts if looks like might be useful 
+
+for i, val in enumerate(allRuns):
+    try:
+        # make a blue and uv snip for all 14, and noise remover / index
+        blueSnips, ppsBlue = snipper(allRatBlue[i], lowerqRunTimes[i], fs=allRatFS[i], bins=300)
+        uvSnips, ppsUV = snipper(allRatUV[i], lowerqRunTimes[i], fs=allRatFS[i], bins=300)
+    
+        randevents = makerandomevents(allRatBlue[i][300], allRatBlue[i][-300])
+        bgMad, bgMean = findnoise(allRatBlue[i], randevents, fs=allRatFS[i], method='sum', bins=300)
+        threshold = 1
+        sigSum = [np.sum(abs(i)) for i in blueSnips]
+        noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
+        # Might not need the noise index, this is just for trials fig 
+    except: 
+        pass
+#    
+#    fig12 = plt.figure()
+#    ax10 = plt.subplot(1,1,1)
+#    ax10.set_ylim([-0.03, 0.03])
+#    #ax.set_ylim([-0.05, 0.05])
+#    trialsMultShadedFig(ax10, [uvSnips,blueSnips], ppsBlue, eventText='First Lick Short Run')
+#    plt.text(250,0.03, '{}'.format(len(lowerqRunTimes[i])) + ' short runs' )
+#    
+#    fig13 = plt.figure()
+#    ax11 = plt.subplot(1,1,1)
+#    ax11.set_ylim([-0.2, 0.2])
+#    trialsFig(ax11, blueSnips, uvSnips, ppsBlue, eventText='First Lick in Short Run', noiseindex=noiseindex) #, )
+#    plt.text(250,0.2, '{}'.format(len(lowerqRunTimes[i])) + ' short runs' )
+
+# # these four lines used later to define means plot (made after runs)
+    blueMeanALL = np.mean(blueSnips, axis=0)
+    blueMeans_all_run.append(blueMeanSHORT)
+    uvMeanALL = np.mean(uvSnips, axis=0)
+    uvMeans_all_run.append(uvMeanSHORT)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Find short and long run lengths 
 aggregateLowerQuart = np.percentile(MergedRunList,25)
@@ -418,8 +559,8 @@ for i, listofindices in enumerate(allLogIndRuns):
     
 ''' 
          
-allign to lowerqRunTimes
-allign to uppqRunTimes
+#allign to lowerqRunTimes
+#allign to uppqRunTimes
 
 # Then, if not too complex, add BOTH BLUE SIGNALS high and low burst numbers to the 
     # same photometry plot 
@@ -508,36 +649,8 @@ for i, val in enumerate(uppqRunTimes):
     uvMeans_long_run.append(uvMeanLONG)
 '''
 
-# Assign empty lists for storing arrays of burst/run lengths? where is this code
-allDistracted = []
-allNotDistracted = []
-allDistractors = []
-allRatLicks = []
-allRatBlue = []
-allRatUV = []
-allRatFS = []
 
-
-# Loop through files and extracts all info needed for snips 
-for filename in TDTfiles_thph_dis:
-    
-    file = TDTfilepath + filename
-    ratdata = loadmatfile(file)
-    distracted = ratdata['distracted']
-    notdistracted = ratdata['notdistracted']
-    distractors = ratdata['distractors']
-        
-    allRatBlue.append(ratdata['blue'])
-    allRatUV.append(ratdata['uv'])
-    allRatFS.append(ratdata['fs'])
-    
-    allRatLicks.append(ratdata['licks'])
-    allDistracted.append(distracted)
-    allNotDistracted.append(notdistracted)
-    allDistractors.append(distractors)
-
-
-
+'''
 
 
 
@@ -559,105 +672,5 @@ for i, val in enumerate(allDistracted):
         alluvMeans.append(uvMean)
         
         
-# Make the snips 
-'''
-# Should run different analysis for licking and distraction data 
-
-# Find notes of which figures to have for each photomoetry chapter 
-
-# Calculating different peaks, and means based on on DISTRACTED and NOT DISTRACTED
-# To find peaks and averaged activity across time 
-
-# Called means because give 14 arrays which are the MEAN for each rat 
-allblueMeans = []
-alluvMeans = []
-for i, val in enumerate(allDistracted):
-
-        # make a blue and uv snip for all 14
-        blueSnips, ppsBlue = snipper(allRatBlue[i], allDistracted[i], fs=allRatFS[i], bins=300)
-        uvSnips, ppsUV = snipper(allRatUV[i], allDistracted[i], fs=allRatFS[i], bins=300)
-# # these four lines used later to define means plot (made after runs) 
-        # Makes a mean for each rat's snips
-        blueMean = np.mean(blueSnips, axis=0)
-        allblueMeans.append(blueMean)
-        uvMean = np.mean(uvSnips, axis=0)
-        alluvMeans.append(uvMean)
-
-#values for averaged activity for the 2 seconds preceeding (14 values, 1 per rat) =
-
-#TwoSecBEFOREactivity = (np.mean(allblueMeans, axis=1)) # axis 1 gives 14 values, axis 0 gives 1 list of 20 (the averaged average snip)
-
-# Want to produce slices of the lists already here
-# I have 14 lists of 300. 0 to 100 are the 10 seconds preding distraction
-# 100 to 300 are 20 seconds after 
-
-# Split into (1) 80 - 100 (the 2 seconds before distraction)
-           # (2) 110 - 300 (the 19 seconds after - to see if supression)
-
-# JUST BLUE ACTIVITY IGNORING THE UV (NO SUBTRACTION AS PRETTY MUCH ZERO)
-
-
-
-all2SecBefore = []
-all20SecAfter = []
-for eachlist in allblueMeans:
-    slice1 = eachlist[80:100]
-    #print(len(slice1))
-    
-    slice2 = eachlist[100:300]
-    #print(len(slice2))
-    
-    all2SecBefore.append(slice1)
-    all20SecAfter.append(slice2) 
-    
-    #then out of the loop mean these (axis 1 not 0) = gives 14 points for the barscatter
-
-      
-MeanOf2SecDISTRACTED = (np.mean(all2SecBefore, axis=1))
-MeanOf20SecDISTRACTED = (np.mean(all20SecAfter, axis=1))
-
-# Repeat for not distracted - reassignes all values 
-
-allblueMeans = []
-alluvMeans = []
-for i, val in enumerate(allNotDistracted):
-
-        # make a blue and uv snip for all 14
-        blueSnips, ppsBlue = snipper(allRatBlue[i], allNotDistracted[i], fs=allRatFS[i], bins=300)
-        uvSnips, ppsUV = snipper(allRatUV[i], allNotDistracted[i], fs=allRatFS[i], bins=300)
-# # these four lines used later to define means plot (made after runs) 
-        # Makes a mean for each rat's snips
-        blueMean = np.mean(blueSnips, axis=0)
-        allblueMeans.append(blueMean)
-        uvMean = np.mean(uvSnips, axis=0)
-        alluvMeans.append(uvMean)
-
-
-all2SecBefore = []
-all20SecAfter = []
-for eachlist in allblueMeans:
-    slice1 = eachlist[80:100]
-    #print(len(slice1))
-    
-    slice2 = eachlist[100:300]
-    #print(len(slice2))
-    
-    all2SecBefore.append(slice1)
-    all20SecAfter.append(slice2) 
-    
-MeanOf2SecNOT_DISTRACTED = (np.mean(all2SecBefore, axis=1))
-MeanOf20SecNOT_DISTRACTED = (np.mean(all20SecAfter, axis=1))
-
-PEAK2SEC = np.empty((2,), dtype=np.object)
-PEAK2SEC[0] = MeanOf2SecDISTRACTED 
-PEAK2SEC[1] = MeanOf2SecNOT_DISTRACTED
-
-peak20sec = np.empty((2,), dtype=np.object)
-peak20sec[0] = MeanOf20SecDISTRACTED
-peak20sec[1] = MeanOf20SecNOT_DISTRACTED
-
 
 '''        
-        
-        
-        
