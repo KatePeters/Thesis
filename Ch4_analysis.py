@@ -336,6 +336,7 @@ TDTfiles_thph_hab = ['thph1-1_distraction2','thph1-2_distraction2','thph1-3_dist
 
 TDTfilepath = '/Volumes/KP_HARD_DRI/All_Matlab_Converts/BIG CONVERSION 14 AUG 2018/THPH matfiles/'
 
+savepath = '/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures'
 
 # LICKING ANALYSIS **************************************************************************
 # Loop through files and calculate burst and run lengths
@@ -395,6 +396,7 @@ blueMeansBurst = []
 uvMeansBurst = []
 blueMeansRuns = []
 uvMeansRuns = []
+allbluesnips = []
 
 for i, val in enumerate(allRunTimes):
     
@@ -428,26 +430,32 @@ for i, val in enumerate(allRunTimes):
     blueMeansRuns.append(blueMean)
     uvMean = np.mean(uvSnips, axis=0)
     uvMeansRuns.append(uvMean)
-    
+    allbluesnips.append(blueSnips)
 # All runs and all bursts (representative rat, etc.)
 # Then segregate by long and short (for all rats quartiles not for each rat)
 
-# Get the correct allignment from the snipper, that uses the times taken from where? 
-uvMeans_all_run = []
-blueMeans_all_run = []
+
 
 ## Mean of ALL runs and ALL rats on multishaded figure
 
 #linecolor=['purple', 'blue'], errorcolor=['thistle', 'lightblue']
 
-fig = plt.figure()
+
+fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
 ax.set_ylim([-0.03, 0.03])
-#ax.set_ylim([-0.05, 0.05])
+ax.set_ylim([-0.05, 0.05])
 trialsMultShadedFig(ax, [np.asarray(uvMeansRuns),np.asarray(blueMeansRuns)], ppsBlue, eventText='First Lick in Run', linecolor = ['black','green'], errorcolor = ['lightgray','lightgreen'])
-plt.text(250,0.03, '{}'.format(len(allRunTimes[i])) + ' Runs' ) ## Edit this to be all
+plt.text(250,0.03, '{}'.format(len(MergedRunList)) + ' Runs' ) ## Edit this to be all
 
 
+for index, sniplist in enumerate(allbluesnips):
+    for ind, lis in enumerate(sniplist):
+        print(index, ind)
+        fig = plt.figure(figsize=(6,3))
+        ax = plt.subplot(1,1,1)
+        ax = plt.plot(allbluesnips[index][ind])
+        plt.text(250,0, '{}'.format(index, ind)
 '''
 
 # Makes tonnes of individual plots             
