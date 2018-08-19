@@ -397,6 +397,7 @@ uvMeansBurst = []
 blueMeansRuns = []
 uvMeansRuns = []
 allbluesnips = []
+alluvsnips = []
 
 for i, val in enumerate(allRunTimes):
     
@@ -431,6 +432,7 @@ for i, val in enumerate(allRunTimes):
     uvMean = np.mean(uvSnips, axis=0)
     uvMeansRuns.append(uvMean)
     allbluesnips.append(blueSnips)
+    alluvsnips.append(uvSnips)
 # All runs and all bursts (representative rat, etc.)
 # Then segregate by long and short (for all rats quartiles not for each rat)
 
@@ -448,14 +450,98 @@ ax.set_ylim([-0.05, 0.05])
 trialsMultShadedFig(ax, [np.asarray(uvMeansRuns),np.asarray(blueMeansRuns)], ppsBlue, eventText='First Lick in Run', linecolor = ['black','green'], errorcolor = ['lightgray','lightgreen'])
 plt.text(250,0.03, '{}'.format(len(MergedRunList)) + ' Runs' ) ## Edit this to be all
 
+#
+#for index, sniplist in enumerate(allbluesnips):
+#    for ind, lis in enumerate(sniplist):
+#        print(index, ind)
+#        fig = plt.figure(figsize=(6,3))
+#        ax = plt.subplot(1,1,1)
+#        ax = plt.plot(allbluesnips[index][ind])
+#        plt.text(250,0, '{}'.format([index,ind]))
+#        
 
-for index, sniplist in enumerate(allbluesnips):
-    for ind, lis in enumerate(sniplist):
-        print(index, ind)
-        fig = plt.figure(figsize=(6,3))
-        ax = plt.subplot(1,1,1)
-        ax = plt.plot(allbluesnips[index][ind])
-        plt.text(250,0, '{}'.format(index, ind)
+# Individual trial 1 - 13,1
+f = plt.figure(figsize=(6,2))
+ax = plt.subplot(111)
+ax.plot(allbluesnips[13][1] , color='blue')
+ax.plot(alluvsnips[13][1] , color='purple')
+triallicks = nearestevents(allRunTimes[13],allRatLicks[13])# allRatLicks[13], allRatLicks[13]) 
+xvals1 = [(x+10)*10 for x in triallicks[1]] 
+yvals1 = [ax.get_ylim()[1]] * len(xvals1)
+ax.scatter(xvals1, yvals1, marker='|', s=90)      
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+
+# Making x scale
+#scale = 5
+#scalebar = scale * pps
+#yrange = ax.get_ylim()[1] - ax.get_ylim()[0]
+#scalebary = (yrange / 10) + ax.get_ylim()[0]
+#scalebarx = [ax.get_xlim()[1] - scalebar, ax.get_xlim()[1]]
+#ax.plot(scalebarx, [scalebary, scalebary], c='k', linewidth=2)
+#ax.text((scalebarx[0] + (scalebar/2)), scalebary-(yrange/50), str(scale) +' s', ha='center',va='top', **Calibri, **Size)
+# 
+
+# Individual trial 1 - 13,6
+f = plt.figure(figsize=(6,2))
+ax = plt.subplot(111)
+ax.plot(allbluesnips[13][6] , color='blue')
+ax.plot(alluvsnips[13][6] , color='purple')
+triallicks = nearestevents(allRunTimes[13],allRatLicks[13])# allRatLicks[13], allRatLicks[13]) 
+xvals1 = [(x+10)*10 for x in triallicks[6]] 
+yvals1 = [ax.get_ylim()[1]] * len(xvals1)
+ax.scatter(xvals1, yvals1, marker='|', s=90)  
+
+# Individual trial 1 - 12, 11
+f = plt.figure(figsize=(6,2))
+ax = plt.subplot(111)
+ax.plot(allbluesnips[12][11] , color='blue')
+ax.plot(alluvsnips[12][11] , color='purple')
+triallicks = nearestevents(allRunTimes[12],allRatLicks[12])# allRatLicks[13], allRatLicks[13]) 
+xvals1 = [(x+10)*10 for x in triallicks[11]] 
+yvals1 = [ax.get_ylim()[1]] * len(xvals1)
+ax.scatter(xvals1, yvals1, marker='|', s=90)  
+
+# Individual trial 1 - 11, 10
+f = plt.figure(figsize=(6,2))
+ax = plt.subplot(111)
+ax.plot(allbluesnips[11][10] , color='blue')
+ax.plot(alluvsnips[11][10] , color='purple')
+triallicks = nearestevents(allRunTimes[11],allRatLicks[11])# allRatLicks[13], allRatLicks[13]) 
+xvals1 = [(x+10)*10 for x in triallicks[10]] 
+yvals1 = [ax.get_ylim()[1]] * len(xvals1)
+ax.scatter(xvals1, yvals1, marker='|', s=90)
+
+# Individual trial 1 - 4, 33
+f = plt.figure(figsize=(6,2))
+ax = plt.subplot(111)
+ax.plot(allbluesnips[4][33] , color='blue')
+ax.plot(alluvsnips[4][33] , color='purple')
+triallicks = nearestevents(allRunTimes[4],allRatLicks[4])# allRatLicks[13], allRatLicks[13]) 
+xvals1 = [(x+10)*10 for x in triallicks[33]] 
+yvals1 = [ax.get_ylim()[1]] * len(xvals1)
+ax.scatter(xvals1, yvals1, marker='|', s=90)
+
+# Individual trial 1 - 3, 13
+f = plt.figure(figsize=(6,2))
+ax = plt.subplot(111)
+ax.plot(allbluesnips[3][13] , color='blue')
+ax.plot(alluvsnips[3][13] , color='purple')
+triallicks = nearestevents(allRunTimes[3],allRatLicks[3])# allRatLicks[13], allRatLicks[13]) 
+xvals1 = [(x+10)*10 for x in triallicks[13]] 
+yvals1 = [ax.get_ylim()[1]] * len(xvals1)
+ax.scatter(xvals1, yvals1, marker='|', s=90)
+
+# [3][13] •
+# [4][33] •
+# [11][8]
+# [11][10] •
+# [12][11] *
+# [12][14] 
+# [13][1] *
+# [13][6] *
+
+
 '''
 
 # Makes tonnes of individual plots             
