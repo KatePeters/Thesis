@@ -369,8 +369,6 @@ for filename in TDTfiles_thph_lick:
     runList = burstanalysis['rLicks'] # n licks per run
     burstListTimes = burstanalysis['bStart'] # Actual times of start of runs  
     runListTimes = burstanalysis['rStart'] # Actual times of start of bursts 
-
-
     allBursts.append(burstList)
     allRuns.append(runList)
     allRunTimes.append(runListTimes)
@@ -413,18 +411,23 @@ for i, val in enumerate(allRunTimes):
 
 #     Might not need the noise index, this is just for trials fig 
     
-    fig = plt.figure()
-    ax = plt.subplot(1,1,1)
-    ax.set_ylim([-0.03, 0.03])
-    #ax.set_ylim([-0.05, 0.05])
-    trialsMultShadedFig(ax, [uvSnips,blueSnips], ppsBlue, eventText='First Lick in Run')
-    plt.text(250,0.03, '{}'.format(len(allRunTimes[i])) + ' Runs' )
-    
-    fig2 = plt.figure()
-    ax2 = plt.subplot(1,1,1)
-    ax2.set_ylim([-0.2, 0.2])
-    trialsFig(ax2, blueSnips, uvSnips, ppsBlue, eventText='First Lick in Run', noiseindex=noiseindex) #, )
-    plt.text(250,0.2, '{}'.format(len(allRunTimes[i])) + ' Runs' )
+#    fig = plt.figure()
+#    ax = plt.subplot(1,1,1)
+#    ax.set_ylim([-0.03, 0.03])
+#    #ax.set_ylim([-0.05, 0.05])
+#    trialsMultShadedFig(ax, [uvSnips,blueSnips], ppsBlue, eventText='First Lick in Run')
+#    plt.text(250,0.03, '{}'.format(len(allRunTimes[i])) + ' Runs' )
+#    
+#    fig2 = plt.figure()
+#    ax2 = plt.subplot(1,1,1)
+#    ax2.set_ylim([-0.2, 0.2])
+#    trialsFig(ax2, blueSnips, uvSnips, ppsBlue, eventText='First Lick in Run') #noiseindex=noiseindex) #, )
+#    plt.text(250,0.2, '{}'.format(len(allRunTimes[i])) + ' Runs' )
+#
+#    filepath ='/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/'
+#    ratname = str(i+1) +'.pdf'
+#
+#    fig2.savefig(filepath+ratname)
 
  # these four lines used later to define means plot (made after runs)
     blueMean = np.mean(blueSnips, axis=0)
@@ -437,7 +440,8 @@ for i, val in enumerate(allRunTimes):
 # Then segregate by long and short (for all rats quartiles not for each rat)
 
 
-
+#########################################################################################
+# Average of all runs, all rats, all trials 
 ## Mean of ALL runs and ALL rats on multishaded figure
 
 #linecolor=['purple', 'blue'], errorcolor=['thistle', 'lightblue']
@@ -447,18 +451,21 @@ fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
 ax.set_ylim([-0.03, 0.03])
 ax.set_ylim([-0.05, 0.05])
-trialsMultShadedFig(ax, [np.asarray(uvMeansRuns),np.asarray(blueMeansRuns)], ppsBlue, eventText='First Lick in Run', linecolor = ['black','green'], errorcolor = ['lightgray','lightgreen'])
+trialsMultShadedFig(ax, [np.asarray(uvMeansRuns),np.asarray(blueMeansRuns)], ppsBlue, eventText='First Lick in Run', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'])
 plt.text(250,0.03, '{}'.format(len(MergedRunList)) + ' Runs' ) ## Edit this to be all
+fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/All_Runs_All_Rats.pdf')
 
-#
+
+## Shows every single trial for each rat for runs - to choose representative sample
 #for index, sniplist in enumerate(allbluesnips):
 #    for ind, lis in enumerate(sniplist):
-#        print(index, ind)
 #        fig = plt.figure(figsize=(6,3))
 #        ax = plt.subplot(1,1,1)
 #        ax = plt.plot(allbluesnips[index][ind])
 #        plt.text(250,0, '{}'.format([index,ind]))
-#        
+        
+#########################################################################################
+
 
 # Individual trial 1 - 13,1
 f = plt.figure(figsize=(6,2))
@@ -468,19 +475,16 @@ ax.plot(alluvsnips[13][1] , color='purple')
 triallicks = nearestevents(allRunTimes[13],allRatLicks[13])# allRatLicks[13], allRatLicks[13]) 
 xvals1 = [(x+10)*10 for x in triallicks[1]] 
 yvals1 = [ax.get_ylim()[1]] * len(xvals1)
-ax.scatter(xvals1, yvals1, marker='|', s=90)      
+ax.scatter(xvals1, yvals1, marker='|', s=90, c='k')  
+ax.set_ylim([-0.2, 0.2])    
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
+ax.spines['left'].set_visible(False)
+ax.spines['bottom'].set_visible(False)
+ax.xaxis.set_visible(False)
+ax.yaxis.set_visible(False)
+#f.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/SingleTrial_THPH2.8_Run2.pdf')
 
-# Making x scale
-#scale = 5
-#scalebar = scale * pps
-#yrange = ax.get_ylim()[1] - ax.get_ylim()[0]
-#scalebary = (yrange / 10) + ax.get_ylim()[0]
-#scalebarx = [ax.get_xlim()[1] - scalebar, ax.get_xlim()[1]]
-#ax.plot(scalebarx, [scalebary, scalebary], c='k', linewidth=2)
-#ax.text((scalebarx[0] + (scalebar/2)), scalebary-(yrange/50), str(scale) +' s', ha='center',va='top', **Calibri, **Size)
-# 
 
 # Individual trial 1 - 13,6
 f = plt.figure(figsize=(6,2))
@@ -490,7 +494,16 @@ ax.plot(alluvsnips[13][6] , color='purple')
 triallicks = nearestevents(allRunTimes[13],allRatLicks[13])# allRatLicks[13], allRatLicks[13]) 
 xvals1 = [(x+10)*10 for x in triallicks[6]] 
 yvals1 = [ax.get_ylim()[1]] * len(xvals1)
-ax.scatter(xvals1, yvals1, marker='|', s=90)  
+ax.scatter(xvals1, yvals1, marker='|', s=90, c='k')  
+ax.set_ylim([-0.2, 0.2])
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.spines['left'].set_visible(False)
+ax.spines['bottom'].set_visible(False)
+ax.xaxis.set_visible(False)
+ax.yaxis.set_visible(False)
+#f.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/SingleTrial_THPH2.8_Run7.pdf',  bbox_inches="tight")
+
 
 # Individual trial 1 - 12, 11
 f = plt.figure(figsize=(6,2))
@@ -500,7 +513,15 @@ ax.plot(alluvsnips[12][11] , color='purple')
 triallicks = nearestevents(allRunTimes[12],allRatLicks[12])# allRatLicks[13], allRatLicks[13]) 
 xvals1 = [(x+10)*10 for x in triallicks[11]] 
 yvals1 = [ax.get_ylim()[1]] * len(xvals1)
-ax.scatter(xvals1, yvals1, marker='|', s=90)  
+ax.scatter(xvals1, yvals1, marker='|', s=90,c='k')  
+ax.set_ylim([-0.2, 0.2])
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.spines['left'].set_visible(False)
+ax.spines['bottom'].set_visible(False)
+ax.xaxis.set_visible(False)
+ax.yaxis.set_visible(False)
+#f.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/SingleTrial_THPH2.7_Run12.pdf',  bbox_inches="tight")
 
 # Individual trial 1 - 11, 10
 f = plt.figure(figsize=(6,2))
@@ -510,7 +531,15 @@ ax.plot(alluvsnips[11][10] , color='purple')
 triallicks = nearestevents(allRunTimes[11],allRatLicks[11])# allRatLicks[13], allRatLicks[13]) 
 xvals1 = [(x+10)*10 for x in triallicks[10]] 
 yvals1 = [ax.get_ylim()[1]] * len(xvals1)
-ax.scatter(xvals1, yvals1, marker='|', s=90)
+ax.scatter(xvals1, yvals1, marker='|', s=90,c='k')
+ax.set_ylim([-0.2, 0.2])
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.spines['left'].set_visible(False)
+ax.spines['bottom'].set_visible(False)
+ax.xaxis.set_visible(False)
+ax.yaxis.set_visible(False)
+#f.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/SingleTrial_THPH2.6_Run11.pdf',  bbox_inches="tight")
 
 # Individual trial 1 - 4, 33
 f = plt.figure(figsize=(6,2))
@@ -520,7 +549,15 @@ ax.plot(alluvsnips[4][33] , color='purple')
 triallicks = nearestevents(allRunTimes[4],allRatLicks[4])# allRatLicks[13], allRatLicks[13]) 
 xvals1 = [(x+10)*10 for x in triallicks[33]] 
 yvals1 = [ax.get_ylim()[1]] * len(xvals1)
-ax.scatter(xvals1, yvals1, marker='|', s=90)
+ax.scatter(xvals1, yvals1, marker='|', s=90,c='k')
+ax.set_ylim([-0.2, 0.2])
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.spines['left'].set_visible(False)
+ax.spines['bottom'].set_visible(False)
+ax.xaxis.set_visible(False)
+ax.yaxis.set_visible(False)
+#f.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/SingleTrial_THPH1.5_Run34.pdf',  bbox_inches="tight")
 
 # Individual trial 1 - 3, 13
 f = plt.figure(figsize=(6,2))
@@ -530,72 +567,40 @@ ax.plot(alluvsnips[3][13] , color='purple')
 triallicks = nearestevents(allRunTimes[3],allRatLicks[3])# allRatLicks[13], allRatLicks[13]) 
 xvals1 = [(x+10)*10 for x in triallicks[13]] 
 yvals1 = [ax.get_ylim()[1]] * len(xvals1)
-ax.scatter(xvals1, yvals1, marker='|', s=90)
+ax.scatter(xvals1, yvals1, marker='|', s=90,c='k')
+ax.set_ylim([-0.2, 0.2])
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.spines['left'].set_visible(False)
+ax.spines['bottom'].set_visible(False)
+ax.xaxis.set_visible(False)
+ax.yaxis.set_visible(False)
+#f.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/SingleTrial_THPH1.4_Run14.pdf',  bbox_inches="tight")
 
-# [3][13] •
-# [4][33] •
-# [11][8]
-# [11][10] •
-# [12][11] *
-# [12][14] 
-# [13][1] *
-# [13][6] *
-
-
-'''
-
-# Makes tonnes of individual plots             
-# Individual rats might look odd as low Ns, but mean of mean will be better 
-# Repeat this with bursts if looks like might be useful 
-
-for i, val in enumerate(allRuns):
-    try:
-        # make a blue and uv snip for all 14, and noise remover / index
-        blueSnips, ppsBlue = snipper(allRatBlue[i], lowerqRunTimes[i], fs=allRatFS[i], bins=300)
-        uvSnips, ppsUV = snipper(allRatUV[i], lowerqRunTimes[i], fs=allRatFS[i], bins=300)
-    
-        randevents = makerandomevents(allRatBlue[i][300], allRatBlue[i][-300])
-        bgMad, bgMean = findnoise(allRatBlue[i], randevents, fs=allRatFS[i], method='sum', bins=300)
-        threshold = 1
-        sigSum = [np.sum(abs(i)) for i in blueSnips]
-        noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
-        # Might not need the noise index, this is just for trials fig 
-    except: 
-        pass
-#    
-#    fig12 = plt.figure()
-#    ax10 = plt.subplot(1,1,1)
-#    ax10.set_ylim([-0.03, 0.03])
-#    #ax.set_ylim([-0.05, 0.05])
-#    trialsMultShadedFig(ax10, [uvSnips,blueSnips], ppsBlue, eventText='First Lick Short Run')
-#    plt.text(250,0.03, '{}'.format(len(lowerqRunTimes[i])) + ' short runs' )
-#    
-#    fig13 = plt.figure()
-#    ax11 = plt.subplot(1,1,1)
-#    ax11.set_ylim([-0.2, 0.2])
-#    trialsFig(ax11, blueSnips, uvSnips, ppsBlue, eventText='First Lick in Short Run', noiseindex=noiseindex) #, )
-#    plt.text(250,0.2, '{}'.format(len(lowerqRunTimes[i])) + ' short runs' )
-
-# # these four lines used later to define means plot (made after runs)
-    blueMeanALL = np.mean(blueSnips, axis=0)
-    blueMeans_all_run.append(blueMeanSHORT)
-    uvMeanALL = np.mean(uvSnips, axis=0)
-    uvMeans_all_run.append(uvMeanSHORT)
+# Individual trial 1 - 3, 13 ----- TESTER FOR SCALE 
+f = plt.figure(figsize=(6,2))
+ax = plt.subplot(111)
+ax.plot(allbluesnips[3][13] , color='black')
+ax.plot(alluvsnips[3][13] , color='black')
+triallicks = nearestevents(allRunTimes[3],allRatLicks[3])# allRatLicks[13], allRatLicks[13]) 
+xvals1 = [(x+10)*10 for x in triallicks[13]] 
+yvals1 = [ax.get_ylim()[1]] * len(xvals1)
+ax.scatter(xvals1, yvals1, marker='|', s=90,c='k')
+ax.set_ylim([-0.2, 0.2])
+# Making x scale
+scale = 5
+scalebar = scale * ppsBlue
+yrange = ax.get_ylim()[1] - ax.get_ylim()[0]
+scalebary = (yrange / 10) + ax.get_ylim()[0]
+scalebarx = [ax.get_xlim()[1] - scalebar, ax.get_xlim()[1]]
+ax.plot(scalebarx, [scalebary, scalebary], c='k', linewidth=2)
+ax.text((scalebarx[0] + (scalebar/2)), scalebary-(yrange/50), str(scale) +' s', ha='center',va='top', **Calibri, **Size)
+#f.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/SingleTrial_SCALE.pdf',  bbox_inches="tight")
 
 
+###########################################################################################
 
-
-
-
-
-
-
-
-
-
-
-
-
+# Long and short runs, 25th and 75th percentiles 
 
 ## Find short and long run lengths 
 aggregateLowerQuart = np.percentile(MergedRunList,25)
@@ -606,10 +611,10 @@ for runLicksList in allRuns:
     logIndRuns = [] # so 14 empty arrays exist and then don't (add to larger)
     for item in runLicksList:
         if item < aggregateLowerQuart:
-            logIndRuns.append('UPPER')
+            logIndRuns.append('LOWER')
         else:
             if item > aggregateUpperQuart:
-                logIndRuns.append('LOWER')
+                logIndRuns.append('UPPER')
             
             else:
                 logIndRuns.append('MIDDLE')
@@ -617,11 +622,14 @@ for runLicksList in allRuns:
             
 # 14 lists of logical indices for whether the n licks in that run was L,M,U
 
+
  
 # Final lists of run times sorted by u.m.l and stored by rat (14 lists)
 lowerqRunTimes = []
 uppqRunTimes = []
 mid50RunTimes = []
+lowerLengths = []
+upperLengths = []
 
 # Might need the index and the value for both lists ??
 for i, listofindices in enumerate(allLogIndRuns):
@@ -633,33 +641,30 @@ for i, listofindices in enumerate(allLogIndRuns):
         #print(i,j) i is the list index and j is the item index
         
         if runIndex == 'LOWER':
-            lowrun = allRunsTimes[i][j]
+            lowrun = allRunTimes[i][j]
             templower.append(lowrun)
+            lowerLengths.append(allRuns[i][j])
                
         if runIndex == 'UPPER':
-            upprun = allRunsTimes[i][j]
+            upprun = allRunTimes[i][j]
             tempupper.append(upprun)
+            upperLengths.append(allRuns[i][j])
 #                
         if runIndex == 'MIDDLE':
-            midrun = allRunsTimes[i][j]
+            midrun = allRunTimes[i][j]
             tempmid.append(midrun)
             
     lowerqRunTimes.append(templower)
     uppqRunTimes.append(tempupper)
     mid50RunTimes.append(tempmid)
-    
+ 
+    ## Figure how to also get the actual lengths? Must have done this. Line 603
+    ## runLicksList inside allRuns 
 # _________________________________________________________________________
 
-    
-''' 
          
 #allign to lowerqRunTimes
 #allign to uppqRunTimes
-
-# Then, if not too complex, add BOTH BLUE SIGNALS high and low burst numbers to the 
-    # same photometry plot 
-
-'''
 
 uvMeans_short_run = []
 blueMeans_short_run = []
@@ -690,7 +695,7 @@ for i, val in enumerate(lowerqRunTimes):
 #    #ax.set_ylim([-0.05, 0.05])
 #    trialsMultShadedFig(ax10, [uvSnips,blueSnips], ppsBlue, eventText='First Lick Short Run')
 #    plt.text(250,0.03, '{}'.format(len(lowerqRunTimes[i])) + ' short runs' )
-#    
+##    
 #    fig13 = plt.figure()
 #    ax11 = plt.subplot(1,1,1)
 #    ax11.set_ylim([-0.2, 0.2])
@@ -703,10 +708,23 @@ for i, val in enumerate(lowerqRunTimes):
     uvMeanSHORT = np.mean(uvSnips, axis=0)
     uvMeans_short_run.append(uvMeanSHORT)
 
+MergedRunList_Short = list(itertools.chain.from_iterable(lowerqRunTimes)) 
+# Average of all SHORT runs, all rats, all trials 
+## Mean of ALL SHORT runs and ALL rats on multishaded figure
+
+#linecolor=['purple', 'blue'], errorcolor=['thistle', 'lightblue']
+fig = plt.figure(figsize=(6,3))
+ax = plt.subplot(1,1,1)
+ax.set_ylim([-0.03, 0.03])
+ax.set_ylim([-0.05, 0.05])
+trialsMultShadedFig(ax, [np.asarray(uvMeans_short_run),np.asarray(blueMeans_short_run)], ppsBlue, eventText='First Lick in Run', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'])
+plt.text(250,0.03, '{}'.format(len(MergedRunList_Short)) + ' Short Runs' ) ## Edit this to be all
+#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/All_Runs_All_Rats.pdf')
+
 
 ## ===============================================================
 
-# Photometry figures (individual) for LONG bursts 
+# Photometry figures (individual) for LONG runs 
 
 for i, val in enumerate(uppqRunTimes):
     try:
@@ -741,30 +759,19 @@ for i, val in enumerate(uppqRunTimes):
     blueMeans_long_run.append(blueMeanLONG)
     uvMeanLONG = np.mean(uvSnips, axis=0)
     uvMeans_long_run.append(uvMeanLONG)
-'''
+
+MergedRunList_Long = list(itertools.chain.from_iterable(uppqRunTimes)) 
+# Average of all SHORT runs, all rats, all trials 
+## Mean of ALL SHORT runs and ALL rats on multishaded figure
+
+#linecolor=['purple', 'blue'], errorcolor=['thistle', 'lightblue']
+fig = plt.figure(figsize=(6,3))
+ax = plt.subplot(1,1,1)
+ax.set_ylim([-0.03, 0.03])
+ax.set_ylim([-0.05, 0.05])
+trialsMultShadedFig(ax, [np.asarray(uvMeans_long_run),np.asarray(blueMeans_long_run)], ppsBlue, eventText='First Lick in Long Run', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'])
+plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
+#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/All_Runs_All_Rats.pdf')
 
 
-'''
-
-
-
-# Called means because give 14 arrays which are the MEAN for each rat 
-
-# Probably want to store the blueSnips and uvSnips so that representative RAT can be plotted
-allblueMeans = []
-alluvMeans = []
-for i, val in enumerate(allDistracted):
-
-        # make a blue and uv snip for all 14
-        blueSnips, ppsBlue = snipper(allRatBlue[i], allDistracted[i], fs=allRatFS[i], bins=300)
-        uvSnips, ppsUV = snipper(allRatUV[i], allDistracted[i], fs=allRatFS[i], bins=300)
-# # these four lines used later to define means plot (made after runs) 
-        # Makes a mean for each rat's snips
-        blueMean = np.mean(blueSnips, axis=0)
-        allblueMeans.append(blueMean)
-        uvMean = np.mean(uvSnips, axis=0)
-        alluvMeans.append(uvMean)
-        
-        
-
-'''        
+   
