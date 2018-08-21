@@ -320,18 +320,18 @@ TDTfiles_thph_lick = ['thph1-1_lick6', 'thph1-2_lick6', 'thph1-3_lick6', 'thph1-
 
 # Modelled distractors change variable names for this script or script section 
 # Distraction day 
-TDTfiles_thph_dis = ['thph1-1_distraction1', 'thph1-2_distraction1','thph1-3_distraction1', \
+TDTfiles_thph_dis = ['thph1-3_distraction1', \
                 'thph1-4_distraction1','thph1-5_distraction1','thph1-6_distraction1', \
                 'thph2-1_distraction', 'thph2-2_distraction', 'thph2-3_distraction', \
                 'thph2-4_distraction', 'thph2-5_distraction', 'thph2-6_distraction', \
-                'thph2-7_distraction', 'thph2-8_distraction']
+                'thph2-7_distraction', 'thph2-8_distraction'] #'thph1-1_distraction1', 'thph1-2_distraction1'
 
 # Habituation day 
-TDTfiles_thph_hab = ['thph1-1_distraction2','thph1-2_distraction2','thph1-3_distraction2',\
+TDTfiles_thph_hab = ['thph1-3_distraction2',\
                 'thph1-4_distraction2', 'thph1-5_distraction2','thph1-6_distraction2',\
                 'thph2-1_habituation', 'thph2-2_habituation', 'thph2-3_habituation', \
                 'thph2-4_habituation', 'thph2-5_habituation', 'thph2-6_habituation', \
-                'thph2-7_habituation']
+                'thph2-7_habituation'] #['thph1-1_distraction2','thph1-2_distraction2',
 
 
 TDTfilepath = '/Volumes/KP_HARD_DRI/All_Matlab_Converts/BIG CONVERSION 14 AUG 2018/THPH matfiles/'
@@ -800,7 +800,7 @@ fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/ShortAN
 ##############################################################################################################
 ##############################################################################################################
 
-# DISTRACTION FILES 
+# DISTRACTION FILES (minus the first 2) - this was run with all included 
 ### Distractors, distracted and not distracted, licks and blue / uv signals 
 
 
@@ -849,11 +849,11 @@ for i, val in enumerate(allRatDistractors):
         pass
 # Individual plots to choose a representative rat 
     
-#    fig14 = plt.figure()
-#    ax13 = plt.subplot(1,1,1)
-#    ax13.set_ylim([-0.2, 0.2])
-#    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Distractor', noiseindex=noiseindex) #, )
-#    plt.text(250,0.2, '{}'.format(len(allRatDistractors[i])) + ' distractors' )
+    fig14 = plt.figure()
+    ax13 = plt.subplot(1,1,1)
+    ax13.set_ylim([-0.2, 0.2])
+    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Distractor', noiseindex=noiseindex) #, )
+    plt.text(250,0.2, '{}'.format(len(allRatDistractors[i])) + ' distractors' )
 
     blueMeanDISTRACTOR = np.mean(blueSnips, axis=0)
     blueMeans_distractor.append(blueMeanDISTRACTOR)
@@ -864,12 +864,11 @@ for i, val in enumerate(allRatDistractors):
 # Means for distractORS trials here MULT SHADED FIG 
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
-ax.set_ylim([-0.03, 0.03])
-ax.set_ylim([-0.05, 0.05])
+ax.set_ylim([-0.04, 0.04])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_distractor),np.asarray(blueMeans_distractor)], ppsBlue, eventText='Distractor', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
-#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Long_Runs_All_Rats.pdf', bbox_inches="tight")
+#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Distractors_All_Rats.pdf', bbox_inches="tight")
 
 
 
@@ -903,12 +902,11 @@ for i, val in enumerate(allRatDistracted):
 # Means for distracted trials here MULT SHADED FIG 
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
-ax.set_ylim([-0.03, 0.03])
-ax.set_ylim([-0.05, 0.05])
+ax.set_ylim([-0.04, 0.04])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_distracted),np.asarray(blueMeans_distracted)], ppsBlue, eventText='Distracted trial', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
-#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Long_Runs_All_Rats.pdf', bbox_inches="tight")
+#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Distracted_All_Rats.pdf', bbox_inches="tight")
 
 
 
@@ -944,66 +942,71 @@ for i, val in enumerate(allRatNotDistracted):
 # Means for distracted trials here MULT SHADED FIG 
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
-ax.set_ylim([-0.03, 0.03])
-ax.set_ylim([-0.05, 0.05])
+ax.set_ylim([-0.04, 0.04])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_notdistracted),np.asarray(blueMeans_notdistracted)], ppsBlue, eventText='Not Distracted trial', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
-#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Long_Runs_All_Rats.pdf', bbox_inches="tight")
+#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/NotDistracted_All_Rats.pdf', bbox_inches="tight")
+
+
+########################################################################################################
+
 
 # (1) Make plots of each trial or pick ones that look good 
 
-## INDIVIDUAL TRIALS, ALREADY WORKING COULD JUST TAKE THESE OR MAKE NEW???
+# Individual trial Run this with [0] --> [13] for each rat all trials saved 
+# Manually chose trials to run single trials for
 
+# Indices all moved by +2
+# 2.7 - 3, 6, 9
+# 2.6 - 3, 9, 14
+# 2.5 - 5
+# 2.1 - 0
+# 1.5 - 0
 
-# 2.3, 8
-# 2.3, 17
-# 2.5, 5 YES (10,5)
-
-# Individual trial 1 - 3, 13
-
-for ind, snip in enumerate(allbluesnips[13]):
-    print(ind)
-    f = plt.figure(figsize=(6,3))
-    ax = plt.subplot(111)
-    ax.plot(allbluesnips[13][ind] , color='blue')
-    ax.plot(alluvsnips[13][ind] , color='purple')
-
-
-    triallicks = nearestevents(allRatDistractors[13],allRatLicks[13])
-    trialdistractors = nearestevents(allRatDistractors[13],allRatDistractors[13])
-    trialdistracted = nearestevents(allRatDistractors[13],allRatDistracted[13])
-    trialnotdistracted = nearestevents(allRatDistractors[13],allRatNotDistracted[13])
-     
-    xvals1 = [(x+10)*10 for x in triallicks[ind]] 
-    xvals1 = [(x+10)*10 for x in triallicks[ind]]
-    #xvals2 = [(x+10)*10 for x in trialdistractors[trial]]
-    xvals3 = [(x+10)*10 for x in trialdistracted[ind]]
-    xvals4 = [(x+10)*10 for x in trialnotdistracted[ind]]
-    yvals1 = [ax.get_ylim()[1]] * len(xvals1)
-    #yvals2 = [ax.get_ylim()[1] + 0.005] * len(xvals2)
-    yvals3 = [ax.get_ylim()[1] + 0.02] * len(xvals3) 
-    yvals4 = [ax.get_ylim()[1] + 0.02] * len(xvals4)
-    #ax.scatter(xvals, yvals)
-    ax.scatter(xvals1, yvals1, marker='|', s=90, c='k')
-    #ax.scatter(xvals2, yvals2, marker='*')
-    ax.scatter(xvals3, yvals3, marker='o', facecolors= 'k', edgecolors='k', linewidth=2, s=60)
-    ax.scatter(xvals4, yvals4, marker='o', facecolors= 'none', edgecolors='k', linewidth=2, s=60)
-    
-  #  ax.set_ylim([-0.0, 0.05])
-    ax.spines['right'].set_visible(False)
-    ax.spines['top'].set_visible(False)
-    ax.spines['left'].set_visible(False)
-    ax.spines['bottom'].set_visible(False)
-    ax.xaxis.set_visible(False)
-    ax.yaxis.set_visible(False)
-    f.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/THPH2.8_trial_' + str(ind) +'.pdf',  bbox_inches="tight")
+#for ind, snip in enumerate(allbluesnips[13]):
+#    print(ind)
+#    f = plt.figure(figsize=(6,3))
+#    ax = plt.subplot(111)
+#    ax.plot(allbluesnips[13][ind] , color='blue')
+#    ax.plot(alluvsnips[13][ind] , color='purple')
+#
+#
+#    triallicks = nearestevents(allRatDistractors[13],allRatLicks[13])
+#    trialdistractors = nearestevents(allRatDistractors[13],allRatDistractors[13])
+#    trialdistracted = nearestevents(allRatDistractors[13],allRatDistracted[13])
+#    trialnotdistracted = nearestevents(allRatDistractors[13],allRatNotDistracted[13])
+#     
+#    xvals1 = [(x+10)*10 for x in triallicks[ind]] 
+#    xvals1 = [(x+10)*10 for x in triallicks[ind]]
+#    #xvals2 = [(x+10)*10 for x in trialdistractors[trial]]
+#    xvals3 = [(x+10)*10 for x in trialdistracted[ind]]
+#    xvals4 = [(x+10)*10 for x in trialnotdistracted[ind]]
+#    yvals1 = [ax.get_ylim()[1]] * len(xvals1)
+#    #yvals2 = [ax.get_ylim()[1] + 0.005] * len(xvals2)
+#    yvals3 = [ax.get_ylim()[1] + 0.02] * len(xvals3) 
+#    yvals4 = [ax.get_ylim()[1] + 0.02] * len(xvals4)
+#    #ax.scatter(xvals, yvals)
+#    ax.scatter(xvals1, yvals1, marker='|', s=90, c='k')
+#    #ax.scatter(xvals2, yvals2, marker='*')
+#    ax.scatter(xvals3, yvals3, marker='o', facecolors= 'k', edgecolors='k', linewidth=2, s=60)
+#    ax.scatter(xvals4, yvals4, marker='o', facecolors= 'none', edgecolors='k', linewidth=2, s=60)
+#    
+#  #  ax.set_ylim([-0.0, 0.05])
+#    ax.spines['right'].set_visible(False)
+#    ax.spines['top'].set_visible(False)
+#    ax.spines['left'].set_visible(False)
+#    ax.spines['bottom'].set_visible(False)
+#    ax.xaxis.set_visible(False)
+#    ax.yaxis.set_visible(False)
+#    f.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/THPH2.8_trial_' + str(ind) +'.pdf',  bbox_inches="tight")
 
 ### REMEMBER the axes have been removed and the scales are different 
 
 ### Are these just alligned to distracted or both??? Check which list you use and how many trials 
 
 ## Smaller time period before ? Less than a second so you know no distractors are present???? 
+
 '''
 
 #### Representative rat 
