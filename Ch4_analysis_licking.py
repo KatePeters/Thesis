@@ -436,6 +436,7 @@ for i, val in enumerate(allRunTimes):
     uvMeansRuns.append(uvMean)
     allbluesnips.append(blueSnips)
     alluvsnips.append(uvSnips)
+
 # All runs and all bursts (representative rat, etc.)
 # Then segregate by long and short (for all rats quartiles not for each rat)
 
@@ -816,6 +817,8 @@ blueMeans_distracted = []
 uvMeans_distracted = []
 blueMeans_notdistracted = []
 uvMeans_notdistracted = [] 
+allbluesnips = []
+alluvsnips = []
 
 for filename in TDTfiles_thph_dis:
     
@@ -856,6 +859,8 @@ for i, val in enumerate(allRatDistractors):
     blueMeans_distractor.append(blueMeanDISTRACTOR)
     uvMeanDISTRACTOR = np.mean(uvSnips, axis=0)
     uvMeans_distractor.append(uvMeanDISTRACTOR)
+
+
 # Means for distractORS trials here MULT SHADED FIG 
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
@@ -893,6 +898,8 @@ for i, val in enumerate(allRatDistracted):
     blueMeans_distracted.append(blueMeanDISTRACTED)
     uvMeanDISTRACTED = np.mean(uvSnips, axis=0)
     uvMeans_distracted.append(uvMeanDISTRACTED)
+    allbluesnips.append(blueSnips)
+    alluvsnips.append(uvSnips)
 # Means for distracted trials here MULT SHADED FIG 
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
@@ -944,10 +951,60 @@ trialsMultShadedFig(ax, [np.asarray(uvMeans_notdistracted),np.asarray(blueMeans_
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
 #fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Long_Runs_All_Rats.pdf', bbox_inches="tight")
 
-
+# (1) Make plots of each trial or pick ones that look good 
 
 ## INDIVIDUAL TRIALS, ALREADY WORKING COULD JUST TAKE THESE OR MAKE NEW???
 
+
+# 2.3, 8
+# 2.3, 17
+# 2.5, 5 YES (10,5)
+
+# Individual trial 1 - 3, 13
+
+for ind, snip in enumerate(allbluesnips[13]):
+    print(ind)
+    f = plt.figure(figsize=(6,3))
+    ax = plt.subplot(111)
+    ax.plot(allbluesnips[13][ind] , color='blue')
+    ax.plot(alluvsnips[13][ind] , color='purple')
+
+
+    triallicks = nearestevents(allRatDistractors[13],allRatLicks[13])
+    trialdistractors = nearestevents(allRatDistractors[13],allRatDistractors[13])
+    trialdistracted = nearestevents(allRatDistractors[13],allRatDistracted[13])
+    trialnotdistracted = nearestevents(allRatDistractors[13],allRatNotDistracted[13])
+     
+    xvals1 = [(x+10)*10 for x in triallicks[ind]] 
+    xvals1 = [(x+10)*10 for x in triallicks[ind]]
+    #xvals2 = [(x+10)*10 for x in trialdistractors[trial]]
+    xvals3 = [(x+10)*10 for x in trialdistracted[ind]]
+    xvals4 = [(x+10)*10 for x in trialnotdistracted[ind]]
+    yvals1 = [ax.get_ylim()[1]] * len(xvals1)
+    #yvals2 = [ax.get_ylim()[1] + 0.005] * len(xvals2)
+    yvals3 = [ax.get_ylim()[1] + 0.02] * len(xvals3) 
+    yvals4 = [ax.get_ylim()[1] + 0.02] * len(xvals4)
+    #ax.scatter(xvals, yvals)
+    ax.scatter(xvals1, yvals1, marker='|', s=90, c='k')
+    #ax.scatter(xvals2, yvals2, marker='*')
+    ax.scatter(xvals3, yvals3, marker='o', facecolors= 'k', edgecolors='k', linewidth=2, s=60)
+    ax.scatter(xvals4, yvals4, marker='o', facecolors= 'none', edgecolors='k', linewidth=2, s=60)
+    
+  #  ax.set_ylim([-0.0, 0.05])
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+    ax.spines['bottom'].set_visible(False)
+    ax.xaxis.set_visible(False)
+    ax.yaxis.set_visible(False)
+    f.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/THPH2.8_trial_' + str(ind) +'.pdf',  bbox_inches="tight")
+
+### REMEMBER the axes have been removed and the scales are different 
+
+### Are these just alligned to distracted or both??? Check which list you use and how many trials 
+
+## Smaller time period before ? Less than a second so you know no distractors are present???? 
+'''
 
 #### Representative rat 
 
@@ -960,3 +1017,4 @@ trialsMultShadedFig(ax, [np.asarray(uvMeans_notdistracted),np.asarray(blueMeans_
 ## Then white noise on habituation day AND all distractors on habituation day (not distracted trials as very few, maybe)
 ## THEN compare the peaks with stats and export to SPSS for t-tests?
 
+'''
