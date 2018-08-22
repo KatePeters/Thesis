@@ -1104,3 +1104,173 @@ peak_distracted, t_distracted, pre_distracted, post_distracted, baseline_distrac
 # Not distracted 
 peak_notdistracted, t_notdistracted, pre_notdistracted, post_notdistracted, baseline_notdistracted = PhotoPeaksCalc(bkgnd_sub_Notdistracted)
 
+
+## Run the distraction code on the lick day data (minus rats 1 and 2) to get modelled distractor
+## peaks 
+##############################################################################################################
+##############################################################################################################
+##############################################################################################################
+
+# DISTRACTION FILES (minus the first 2) - this was run with all included 
+### Distractors, distracted and not distracted, licks and blue / uv signals 
+
+
+allRatBlueMOD = []
+allRatUVMOD = []
+allRatFSMOD = []
+allRatLicksMOD = []
+allRatDistractorsMOD = []
+allRatDistractedMOD = []
+allRatNotDistractedMOD = []
+blueMeans_distractorMOD = []
+uvMeans_distractorMOD = [] 
+blueMeans_distractedMOD = []
+uvMeans_distractedMOD = []
+blueMeans_notdistractedMOD = []
+uvMeans_notdistractedMOD = [] 
+allbluesnipsMOD = []
+alluvsnipsMOD = []
+
+for filename in TDTfiles_thph_lick[2:]:
+    
+    file = TDTfilepath + filename
+    ratdata = loadmatfile(file)
+    allRatBlueMOD.append(ratdata['blue'])
+    allRatUVMOD.append(ratdata['uv'])
+    allRatFSMOD.append(ratdata['fs'])
+    allRatLicksMOD.append(ratdata['licks'])
+    allRatDistractorsMOD.append(ratdata['distractors'])
+    allRatDistractedMOD.append(ratdata['distracted'])
+    allRatNotDistractedMOD.append(ratdata['notdistracted'])
+
+
+for i, val in enumerate(allRatDistractorsMOD):
+    try:
+        # make a blue and uv snip for all 14, and noise remover / index
+        blueSnips, ppsBlue = snipper(allRatBlueMOD[i], allRatDistractorsMOD[i], fs=allRatFSMOD[i], bins=300)
+        uvSnips, ppsUV = snipper(allRatUVMOD[i], allRatDistractorsMOD[i], fs=allRatFSMOD[i], bins=300)
+    
+        randevents = makerandomevents(allRatBlueMOD[i][300], allRatBlueMOD[i][-300])
+        bgMad, bgMean = findnoise(allRatBlueMOD[i], randevents, fs=allRatFSMOD[i], method='sum', bins=300)
+        threshold = 1
+        sigSum = [np.sum(abs(i)) for i in blueSnips]
+        noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
+        # Might not need the noise index, this is just for trials fig 
+    except: 
+        pass
+# Individual plots to choose a representative rat 
+    
+#    fig14 = plt.figure()
+#    ax13 = plt.subplot(1,1,1)
+#    ax13.set_ylim([-0.15, 0.15])
+#    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Distractor') #, noiseindex=noiseindex) #, )
+#    plt.text(250,0.2, '{}'.format(len(allRatDistractors[i])) + ' distractors' )
+#    fig14.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Distractors_' + str(i) + '.pdf', bbox_inches="tight")
+
+    
+    blueMeanDISTRACTOR = np.mean(blueSnips, axis=0)
+    blueMeans_distractorMOD.append(blueMeanDISTRACTOR)
+    uvMeanDISTRACTOR = np.mean(uvSnips, axis=0)
+    uvMeans_distractorMOD.append(uvMeanDISTRACTOR)
+
+
+# Means for distractORS trials here MULT SHADED FIG 
+fig = plt.figure(figsize=(6,3))
+ax = plt.subplot(1,1,1)
+ax.set_ylim([-0.04, 0.04])
+trialsMultShadedFig(ax, [np.asarray(uvMeans_distractorMOD),np.asarray(blueMeans_distractorMOD)], ppsBlue, eventText='Distractor', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
+# EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
+#plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
+#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Distractors_All_Rats.pdf', bbox_inches="tight")
+
+
+
+for i, val in enumerate(allRatDistractedMOD):
+    try:
+        # make a blue and uv snip for all 14, and noise remover / index
+        blueSnips, ppsBlue = snipper(allRatBlueMOD[i], allRatDistractedMOD[i], fs=allRatFSMOD[i], bins=300)
+        uvSnips, ppsUV = snipper(allRatUVMOD[i], allRatDistractedMOD[i], fs=allRatFSMOD[i], bins=300)
+    
+        randevents = makerandomevents(allRatBlueMOD[i][300], allRatBlueMOD[i][-300])
+        bgMad, bgMean = findnoise(allRatBlueMOD[i], randevents, fs=allRatFSMOD[i], method='sum', bins=300)
+        threshold = 1
+        sigSum = [np.sum(abs(i)) for i in blueSnips]
+        noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
+        # Might not need the noise index, this is just for trials fig 
+    except: 
+        pass
+# Individual plots to choose a representative rat 
+#    fig14 = plt.figure()
+#    ax13 = plt.subplot(1,1,1)
+#    ax13.set_ylim([-0.15, 0.15])
+#    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Distracted') #, noiseindex=noiseindex) #, )
+#    plt.text(250,0.2, '{}'.format(len(allRatDistracted[i])) + ' distracted' )
+#    fig14.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Distracted_' + str(i) + '.pdf', bbox_inches="tight")
+#
+
+    blueMeanDISTRACTED = np.mean(blueSnips, axis=0)
+    blueMeans_distractedMOD.append(blueMeanDISTRACTED)
+    uvMeanDISTRACTED = np.mean(uvSnips, axis=0)
+    uvMeans_distractedMOD.append(uvMeanDISTRACTED)
+    allbluesnipsMOD.append(blueSnips)
+    alluvsnipsMOD.append(uvSnips)
+# Means for distracted trials here MULT SHADED FIG 
+fig = plt.figure(figsize=(6,3))
+ax = plt.subplot(1,1,1)
+ax.set_ylim([-0.04, 0.04])
+trialsMultShadedFig(ax, [np.asarray(uvMeans_distractedMOD),np.asarray(blueMeans_distractedMOD)], ppsBlue, eventText='Distracted trial', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
+# EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
+#plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
+#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Distracted_All_Rats.pdf', bbox_inches="tight")
+
+
+
+
+for i, val in enumerate(allRatNotDistractedMOD):
+    try:
+        # make a blue and uv snip for all 14, and noise remover / index
+        blueSnips, ppsBlue = snipper(allRatBlueMOD[i], allRatNotDistractedMOD[i], fs=allRatFSMOD[i], bins=300)
+        uvSnips, ppsUV = snipper(allRatUVMOD[i], allRatNotDistractedMOD[i], fs=allRatFSMOD[i], bins=300)
+    
+        randevents = makerandomevents(allRatBlueMOD[i][300], allRatBlueMOD[i][-300])
+        bgMad, bgMean = findnoise(allRatBlueMOD[i], randevents, fs=allRatFSMOD[i], method='sum', bins=300)
+        threshold = 1
+        sigSum = [np.sum(abs(i)) for i in blueSnips]
+        noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
+        # Might not need the noise index, this is just for trials fig 
+    except: 
+        pass
+    
+## Individual plots to choose a representative rat 
+#    fig14 = plt.figure()
+#    ax13 = plt.subplot(1,1,1)
+#    ax13.set_ylim([-0.15, 0.15])
+#    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Not Distracted') #, noiseindex=noiseindex) #, )
+#    plt.text(250,0.2, '{}'.format(len(allRatNotDistractedMOD[i])) + ' not distracted' )
+##    fig14.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/NotDistracted_' + str(i) + '.pdf', bbox_inches="tight")
+
+# Means for not distracted trials here MULT SHADED FIG 
+
+    blueMeanNOTDISTRACTED = np.mean(blueSnips, axis=0)
+    blueMeans_notdistractedMOD.append(blueMeanNOTDISTRACTED)
+    uvMeanNOTDISTRACTED = np.mean(uvSnips, axis=0)
+    uvMeans_notdistractedMOD.append(uvMeanNOTDISTRACTED)
+# Means for distracted trials here MULT SHADED FIG 
+fig = plt.figure(figsize=(6,3))
+ax = plt.subplot(1,1,1)
+ax.set_ylim([-0.04, 0.04])
+trialsMultShadedFig(ax, [np.asarray(uvMeans_notdistractedMOD),np.asarray(blueMeans_notdistractedMOD)], ppsBlue, eventText='Not Distracted trial', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
+# EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
+#plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
+#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/NotDistracted_All_Rats.pdf', bbox_inches="tight")
+
+# CONCLUSION - NOT DISTRACTED TRIALS ARE JUST LONG RUNS OF LICKS (and this looks just like that)
+# Importantly the distracted trials DO NOT LOOK LIKE real ones 
+###????
+
+
+
+# TO DO: 
+    
+    # White noise vs non white noise 
+    # White noise and non white noise on distraction day and habituation (presentations not dis or not dis trials )
