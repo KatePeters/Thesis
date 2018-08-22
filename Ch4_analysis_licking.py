@@ -452,7 +452,7 @@ fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
 ax.set_ylim([-0.03, 0.03])
 ax.set_ylim([-0.05, 0.05])
-trialsMultShadedFig(ax, [np.asarray(uvMeansRuns),np.asarray(blueMeansRuns)], ppsBlue, eventText='First Lick in Run', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'])
+trialsMultShadedFig(ax, [np.asarray(uvMeansRuns[2:]),np.asarray(blueMeansRuns)], ppsBlue, eventText='First Lick in Run', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'])
 plt.text(250,0.03, '{}'.format(len(MergedRunList)) + ' Runs' ) ## Edit this to be all
 fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/All_Runs_All_Rats.pdf')
 
@@ -849,12 +849,14 @@ for i, val in enumerate(allRatDistractors):
         pass
 # Individual plots to choose a representative rat 
     
-    fig14 = plt.figure()
-    ax13 = plt.subplot(1,1,1)
-    ax13.set_ylim([-0.2, 0.2])
-    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Distractor', noiseindex=noiseindex) #, )
-    plt.text(250,0.2, '{}'.format(len(allRatDistractors[i])) + ' distractors' )
+#    fig14 = plt.figure()
+#    ax13 = plt.subplot(1,1,1)
+#    ax13.set_ylim([-0.15, 0.15])
+#    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Distractor') #, noiseindex=noiseindex) #, )
+#    plt.text(250,0.2, '{}'.format(len(allRatDistractors[i])) + ' distractors' )
+#    fig14.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Distractors_' + str(i) + '.pdf', bbox_inches="tight")
 
+    
     blueMeanDISTRACTOR = np.mean(blueSnips, axis=0)
     blueMeans_distractor.append(blueMeanDISTRACTOR)
     uvMeanDISTRACTOR = np.mean(uvSnips, axis=0)
@@ -889,9 +891,11 @@ for i, val in enumerate(allRatDistracted):
 # Individual plots to choose a representative rat 
 #    fig14 = plt.figure()
 #    ax13 = plt.subplot(1,1,1)
-#    ax13.set_ylim([-0.2, 0.2])
-#    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Distracted', noiseindex=noiseindex) #, )
+#    ax13.set_ylim([-0.15, 0.15])
+#    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Distracted') #, noiseindex=noiseindex) #, )
 #    plt.text(250,0.2, '{}'.format(len(allRatDistracted[i])) + ' distracted' )
+#    fig14.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Distracted_' + str(i) + '.pdf', bbox_inches="tight")
+#
 
     blueMeanDISTRACTED = np.mean(blueSnips, axis=0)
     blueMeans_distracted.append(blueMeanDISTRACTED)
@@ -927,11 +931,12 @@ for i, val in enumerate(allRatNotDistracted):
         pass
     
 # Individual plots to choose a representative rat 
-#    fig14 = plt.figure()
-#    ax13 = plt.subplot(1,1,1)
-#    ax13.set_ylim([-0.2, 0.2])
-#    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Not Distracted', noiseindex=noiseindex) #, )
-#    plt.text(250,0.2, '{}'.format(len(allRatNotDistracted[i])) + ' not distracted' )
+    fig14 = plt.figure()
+    ax13 = plt.subplot(1,1,1)
+    ax13.set_ylim([-0.15, 0.15])
+    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Not Distracted') #, noiseindex=noiseindex) #, )
+    plt.text(250,0.2, '{}'.format(len(allRatNotDistracted[i])) + ' not distracted' )
+    fig14.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/NotDistracted_' + str(i) + '.pdf', bbox_inches="tight")
 
 # Means for not distracted trials here MULT SHADED FIG 
 
@@ -1021,3 +1026,81 @@ trialsMultShadedFig(ax, [np.asarray(uvMeans_notdistracted),np.asarray(blueMeans_
 ## THEN compare the peaks with stats and export to SPSS for t-tests?
 
 '''
+################################################################################################
+################################################################################################
+
+## Subsetting data, to get peaks 
+
+## Variables : stored blue and uv snips for different conditions (means for each rat, lists of 12 - not 14 1.1 and 1.2 removed)
+## Do this all on a uv subtracted baseline?
+
+# UV is essentially zero but check this 
+
+# (1) UV signal subtracted from the blue 
+# (2) Derive the peaks by following rules:
+# (3) Compare using ANOVA or t-tests
+
+## Expects list of 12 rats with mean snips in each field 
+def uvSubtractor(rat_snip_means_list_blue, uv):
+    subtractedSignal = []
+    for ind, rat in enumerate(rat_snip_means_list_blue):
+        subtractedSignal.append(rat_snip_means_list_blue[ind] - uv[ind])
+        
+    return subtractedSignal
+
+bkgnd_sub_Runs = uvSubtractor(blueMeansRuns, uvMeansRuns)
+bkgnd_sub_Short_Runs = uvSubtractor(blueMeans_short_run, uvMeans_short_run)
+bkgnd_sub_Long_Runs = uvSubtractor(blueMeans_long_run, uvMeans_long_run)
+bkgnd_sub_Distractor = uvSubtractor(blueMeans_distractor, uvMeans_distractor)
+bkgnd_sub_Distracted = uvSubtractor(blueMeans_distracted, uvMeans_distracted)
+bkgnd_sub_Notdistracted = uvSubtractor(blueMeans_notdistracted, uvMeans_notdistracted)
+
+## Expects list of 12 rats with mean snips in each field 
+## Give it the background subtracted snips or just the blue (as list of lists with eachlist a rat)
+
+def PhotoPeaksCalc(snips_all_rats):
+    
+    allRat_peak = []
+    allRat_t = []
+    allRat_pre = []
+    allRat_post = []
+    allRat_base = []
+    
+    for rat in snips_all_rats:
+        pre_event = np.mean(rat[0:50]) # Average for 5 seconds, 10 seconds before event 
+        peak = np.max(rat[100:300]) ## Minus the average of the first 5 seconds and after 100 points (slice)
+        peak_range = rat[100:300]
+        a = peak_range.tolist()
+        peak_index = a.index(peak)
+        t = peak_index / 10
+        pre_event = np.mean(rat[50:100])
+        post_event = np.mean(rat[100:300])
+        baseline = np.mean(rat[0:50])
+        
+        allRat_peak.append(peak)
+        allRat_t.append(t)
+        allRat_pre.append(pre_event)
+        allRat_post.append(post_event)
+        allRat_base.append(baseline) 
+        
+    
+    return allRat_peak, allRat_t, allRat_pre, allRat_post, allRat_base
+
+
+### Photometry peak variables - remember these lists will be unequal distractors 12 rats not 14?
+### Should maybe take out the first 2 of the licks too? As they had no signal ???
+## Manually removed the first 2 rats in SPSS -- should also remove them here (check later about the photo plots)
+
+# All runs
+peak_runs, t_runs, pre_runs, post_runs, baseline_runs = PhotoPeaksCalc(bkgnd_sub_Runs[2:])
+# Short runs
+peak_short_runs, t_short_runs, pre_short_runs, post_short_runs, baseline_short_runs = PhotoPeaksCalc(bkgnd_sub_Short_Runs[2:])
+# Long runs
+peak_long_runs, t_long_runs, pre_long_runs, post_long_runs, baseline_long_runs = PhotoPeaksCalc(bkgnd_sub_Long_Runs[2:])
+# Distractors
+peak_distractor, t_distractor, pre_distractor, post_distractor, baseline_distractor = PhotoPeaksCalc(bkgnd_sub_Distractor)
+# Distracted
+peak_distracted, t_distracted, pre_distracted, post_distracted, baseline_distracted = PhotoPeaksCalc(bkgnd_sub_Distracted)
+# Not distracted 
+peak_notdistracted, t_notdistracted, pre_notdistracted, post_notdistracted, baseline_notdistracted = PhotoPeaksCalc(bkgnd_sub_Notdistracted)
+
