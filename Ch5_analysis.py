@@ -878,11 +878,11 @@ for i, val in enumerate(allRatDistractors):
         pass
 # Individual plots to choose a representative rat 
     
-#    fig14 = plt.figure()
-#    ax13 = plt.subplot(1,1,1)
-#    ax13.set_ylim([-0.15, 0.15])
-#    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Distractor') #, noiseindex=noiseindex) #, )
-#    plt.text(250,0.2, '{}'.format(len(allRatDistractors[i])) + ' distractors' )
+    fig14 = plt.figure()
+    ax13 = plt.subplot(1,1,1)
+    ax13.set_ylim([-0.15, 0.15])
+    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Distractor') #, noiseindex=noiseindex) #, )
+    plt.text(250,0.2, '{}'.format(len(allRatDistractors[i])) + ' distractors' )
 #    fig14.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Distractors_' + str(i) + '.pdf', bbox_inches="tight")
 
     

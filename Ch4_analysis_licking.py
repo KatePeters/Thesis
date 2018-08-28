@@ -1268,7 +1268,9 @@ trialsMultShadedFig(ax, [np.asarray(uvMeans_notdistractedMOD),np.asarray(blueMea
 # Importantly the distracted trials DO NOT LOOK LIKE real ones 
 ###????
 
-
+# Make the peaks , t, pre, post (otherwaise only evidence is that post is dif)
+## Argue that the runs are sustained licking which is often not the case in distraction 
+## To tease appart, modelled distractors 
 
 # TO DO: 
     
