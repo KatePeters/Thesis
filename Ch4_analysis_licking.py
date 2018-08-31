@@ -1223,9 +1223,6 @@ trialsMultShadedFig(ax, [np.asarray(uvMeans_distractedMOD),np.asarray(blueMeans_
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
 #fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Distracted_All_Rats.pdf', bbox_inches="tight")
 
-
-
-
 for i, val in enumerate(allRatNotDistractedMOD):
     try:
         # make a blue and uv snip for all 14, and noise remover / index
@@ -1264,15 +1261,192 @@ trialsMultShadedFig(ax, [np.asarray(uvMeans_notdistractedMOD),np.asarray(blueMea
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
 #fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/NotDistracted_All_Rats.pdf', bbox_inches="tight")
 
-# CONCLUSION - NOT DISTRACTED TRIALS ARE JUST LONG RUNS OF LICKS (and this looks just like that)
-# Importantly the distracted trials DO NOT LOOK LIKE real ones 
-###????
+bkgnd_sub_Distractor_MOD = uvSubtractor(blueMeans_distractorMOD, uvMeans_distractorMOD)
+bkgnd_sub_Distracted_MOD = uvSubtractor(blueMeans_distractedMOD, uvMeans_distractedMOD)
+bkgnd_sub_Notdistracted_MOD = uvSubtractor(blueMeans_notdistractedMOD, uvMeans_notdistractedMOD)
+# Distractors (in this case only these peaks in SPSS, may decide to use DIS and NOTDIS later though)
+peak_distractorMOD, t_distractorMOD, pre_distractorMOD, post_distractorMOD, baseline_distractorMOD = PhotoPeaksCalc(bkgnd_sub_Distractor_MOD)
+# Distracted
+peak_distractedMOD, t_distractedMOD, pre_distractedMOD, post_distractedMOD, baseline_distractedMOD = PhotoPeaksCalc(bkgnd_sub_Distracted_MOD)
+# Not distracted 
+peak_notdistractedMOD, t_notdistractedMOD, pre_notdistractedMOD, post_notdistractedMOD, baseline_notdistractedMOD = PhotoPeaksCalc(bkgnd_sub_Notdistracted_MOD)
 
-# Make the peaks , t, pre, post (otherwaise only evidence is that post is dif)
-## Argue that the runs are sustained licking which is often not the case in distraction 
-## To tease appart, modelled distractors 
 
-# TO DO: 
+
+
+
+
+## NOW - make all photo peaks again from HABITUATION day not lick day or distraction day 
+
+# Repeat everything (not the licking just distraction) and make all of the snips and peaks 
+# Then transfer these to SPSS 
+
+## Run the distraction code on the HABITUATION DAY data (minus rats 1 and 2) 
+##############################################################################################################
+##############################################################################################################
+##############################################################################################################
+
+# HABITUATION FILES (minus the first 2) 
+### Distractors, distracted and not distracted, licks and blue / uv signals 
+
+allRatBlueHAB = []
+allRatUVHAB = []
+allRatFSHAB = []
+allRatLicksHAB = []
+allRatDistractorsHAB = []
+allRatDistractedHAB = []
+allRatNotDistractedHAB = []
+blueMeans_distractorHAB = []
+uvMeans_distractorHAB = [] 
+blueMeans_distractedHAB = []
+uvMeans_distractedHAB = []
+blueMeans_notdistractedHAB = []
+uvMeans_notdistractedHAB = [] 
+allbluesnipsHAB = []
+alluvsnipsHAB = []
+
+for filename in TDTfiles_thph_hab:
     
-    # White noise vs non white noise 
-    # White noise and non white noise on distraction day and habituation (presentations not dis or not dis trials )
+    file = TDTfilepath + filename
+    ratdata = loadmatfile(file)
+    allRatBlueHAB.append(ratdata['blue'])
+    allRatUVHAB.append(ratdata['uv'])
+    allRatFSHAB.append(ratdata['fs'])
+    allRatLicksHAB.append(ratdata['licks'])
+    allRatDistractorsHAB.append(ratdata['distractors'])
+    allRatDistractedHAB.append(ratdata['distracted'])
+    allRatNotDistractedHAB.append(ratdata['notdistracted'])
+
+
+for i, val in enumerate(allRatDistractorsHAB):
+    try:
+        # make a blue and uv snip for all 14, and noise remover / index
+        blueSnips, ppsBlue = snipper(allRatBlueHAB[i], allRatDistractorsHAB[i], fs=allRatFSHAB[i], bins=300)
+        uvSnips, ppsUV = snipper(allRatUVHAB[i], allRatDistractorsHAB[i], fs=allRatFSHAB[i], bins=300)
+    
+        randevents = makerandomevents(allRatBlueHAB[i][300], allRatBlueHAB[i][-300])
+        bgMad, bgMean = findnoise(allRatBlueHAB[i], randevents, fs=allRatFSHAB[i], method='sum', bins=300)
+        threshold = 1
+        sigSum = [np.sum(abs(i)) for i in blueSnips]
+        noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
+        # Might not need the noise index, this is just for trials fig 
+    except: 
+        pass
+# Individual plots to choose a representative rat 
+    
+#    fig14 = plt.figure()
+#    ax13 = plt.subplot(1,1,1)
+#    ax13.set_ylim([-0.15, 0.15])
+#    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Distractor') #, noiseindex=noiseindex) #, )
+#    plt.text(250,0.2, '{}'.format(len(allRatDistractors[i])) + ' distractors' )
+#    fig14.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Distractors_' + str(i) + '.pdf', bbox_inches="tight")
+
+    
+    blueMeanDISTRACTOR = np.mean(blueSnips, axis=0)
+    blueMeans_distractorHAB.append(blueMeanDISTRACTOR)
+    uvMeanDISTRACTOR = np.mean(uvSnips, axis=0)
+    uvMeans_distractorHAB.append(uvMeanDISTRACTOR)
+
+
+# Means for distractORS trials here MULT SHADED FIG 
+fig = plt.figure(figsize=(6,3))
+ax = plt.subplot(1,1,1)
+ax.set_ylim([-0.04, 0.04])
+trialsMultShadedFig(ax, [np.asarray(uvMeans_distractorHAB),np.asarray(blueMeans_distractorHAB)], ppsBlue, eventText='Distractor', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
+# EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
+#plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
+#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Distractors_All_Rats.pdf', bbox_inches="tight")
+
+
+
+for i, val in enumerate(allRatDistractedHAB):
+    try:
+        # make a blue and uv snip for all 14, and noise remover / index
+        blueSnips, ppsBlue = snipper(allRatBlueHAB[i], allRatDistractedHAB[i], fs=allRatFSHAB[i], bins=300)
+        uvSnips, ppsUV = snipper(allRatUVHAB[i], allRatDistractedHAB[i], fs=allRatFSHAB[i], bins=300)
+    
+        randevents = makerandomevents(allRatBlueHAB[i][300], allRatBlueHAB[i][-300])
+        bgMad, bgMean = findnoise(allRatBlueHAB[i], randevents, fs=allRatFSHAB[i], method='sum', bins=300)
+        threshold = 1
+        sigSum = [np.sum(abs(i)) for i in blueSnips]
+        noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
+        # Might not need the noise index, this is just for trials fig 
+    except: 
+        pass
+# Individual plots to choose a representative rat 
+#    fig14 = plt.figure()
+#    ax13 = plt.subplot(1,1,1)
+#    ax13.set_ylim([-0.15, 0.15])
+#    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Distracted') #, noiseindex=noiseindex) #, )
+#    plt.text(250,0.2, '{}'.format(len(allRatDistracted[i])) + ' distracted' )
+#    fig14.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Distracted_' + str(i) + '.pdf', bbox_inches="tight")
+#
+
+    blueMeanDISTRACTED = np.mean(blueSnips, axis=0)
+    blueMeans_distractedHAB.append(blueMeanDISTRACTED)
+    uvMeanDISTRACTED = np.mean(uvSnips, axis=0)
+    uvMeans_distractedHAB.append(uvMeanDISTRACTED)
+    allbluesnipsHAB.append(blueSnips)
+    alluvsnipsHAB.append(uvSnips)
+# Means for distracted trials here MULT SHADED FIG 
+fig = plt.figure(figsize=(6,3))
+ax = plt.subplot(1,1,1)
+ax.set_ylim([-0.04, 0.04])
+trialsMultShadedFig(ax, [np.asarray(uvMeans_distractedHAB),np.asarray(blueMeans_distractedHAB)], ppsBlue, eventText='Distracted trial', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
+# EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
+#plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
+#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Distracted_All_Rats.pdf', bbox_inches="tight")
+
+for i, val in enumerate(allRatNotDistractedHAB):
+    try:
+        # make a blue and uv snip for all 14, and noise remover / index
+        blueSnips, ppsBlue = snipper(allRatBlueHAB[i], allRatNotDistractedHAB[i], fs=allRatFSHAB[i], bins=300)
+        uvSnips, ppsUV = snipper(allRatUVHAB[i], allRatNotDistractedHAB[i], fs=allRatFSHAB[i], bins=300)
+    
+        randevents = makerandomevents(allRatBlueHAB[i][300], allRatBlueHAB[i][-300])
+        bgMad, bgMean = findnoise(allRatBlueHAB[i], randevents, fs=allRatFSHAB[i], method='sum', bins=300)
+        threshold = 1
+        sigSum = [np.sum(abs(i)) for i in blueSnips]
+        noiseindex = [i > bgMean + bgMad*threshold for i in sigSum]
+        # Might not need the noise index, this is just for trials fig 
+    except: 
+        pass
+    
+## Individual plots to choose a representative rat 
+#    fig14 = plt.figure()
+#    ax13 = plt.subplot(1,1,1)
+#    ax13.set_ylim([-0.15, 0.15])
+#    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Not Distracted') #, noiseindex=noiseindex) #, )
+#    plt.text(250,0.2, '{}'.format(len(allRatNotDistractedMOD[i])) + ' not distracted' )
+##    fig14.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/NotDistracted_' + str(i) + '.pdf', bbox_inches="tight")
+
+# Means for not distracted trials here MULT SHADED FIG 
+
+    blueMeanNOTDISTRACTED = np.mean(blueSnips, axis=0)
+    blueMeans_notdistractedHAB.append(blueMeanNOTDISTRACTED)
+    uvMeanNOTDISTRACTED = np.mean(uvSnips, axis=0)
+    uvMeans_notdistractedHAB.append(uvMeanNOTDISTRACTED)
+# Means for distracted trials here MULT SHADED FIG 
+fig = plt.figure(figsize=(6,3))
+ax = plt.subplot(1,1,1)
+ax.set_ylim([-0.04, 0.04])
+trialsMultShadedFig(ax, [np.asarray(uvMeans_notdistractedHAB),np.asarray(blueMeans_notdistractedHAB)], ppsBlue, eventText='Not Distracted trial', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
+# EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
+#plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
+#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/NotDistracted_All_Rats.pdf', bbox_inches="tight")
+
+bkgnd_sub_Distractor_HAB = uvSubtractor(blueMeans_distractorHAB, uvMeans_distractorHAB)
+bkgnd_sub_Distracted_HAB = uvSubtractor(blueMeans_distractedHAB, uvMeans_distractedHAB)
+bkgnd_sub_Notdistracted_HAB = uvSubtractor(blueMeans_notdistractedHAB, uvMeans_notdistractedHAB)
+# Distractors (in this case only these peaks in SPSS, may decide to use DIS and NOTDIS later though)
+peak_distractorHAB, t_distractorHAB, pre_distractorHAB, post_distractorHAB, baseline_distractorHAB = PhotoPeaksCalc(bkgnd_sub_Distractor_HAB)
+# Distracted
+peak_distractedHAB, t_distractedHAB, pre_distractedHAB, post_distractedHAB, baseline_distractedHAB = PhotoPeaksCalc(bkgnd_sub_Distracted_HAB)
+# Not distracted 
+peak_notdistractedHAB, t_notdistractedHAB, pre_notdistractedHAB, post_notdistractedHAB, baseline_notdistractedHAB = PhotoPeaksCalc(bkgnd_sub_Notdistracted_HAB)
+
+## PERHAPS only care about distractORS as not many distracted trials on this habituation day? 
+
+
+
+
