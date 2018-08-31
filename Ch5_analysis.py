@@ -12,6 +12,7 @@ Chapter 5 - Distraction and photometry in NAc terminals
 
 """
 
+## RATS 2,3,4,5,7 have signal (or possible)
 ## NAPH
 ## ? Do I need to separate these by core and shell? Enough in each category? > 
 # Lick day
@@ -29,19 +30,7 @@ TDTfilepath = '/Volumes/KP_HARD_DRI/All_Matlab_Converts/BIG CONVERSION 14 AUG 20
 
 savepath = '/Volumes/KPMSB352/Thesis/Chapter 5 - Photometry NAc/Figures'
 
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Fri May 25 09:08:16 2018
 
-@author: u1490431
-"""
-
-"""
-Chapter 4 - Distraction and photometry in VTA 
-
-
-"""
 
 # Import modules --------------------------------------------------------
 
@@ -336,34 +325,6 @@ def findnoise(data, background, t2sMap = [], fs = 1, bins=0, method='sd'):
         bgMean = np.mean(bgSD)
    
     return bgMAD, bgMean
-# Distracted or not peaks
-# Manuall add the lists here 
-# Start with THPH1 and 2 lick days
-# Then THPH1 and 2 distraction 
-# Then THPH1 and 2 habituation 
-
-# WHICH RATS DID NOT HAVE SIGNAL?
-# THPH1 AND 2
-# Lick day 
-TDTfiles_thph_lick = ['thph1-1_lick6', 'thph1-2_lick6', 'thph1-3_lick6', 'thph1-4_lick6', 'thph1-5_lick6',\
-                'thph1-6_lick6', 'thph2-1_lick3', 'thph2-2_lick3','thph2-3_lick3','thph2-4_lick3', \
-                'thph2-5_lick3','thph2-6_lick3', 'thph2-7_lick6', 'thph2-8_lick6']
-
-# Modelled distractors change variable names for this script or script section 
-# Distraction day 
-TDTfiles_thph_dis = ['thph1-3_distraction1', \
-                'thph1-4_distraction1','thph1-5_distraction1','thph1-6_distraction1', \
-                'thph2-1_distraction', 'thph2-2_distraction', 'thph2-3_distraction', \
-                'thph2-4_distraction', 'thph2-5_distraction', 'thph2-6_distraction', \
-                'thph2-7_distraction', 'thph2-8_distraction'] #'thph1-1_distraction1', 'thph1-2_distraction1'
-
-# Habituation day 
-TDTfiles_thph_hab = ['thph1-3_distraction2',\
-                'thph1-4_distraction2', 'thph1-5_distraction2','thph1-6_distraction2',\
-                'thph2-1_habituation', 'thph2-2_habituation', 'thph2-3_habituation', \
-                'thph2-4_habituation', 'thph2-5_habituation', 'thph2-6_habituation', \
-                'thph2-7_habituation'] #['thph1-1_distraction2','thph1-2_distraction2',
-
 
 
 
@@ -447,12 +408,12 @@ for i, val in enumerate(allRunTimes):
 #    trialsMultShadedFig(ax, [uvSnips,blueSnips], ppsBlue, eventText='First Lick in Run')
 #    plt.text(250,0.03, '{}'.format(len(allRunTimes[i])) + ' Runs' )
 #    
-#    fig2 = plt.figure()
-#    ax2 = plt.subplot(1,1,1)
-#    ax2.set_ylim([-0.2, 0.2])
-#    trialsFig(ax2, blueSnips, uvSnips, ppsBlue, eventText='First Lick in Run') #noiseindex=noiseindex) #, )
-#    plt.text(250,0.2, '{}'.format(len(allRunTimes[i])) + ' Runs' )
-#
+    fig2 = plt.figure()
+    ax2 = plt.subplot(1,1,1)
+    ax2.set_ylim([-0.02, 0.02])
+    trialsFig(ax2, blueSnips, uvSnips, ppsBlue, eventText='First Lick in Run') #noiseindex=noiseindex) #, )
+    plt.text(250,0.03, '{}'.format(len(allRunTimes[i])) + ' Runs' )
+
 #    filepath ='/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/'
 #    ratname = str(i+1) +'.pdf'
 #
@@ -480,7 +441,7 @@ for i, val in enumerate(allRunTimes):
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
 ax.set_ylim([-0.03, 0.03])
-ax.set_ylim([-0.05, 0.05])
+ax.set_ylim([-0.02, 0.02])
 trialsMultShadedFig(ax, [np.asarray(uvMeansRuns[2:]),np.asarray(blueMeansRuns)], ppsBlue, eventText='First Lick in Run', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'])
 plt.text(250,0.03, '{}'.format(len(MergedRunList)) + ' Runs' ) ## Edit this to be all
 #fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/All_Runs_All_Rats.pdf')
@@ -496,7 +457,7 @@ plt.text(250,0.03, '{}'.format(len(MergedRunList)) + ' Runs' ) ## Edit this to b
         
 #########################################################################################
 
-
+'''
 # Individual trial 1 - 13,1
 f = plt.figure(figsize=(6,2))
 ax = plt.subplot(111)
@@ -823,7 +784,7 @@ plt.legend(handles=[orange_patch, grey_patch], fontsize=14)
 plt.show()
 #fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/ShortANDLong_Runs_All_Rats.pdf', bbox_inches="tight")
 
-
+'''
 ######
 ##############################################################################################################
 ##############################################################################################################
@@ -880,9 +841,9 @@ for i, val in enumerate(allRatDistractors):
     
     fig14 = plt.figure()
     ax13 = plt.subplot(1,1,1)
-    ax13.set_ylim([-0.15, 0.15])
+    ax13.set_ylim([-0.02, 0.02])
     trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Distractor') #, noiseindex=noiseindex) #, )
-    plt.text(250,0.2, '{}'.format(len(allRatDistractors[i])) + ' distractors' )
+    plt.text(250,0.02, '{}'.format(len(allRatDistractors[i])) + ' distractors' )
 #    fig14.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Distractors_' + str(i) + '.pdf', bbox_inches="tight")
 
     
@@ -895,7 +856,7 @@ for i, val in enumerate(allRatDistractors):
 # Means for distractORS trials here MULT SHADED FIG 
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
-ax.set_ylim([-0.04, 0.04])
+ax.set_ylim([-0.005, 0.005])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_distractor),np.asarray(blueMeans_distractor)], ppsBlue, eventText='Distractor', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
@@ -976,7 +937,7 @@ for i, val in enumerate(allRatNotDistracted):
 # Means for distracted trials here MULT SHADED FIG 
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
-ax.set_ylim([-0.04, 0.04])
+ax.set_ylim([-0.004, 0.004])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_notdistracted),np.asarray(blueMeans_notdistracted)], ppsBlue, eventText='Not Distracted trial', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
@@ -1160,7 +1121,7 @@ uvMeans_notdistractedMOD = []
 allbluesnipsMOD = []
 alluvsnipsMOD = []
 
-for filename in TDTfiles_thph_lick[2:]:
+for filename in TDTfiles_naph_lick[2:]:
     
     file = TDTfilepath + filename
     ratdata = loadmatfile(file)
@@ -1287,7 +1248,7 @@ for i, val in enumerate(allRatNotDistractedMOD):
 # Means for distracted trials here MULT SHADED FIG 
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
-ax.set_ylim([-0.04, 0.04])
+ax.set_ylim([-0.01, 0.01])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_notdistractedMOD),np.asarray(blueMeans_notdistractedMOD)], ppsBlue, eventText='Not Distracted trial', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
@@ -1305,3 +1266,4 @@ trialsMultShadedFig(ax, [np.asarray(uvMeans_notdistractedMOD),np.asarray(blueMea
     
     # White noise vs non white noise 
     # White noise and non white noise on distraction day and habituation (presentations not dis or not dis trials )
+
