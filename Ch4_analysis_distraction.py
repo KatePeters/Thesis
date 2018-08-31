@@ -5,6 +5,8 @@ Created on Mon Aug 20 20:17:44 2018
 
 @author: u1490431
 """
+
+## run this script AFTER the ch4 analysis script (photometry licking days and dis, not barscatter)
 def MetaExtractorTHPH (metafile):
     f = open(metafile, 'r')
     f.seek(0)
@@ -489,4 +491,90 @@ ax.spines['bottom'].set_visible(False)
 #figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/PercentDisBarScatter.pdf', bbox_inches="tight")
 
    
+ # Barscatters to make: 
+
+## PERHAPS only care about distractORS as not many distracted trials on this habituation day? 
+
+## UNEQUAL NUMBERS HERE, ISSUE FOR BARSCATTER - Maybe just index missing the LAST rat for ALL comparisons 
+
+## Short versus long runs of licks ORANGES X 2 (ORANGE AND BRICK OR GREY AND BRICK)
+def MultBy100(list):
+    output = [x*100 for x in list]
     
+    return output
+
+shortVlongPeak = [MultBy100(peak_short_runs), MultBy100(peak_long_runs)]
+shortVlongt = [t_short_runs, t_long_runs]
+shortVlongPre = [MultBy100(pre_short_runs), MultBy100(pre_long_runs)]
+shortVlongPost = [MultBy100(post_short_runs), MultBy100(post_long_runs)]
+
+mpl.rcParams['figure.subplot.wspace'] = 0.6
+mpl.rcParams['figure.subplot.right'] = 1
+mpl.rcParams['font.size'] = 14
+figureA, ax = plt.subplots(nrows=1, ncols=4, figsize=(10,4)) ### x,y 
+figureA.tight_layout(pad=3, w_pad=3, h_pad=1.0)
+
+labels = []
+ax[0], barx, barlist, sclist = barscatter(shortVlongPeak, ax=ax[0],transpose=False, paired=True, barfacecolor=['#ffb349','#ef7700'], barfacecoloroption='individual',  ylabel='Peak (%)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[1], barx, barlist, sclist = barscatter(shortVlongt, ax=ax[1], transpose=False, paired=True, barfacecolor=['#ffb349','#ef7700'], barfacecoloroption='individual',  ylabel='t (s)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[2], barx, barlist, sclist = barscatter(shortVlongPre, ax=ax[2],transpose=False, paired=True, barfacecolor=['#ffb349','#ef7700'], barfacecoloroption='individual',  ylabel='Pre-event period (mean %)', barlabels=labels,  baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[3], barx, barlist, sclist = barscatter(shortVlongPost, ax=ax[3],transpose=False, paired=True, barfacecolor=['#ffb349','#ef7700'], barfacecoloroption='individual',  ylabel='Post-event period (mean %)', barlabels=labels, baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+
+ax[0].set_ylabel('Peak (% ΔF)')
+ax[1].set_ylabel('t (s)')
+ax[2].set_ylabel('Pre-event period (mean % ΔF)')
+ax[3].set_ylabel('Post-event period (mean % ΔF)')
+
+ax[0].set_xticks([])
+#ax[0].set_ylim([0,4000])
+ax[1].set_xticks([])
+#ax[1].set_ylim([0,25])
+ax[2].set_xticks([])
+#ax[2].set_ylim(0,1200)
+ax[3].set_xticks([])
+#ax[3].set_ylim(0,1200)
+
+ax[0].spines['bottom'].set_visible(False)
+ax[1].spines['bottom'].set_visible(False)
+ax[2].spines['bottom'].set_visible(False)
+ax[3].spines['bottom'].set_visible(False)
+
+## All runs versus all distractors (BRICK AND GREEN or ORANGE AND GREEN)
+runVdisPeak = [MultBy100(peak_runs), MultBy100(peak_distractor)]
+runVdist = [t_runs, t_distractor]
+runVdisPre = [MultBy100(pre_runs), MultBy100(pre_distractor)]
+runVdisPost = [MultBy100(post_runs), MultBy100(post_distractor)]
+
+## Distracted vs not distracted (GREEN X 2)
+disVnotPeak = [MultBy100(peak_distracted), MultBy100(peak_notdistracted)] 
+disVnott = [t_distracted, t_notdistracted]
+disVnotPre = [MultBy100(pre_distracted), MultBy100(pre_notdistracted)]
+disVnotPost = [MultBy100(post_distracted),MultBy100(post_notdistracted)]
+
+## Modelled versus distracion day presented distractors (GREY and GREEN)
+modVdisPeak = [MultBy100(peak_distractorMOD), MultBy100(peak_distractor)]
+modVdist = [t_distractorMOD, t_distractor]
+modVdisPre = [MultBy100(pre_distractorMOD), MultBy100(pre_distractor)]
+modVdisPost = [MultBy100(post_distractorMOD), MultBy100(post_distractor)]
+
+## Distraction day vs habituation day (GREEN, light and dark)
+disVhabPeak = [MultBy100(peak_distractor), MultBy100(peak_distractorHAB)]
+disVhabt = [t_distractor, t_distractorHAB]
+disVhabPre = [MultBy100(pre_distractor), MultBy100(pre_distractorHAB)]
+disVhabPost = [MultBy100(post_distractor), MultBy100(post_distractorHAB)] 
+
+
+
+# (1) Percent distracted
+# (X) All runs 
+# (2) Lick peaks, long runs vs short runs - peak, t, pre, post 
+# (3) Lick peaks vs distractor peaks (dis day) - peak, t, pre, post 
+# (4) Distracted vs not distracted (dis day) - peak, t, pre, post 
+# (5) Modelled vs distractors (2 day comparison) - peak, t, pre, post 
+# (6) Distraction day vs habituation day - peak, t, pre, post 
+# (7) 4 bars --> wn vs nwn dis day vs hab day - peak, t, pre, post 
+
+
+# Decide which plots need representative rats and individual trials 
+# Save all approprite plots and make sure the mean plots are correctly coloured (white) and labelled
+# Keep axes on and remove later in AI    
