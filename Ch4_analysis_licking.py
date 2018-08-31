@@ -23,7 +23,7 @@ import os
 import matplotlib as mpl
 import itertools
 import matplotlib.mlab as mlab
-import seaborn as sb
+#import seaborn as sb
 import statistics as stats
 
 # Functions -------------------------------------------------------------
@@ -1178,10 +1178,10 @@ for i, val in enumerate(allRatDistractorsMOD):
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
 ax.set_ylim([-0.04, 0.04])
-trialsMultShadedFig(ax, [np.asarray(uvMeans_distractorMOD),np.asarray(blueMeans_distractorMOD)], ppsBlue, eventText='Distractor', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
+trialsMultShadedFig(ax, [np.asarray(uvMeans_distractorMOD),np.asarray(blueMeans_distractorMOD)], ppsBlue, eventText='Modelled Distractor', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
-#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Distractors_All_Rats.pdf', bbox_inches="tight")
+fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Modelled_Distractors_All_Rats.pdf', bbox_inches="tight")
 
 
 
@@ -1218,7 +1218,7 @@ for i, val in enumerate(allRatDistractedMOD):
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
 ax.set_ylim([-0.04, 0.04])
-trialsMultShadedFig(ax, [np.asarray(uvMeans_distractedMOD),np.asarray(blueMeans_distractedMOD)], ppsBlue, eventText='Distracted trial', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
+trialsMultShadedFig(ax, [np.asarray(uvMeans_distractedMOD),np.asarray(blueMeans_distractedMOD)], ppsBlue, eventText='Distracted trial MOD', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
 #fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Distracted_All_Rats.pdf', bbox_inches="tight")
@@ -1256,7 +1256,7 @@ for i, val in enumerate(allRatNotDistractedMOD):
 fig = plt.figure(figsize=(6,3))
 ax = plt.subplot(1,1,1)
 ax.set_ylim([-0.04, 0.04])
-trialsMultShadedFig(ax, [np.asarray(uvMeans_notdistractedMOD),np.asarray(blueMeans_notdistractedMOD)], ppsBlue, eventText='Not Distracted trial', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
+trialsMultShadedFig(ax, [np.asarray(uvMeans_notdistractedMOD),np.asarray(blueMeans_notdistractedMOD)], ppsBlue, eventText='Not Distracted trial MOD', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
 #fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/NotDistracted_All_Rats.pdf', bbox_inches="tight")
@@ -1355,7 +1355,7 @@ ax.set_ylim([-0.04, 0.04])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_distractorHAB),np.asarray(blueMeans_distractorHAB)], ppsBlue, eventText='Distractor', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
-#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Distractors_All_Rats.pdf', bbox_inches="tight")
+#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Habituation_Distractors_All_Rats.pdf', bbox_inches="tight")
 
 
 
@@ -1444,9 +1444,4 @@ peak_distractorHAB, t_distractorHAB, pre_distractorHAB, post_distractorHAB, base
 peak_distractedHAB, t_distractedHAB, pre_distractedHAB, post_distractedHAB, baseline_distractedHAB = PhotoPeaksCalc(bkgnd_sub_Distracted_HAB)
 # Not distracted 
 peak_notdistractedHAB, t_notdistractedHAB, pre_notdistractedHAB, post_notdistractedHAB, baseline_notdistractedHAB = PhotoPeaksCalc(bkgnd_sub_Notdistracted_HAB)
-
-## PERHAPS only care about distractORS as not many distracted trials on this habituation day? 
-
-
-
 
