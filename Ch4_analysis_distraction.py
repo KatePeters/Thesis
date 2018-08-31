@@ -497,12 +497,14 @@ ax.spines['bottom'].set_visible(False)
 
 ## UNEQUAL NUMBERS HERE, ISSUE FOR BARSCATTER - Maybe just index missing the LAST rat for ALL comparisons 
 
+################################################################################################
+################################################################################################
+
 ## Short versus long runs of licks ORANGES X 2 (ORANGE AND BRICK OR GREY AND BRICK)
 def MultBy100(list):
     output = [x*100 for x in list]
     
     return output
-
 shortVlongPeak = [MultBy100(peak_short_runs), MultBy100(peak_long_runs)]
 shortVlongt = [t_short_runs, t_long_runs]
 shortVlongPre = [MultBy100(pre_short_runs), MultBy100(pre_long_runs)]
@@ -538,6 +540,10 @@ ax[0].spines['bottom'].set_visible(False)
 ax[1].spines['bottom'].set_visible(False)
 ax[2].spines['bottom'].set_visible(False)
 ax[3].spines['bottom'].set_visible(False)
+#figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/ShortVsLongPeaksBarScatter.pdf', bbox_inches="tight")
+
+################################################################################################
+################################################################################################
 
 ## All runs versus all distractors (BRICK AND GREEN or ORANGE AND GREEN)
 runVdisPeak = [MultBy100(peak_runs), MultBy100(peak_distractor)]
@@ -545,11 +551,77 @@ runVdist = [t_runs, t_distractor]
 runVdisPre = [MultBy100(pre_runs), MultBy100(pre_distractor)]
 runVdisPost = [MultBy100(post_runs), MultBy100(post_distractor)]
 
+figureA, ax = plt.subplots(nrows=1, ncols=4, figsize=(10,4)) ### x,y 
+figureA.tight_layout(pad=3, w_pad=3, h_pad=1.0)
+
+labels = []
+ax[0], barx, barlist, sclist = barscatter(runVdisPeak, ax=ax[0],transpose=False, paired=True, barfacecolor=['#ef7700','#4cbb17'], barfacecoloroption='individual',  ylabel='Peak (%)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[1], barx, barlist, sclist = barscatter(runVdist, ax=ax[1], transpose=False, paired=True, barfacecolor=['#ef7700','#4cbb17'], barfacecoloroption='individual',  ylabel='t (s)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[2], barx, barlist, sclist = barscatter(runVdisPre, ax=ax[2],transpose=False, paired=True, barfacecolor=['#ef7700','#4cbb17'], barfacecoloroption='individual',  ylabel='Pre-event period (mean %)', barlabels=labels,  baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[3], barx, barlist, sclist = barscatter(runVdisPost, ax=ax[3],transpose=False, paired=True, barfacecolor=['#ef7700','#4cbb17'], barfacecoloroption='individual',  ylabel='Post-event period (mean %)', barlabels=labels, baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+
+ax[0].set_ylabel('Peak (% ΔF)')
+ax[1].set_ylabel('t (s)')
+ax[2].set_ylabel('Pre-event period (mean % ΔF)')
+ax[3].set_ylabel('Post-event period (mean % ΔF)')
+
+ax[0].set_xticks([])
+#ax[0].set_ylim([0,4000])
+ax[1].set_xticks([])
+#ax[1].set_ylim([0,25])
+ax[2].set_xticks([])
+#ax[2].set_ylim(0,1200)
+ax[3].set_xticks([])
+#ax[3].set_ylim(0,1200)
+
+ax[0].spines['bottom'].set_visible(False)
+ax[1].spines['bottom'].set_visible(False)
+ax[2].spines['bottom'].set_visible(False)
+ax[3].spines['bottom'].set_visible(False)
+#figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/RunVsDisPeaksBarScatter.pdf', bbox_inches="tight")
+
+
+################################################################################################
+################################################################################################
+
 ## Distracted vs not distracted (GREEN X 2)
-disVnotPeak = [MultBy100(peak_distracted), MultBy100(peak_notdistracted)] 
-disVnott = [t_distracted, t_notdistracted]
-disVnotPre = [MultBy100(pre_distracted), MultBy100(pre_notdistracted)]
-disVnotPost = [MultBy100(post_distracted),MultBy100(post_notdistracted)]
+disVnotPeak = [MultBy100(peak_notdistracted),MultBy100(peak_distracted)] 
+disVnott = [t_notdistracted,t_distracted]
+disVnotPre = [MultBy100(pre_notdistracted),MultBy100(pre_distracted)]
+disVnotPost = [MultBy100(post_notdistracted),MultBy100(post_distracted)]
+
+figureA, ax = plt.subplots(nrows=1, ncols=4, figsize=(10,4)) ### x,y 
+figureA.tight_layout(pad=3, w_pad=3, h_pad=1.0)
+
+labels = []
+ax[0], barx, barlist, sclist = barscatter(disVnotPeak, ax=ax[0],transpose=False, paired=True, barfacecolor=['#257200','#4cbb17'], barfacecoloroption='individual',  ylabel='Peak (%)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[1], barx, barlist, sclist = barscatter(disVnott, ax=ax[1], transpose=False, paired=True, barfacecolor=['#257200','#4cbb17'], barfacecoloroption='individual',  ylabel='t (s)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[2], barx, barlist, sclist = barscatter(disVnotPre, ax=ax[2],transpose=False, paired=True, barfacecolor=['#257200','#4cbb17'], barfacecoloroption='individual',  ylabel='Pre-event period (mean %)', barlabels=labels,  baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[3], barx, barlist, sclist = barscatter(disVnotPost, ax=ax[3],transpose=False, paired=True, barfacecolor=['#257200','#4cbb17'], barfacecoloroption='individual',  ylabel='Post-event period (mean %)', barlabels=labels, baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+
+ax[0].set_ylabel('Peak (% ΔF)')
+ax[1].set_ylabel('t (s)')
+ax[2].set_ylabel('Pre-event period (mean % ΔF)')
+ax[3].set_ylabel('Post-event period (mean % ΔF)')
+
+ax[0].set_xticks([])
+#ax[0].set_ylim([0,4000])
+ax[1].set_xticks([])
+#ax[1].set_ylim([0,25])
+ax[2].set_xticks([])
+#ax[2].set_ylim(0,1200)
+ax[3].set_xticks([])
+#ax[3].set_ylim(0,1200)
+
+ax[0].spines['bottom'].set_visible(False)
+ax[1].spines['bottom'].set_visible(False)
+ax[2].spines['bottom'].set_visible(False)
+ax[3].spines['bottom'].set_visible(False)
+figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/DisVsNotDisPeaksBarScatter.pdf', bbox_inches="tight")
+
+
+################################################################################################
+################################################################################################
 
 ## Modelled versus distracion day presented distractors (GREY and GREEN)
 modVdisPeak = [MultBy100(peak_distractorMOD), MultBy100(peak_distractor)]
@@ -557,12 +629,71 @@ modVdist = [t_distractorMOD, t_distractor]
 modVdisPre = [MultBy100(pre_distractorMOD), MultBy100(pre_distractor)]
 modVdisPost = [MultBy100(post_distractorMOD), MultBy100(post_distractor)]
 
+figureA, ax = plt.subplots(nrows=1, ncols=4, figsize=(10,4)) ### x,y 
+figureA.tight_layout(pad=3, w_pad=3, h_pad=1.0)
+
+labels = []
+ax[0], barx, barlist, sclist = barscatter(modVdisPeak, ax=ax[0],transpose=False, paired=True, barfacecolor=['lightgray','#4cbb17'], barfacecoloroption='individual',  ylabel='Peak (%)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[1], barx, barlist, sclist = barscatter(modVdist, ax=ax[1], transpose=False, paired=True, barfacecolor=['lightgray','#4cbb17'], barfacecoloroption='individual',  ylabel='t (s)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[2], barx, barlist, sclist = barscatter(modVdisPre, ax=ax[2],transpose=False, paired=True, barfacecolor=['lightgray','#4cbb17'], barfacecoloroption='individual',  ylabel='Pre-event period (mean %)', barlabels=labels,  baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[3], barx, barlist, sclist = barscatter(modVdisPost, ax=ax[3],transpose=False, paired=True, barfacecolor=['lightgray','#4cbb17'], barfacecoloroption='individual',  ylabel='Post-event period (mean %)', barlabels=labels, baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+
+ax[0].set_ylabel('Peak (% ΔF)')
+ax[1].set_ylabel('t (s)')
+ax[2].set_ylabel('Pre-event period (mean % ΔF)')
+ax[3].set_ylabel('Post-event period (mean % ΔF)')
+
+ax[0].set_xticks([])
+#ax[0].set_ylim([0,4000])
+ax[1].set_xticks([])
+#ax[1].set_ylim([0,25])
+ax[2].set_xticks([])
+#ax[2].set_ylim(0,1200)
+ax[3].set_xticks([])
+#ax[3].set_ylim(0,1200)
+
+ax[0].spines['bottom'].set_visible(False)
+ax[1].spines['bottom'].set_visible(False)
+ax[2].spines['bottom'].set_visible(False)
+ax[3].spines['bottom'].set_visible(False)
+figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/ModVsDisPeaksBarScatter.pdf', bbox_inches="tight")
+
+################################################################################################
+################################################################################################
 ## Distraction day vs habituation day (GREEN, light and dark)
 disVhabPeak = [MultBy100(peak_distractor), MultBy100(peak_distractorHAB)]
 disVhabt = [t_distractor, t_distractorHAB]
 disVhabPre = [MultBy100(pre_distractor), MultBy100(pre_distractorHAB)]
 disVhabPost = [MultBy100(post_distractor), MultBy100(post_distractorHAB)] 
 
+figureA, ax = plt.subplots(nrows=1, ncols=4, figsize=(10,4)) ### x,y 
+figureA.tight_layout(pad=3, w_pad=3, h_pad=1.0)
+
+labels = []
+ax[0], barx, barlist, sclist = barscatter(disVhabPeak, ax=ax[0],transpose=False, paired=True, barfacecolor=['#a2e283','#257200'], barfacecoloroption='individual',  ylabel='Peak (%)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[1], barx, barlist, sclist = barscatter(disVhabt, ax=ax[1], transpose=False, paired=True, barfacecolor=['#a2e283','#257200'], barfacecoloroption='individual',  ylabel='t (s)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[2], barx, barlist, sclist = barscatter(disVhabPre, ax=ax[2],transpose=False, paired=True, barfacecolor=['#a2e283','#257200'], barfacecoloroption='individual',  ylabel='Pre-event period (mean %)', barlabels=labels,  baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[3], barx, barlist, sclist = barscatter(disVhabPost, ax=ax[3],transpose=False, paired=True, barfacecolor=['#a2e283','#257200'], barfacecoloroption='individual',  ylabel='Post-event period (mean %)', barlabels=labels, baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+
+ax[0].set_ylabel('Peak (% ΔF)')
+ax[1].set_ylabel('t (s)')
+ax[2].set_ylabel('Pre-event period (mean % ΔF)')
+ax[3].set_ylabel('Post-event period (mean % ΔF)')
+
+ax[0].set_xticks([])
+#ax[0].set_ylim([0,4000])
+ax[1].set_xticks([])
+#ax[1].set_ylim([0,25])
+ax[2].set_xticks([])
+#ax[2].set_ylim(0,1200)
+ax[3].set_xticks([])
+#ax[3].set_ylim(0,1200)
+
+ax[0].spines['bottom'].set_visible(False)
+ax[1].spines['bottom'].set_visible(False)
+ax[2].spines['bottom'].set_visible(False)
+ax[3].spines['bottom'].set_visible(False)
+figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/DisVsHabPeaksBarScatter.pdf', bbox_inches="tight")
 
 
 # (1) Percent distracted
@@ -575,6 +706,3 @@ disVhabPost = [MultBy100(post_distractor), MultBy100(post_distractorHAB)]
 # (7) 4 bars --> wn vs nwn dis day vs hab day - peak, t, pre, post 
 
 
-# Decide which plots need representative rats and individual trials 
-# Save all approprite plots and make sure the mean plots are correctly coloured (white) and labelled
-# Keep axes on and remove later in AI    
