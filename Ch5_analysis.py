@@ -1254,16 +1254,3 @@ trialsMultShadedFig(ax, [np.asarray(uvMeans_notdistractedMOD),np.asarray(blueMea
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
 #fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/NotDistracted_All_Rats.pdf', bbox_inches="tight")
 
-# CONCLUSION - NOT DISTRACTED TRIALS ARE JUST LONG RUNS OF LICKS (and this looks just like that)
-# Importantly the distracted trials DO NOT LOOK LIKE real ones 
-###????
-
-# Make the peaks , t, pre, post (otherwaise only evidence is that post is dif)
-## Argue that the runs are sustained licking which is often not the case in distraction 
-## To tease appart, modelled distractors 
-
-# TO DO: 
-    
-    # White noise vs non white noise 
-    # White noise and non white noise on distraction day and habituation (presentations not dis or not dis trials )
-
