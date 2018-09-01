@@ -693,16 +693,265 @@ ax[0].spines['bottom'].set_visible(False)
 ax[1].spines['bottom'].set_visible(False)
 ax[2].spines['bottom'].set_visible(False)
 ax[3].spines['bottom'].set_visible(False)
-figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/DisVsHabPeaksBarScatter.pdf', bbox_inches="tight")
+#figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/DisVsHabPeaksBarScatter.pdf', bbox_inches="tight")
 
+#???????
 
-# (1) Percent distracted
-# (X) All runs 
-# (2) Lick peaks, long runs vs short runs - peak, t, pre, post 
-# (3) Lick peaks vs distractor peaks (dis day) - peak, t, pre, post 
-# (4) Distracted vs not distracted (dis day) - peak, t, pre, post 
-# (5) Modelled vs distractors (2 day comparison) - peak, t, pre, post 
-# (6) Distraction day vs habituation day - peak, t, pre, post 
+# ANALYSIS FOR WHITE NOISE VS NON-WHITE NOISE HERE 
 # (7) 4 bars --> wn vs nwn dis day vs hab day - peak, t, pre, post 
 
 
+
+## Correlation between PERCENT DISTRACTED and DISTRCTOR PEAK 
+import matplotlib as mpl 
+from scipy import stats
+import seaborn as sn
+slope, intercept, r_value, p_value, std_err = stats.linregress(percentdisDis[2:], MultBy100(peak_distractor))
+## Plot the scatter
+plt.plot(percentdisDis[2:], MultBy100(peak_distractor),'o', color='limegreen')
+## Add line of best fit
+plt.plot(np.asarray(percentdisDis[2:]), intercept+slope*np.asarray(percentdisDis[2:]), 'limegreen')
+
+plt.legend()
+sn.despine(offset=10, trim=True); 
+
+plt.xlabel('Percent distracted', fontsize=14)
+plt.ylabel('Peak response to distractors (% ΔF)', fontsize=14)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Corr_Percent_DistractorPeak.pdf', bbox_inches="tight")
+plt.show()
+print('Linear regression, Percent distracted VS distractor peak')
+print('R squared = ',r_value**2, ', p value = ', p_value)
+
+
+## Correlation between PERCENT DISTRACTED and DISTRACTED PEAK 
+slope, intercept, r_value, p_value, std_err = stats.linregress(percentdisDis[2:], MultBy100(peak_distracted))
+## Plot the scatter
+plt.plot(percentdisDis[2:], MultBy100(peak_distracted),'o', color='#257200')
+## Add line of best fit
+plt.plot(np.asarray(percentdisDis[2:]), intercept+slope*np.asarray(percentdisDis[2:]) ,'#257200')
+
+plt.legend()
+sn.despine(offset=10, trim=True); 
+
+plt.xlabel('Percent distracted', fontsize=14)
+plt.ylabel('Peak response distracted (% ΔF)', fontsize=14)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Corr_Percent_DistractedPeak.pdf', bbox_inches="tight")
+plt.show()
+print('Linear regression, Percent distracted VS distracted peak')
+print('R squared = ',r_value**2, ', p value = ', p_value)
+
+
+
+
+## Correlation between PERCENT DISTRACTED and RUNS PEAK 
+slope, intercept, r_value, p_value, std_err = stats.linregress(percentdisDis[2:], MultBy100(peak_runs))
+## Plot the scatter
+plt.plot(percentdisDis[2:], MultBy100(peak_runs),'o', color='darkorange')
+## Add line of best fit
+plt.plot(np.asarray(percentdisDis[2:]), intercept+slope*np.asarray(percentdisDis[2:]), 'darkorange')
+
+plt.legend()
+sn.despine(offset=10, trim=True); 
+
+plt.xlabel('Percent distracted', fontsize=14)
+plt.ylabel('Peak response runs (% ΔF)', fontsize=14)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Corr_Percent_RunsPeak.pdf', bbox_inches="tight")
+
+plt.show()
+print('Linear regression, Percent distracted VS all runs peak')
+print('R squared = ',r_value**2, ', p value = ', p_value)
+
+
+################################################################################################
+################################################################################################
+
+
+#  White noise separation - thph1 and thph2
+
+def discalc_modalities(dictionary, modalitykey):
+    ''' Calculates distractors, distracted and modalities for dictionary of 
+    rats by group for just distraction day only 
+    
+    Calculates a grouped percentage of each modality and how distracted 
+    by that modality rats are on average (by group)
+    
+    '''
+    percent_dis_whitenoise_group = []
+    percent_dis_tone_group = []
+    percent_dis_combined_group = []
+    percent_dis_all_non_WN_group = []
+    discalcgroup = []
+    ## SAL MALES - DISTRACTION DAY ONLY - DISTRACTOR TYPE ANALYSIS INCLUDED
+# Finds distracted or not (corrects for med slipping issue)
+    for rat in dictionary:
+        print('a')
+        discalc = distractionCalc2(rat[0])
+        distracted, notdistracted = distractedOrNot(discalc, rat[0])
+        print(len(distracted), len(notdistracted))
+      #  work out percentage and add this too 
+        discalcgroup.append([distracted, notdistracted])
+    
+        dis_numeric = []
+        ndis_numeric = []
+    # Modality analysis - calculates which distractors contain different features (whitenoise, tone or combination)
+    # Then works out on how many of these trials rats are distracted (individual) before creating a mean 
+    # Tr and except because there are some cases where there are ZERO distracted or non distracted trials (or both)
+        for d in distracted:
+                        try:
+                            dis_numeric.append([rat[2][idx] for idx, val in enumerate(discalc) if val == d][0])
+                        except IndexError:
+                            pass
+                
+      
+        for nd in notdistracted:
+                        try:
+                             ndis_numeric.append([rat[2][idx] for idx, val in enumerate(discalc) if val == nd][0])   
+                        except IndexError:
+                            pass
+                        
+        # Makes the distracted trial types into integers 
+        dis_numeric = [int(d) for d in dis_numeric]
+        # Counts to work out percentages after finding how many are each modality 
+        d_whitenoise_count = 0
+        d_tone_count = 0
+        d_combined_count = 0 
+        
+        dis_type_text = [] #labels the distypes with text labels and adds to the counts
+        for d in dis_numeric:
+            if d in modalitykey['whitenoise']:
+                dis_type_text.append('whitenoise')
+                d_whitenoise_count += 1
+            elif d in modalitykey['tone']:
+                dis_type_text.append('tone')
+                d_tone_count += 1
+            elif d in modalitykey['combined3']:
+                dis_type_text.append('combined3')
+                d_combined_count += 1 
+   # Non-distracted trials by modality 
+        ndis_numeric = [int(d) for d in ndis_numeric]
+        nd_whitenoise_count = 0
+        nd_tone_count = 0
+        nd_combined_count = 0 
+        
+        ndis_type_text = []
+        for d in ndis_numeric:
+            if d in modalitykey['whitenoise']:
+                ndis_type_text.append('whitenoise')
+                nd_whitenoise_count += 1
+            elif d in modalitykey['tone']:
+                ndis_type_text.append('tone')
+                nd_tone_count += 1
+            elif d in modalitykey['combined3']:
+                ndis_type_text.append('combined3')
+                nd_combined_count += 1 
+ 
+## DEBUGGING SECTION        
+
+# Not an issue if there are zero distracted trials, because calculates 0%
+# without problem, will be an issue if both 0 dis and 0 non-dis (because no 
+# trials of that modality, need to exclude)
+         
+#        if d_whitenoise_count < 1:
+#            print('y', d_whitenoise_count, nd_whitenoise_count)
+#        if d_tone_count < 1:
+#            print('x', d_tone_count, nd_tone_count)
+#        if d_combined_count < 1:
+#            print('z', d_combined_count, nd_combined_count)
+ 
+# WHITENOISE        
+        if nd_whitenoise_count > 0:            
+            percent_distracted_whitenoise = d_whitenoise_count / (d_whitenoise_count + nd_whitenoise_count) *100
+        elif d_whitenoise_count < 1:
+            try:
+                percent_distracted_whitenoise = d_whitenoise_count / (d_whitenoise_count + nd_whitenoise_count) *100
+            except ZeroDivisionError:
+                print('oops')
+                percent_distracted_whitenoise = -1
+        elif d_whitenoise_count > 1:
+            percent_distracted_whitenoise = 100 
+# TONE            
+        ## what to do if both zero 
+        if nd_tone_count > 0:
+            percent_distracted_tone = d_tone_count / (d_tone_count + nd_tone_count) *100
+        elif d_tone_count < 1:
+            try:
+                percent_distracted_tone = d_tone_count / (d_tone_count + nd_tone_count) *100
+            except ZeroDivisionError:
+                print('oopsT')
+                percent_distracted_tone = -1
+        elif d_tone_count > 1:
+            percent_distracted_tone = 100 
+
+# COMBINED        
+        if nd_combined_count > 0:
+            percent_distracted_combined = d_combined_count / (d_combined_count + nd_combined_count) *100  
+
+        elif d_combined_count < 1:
+            try:
+                percent_distracted_combined = d_combined_count / (d_combined_count + nd_combined_count) *100  
+            except ZeroDivisionError:
+                print('oopsC')
+                percent_distracted_combined = -1
+        elif d_combined_count > 1:
+            percent_distracted_combined = 100 
+
+# NON WHITE NOISE
+
+        if nd_combined_count > 0 or nd_tone_count > 0:
+            percent_distracted_all_non_WN = (d_tone_count + d_combined_count) / ((d_tone_count + d_combined_count )+ (nd_tone_count + nd_combined_count)) *100  
+                
+        elif d_combined_count < 1 and d_tone_count < 1:
+            print('all less')
+            try:
+                percent_distracted_all_non_WN = (d_tone_count + d_combined_count) / ((d_tone_count + d_combined_count )+ (nd_tone_count + nd_combined_count)) *100  
+            except ZeroDivisionError:
+                print('oopsNWN')
+                percent_distracted_all_non_WN = -1     
+        elif d_combined_count or d_tone_count > 1:
+            percent_distracted_all_non_WN = 100
+     
+      
+        percent_dis_whitenoise_group.append(percent_distracted_whitenoise)
+        percent_dis_tone_group.append(percent_distracted_tone)
+        percent_dis_combined_group.append(percent_distracted_combined)
+        percent_dis_all_non_WN_group.append(percent_distracted_all_non_WN)
+    
+## Removing the occurrences of -1 which were added to account for zero distractors
+    
+    percent_dis_whitenoise_group = [x for x in percent_dis_whitenoise_group if x != -1]
+    percent_dis_tone_group = [x for x in percent_dis_tone_group if x != -1]
+    percent_dis_combined_group = [x for x in percent_dis_combined_group if x != -1]
+    percent_dis_all_non_WN_group = [x for x in percent_dis_all_non_WN_group if x != -1]       
+
+        
+    mean_percent_WHITENOISE = np.mean(percent_dis_whitenoise_group) # the average percentage of JUST whitenoise trials that rats are distracted on 
+    mean_percent_TONE = np.mean(percent_dis_tone_group)
+    mean_percent_COMBINED = np.mean(percent_dis_combined_group)
+    mean_percent_ALL_NON_WN = np.mean(percent_dis_all_non_WN_group)
+    
+    return discalcgroup, percent_dis_whitenoise_group, percent_dis_tone_group, \
+            percent_dis_combined_group, percent_dis_all_non_WN_group, mean_percent_WHITENOISE, mean_percent_TONE, \
+            mean_percent_COMBINED, mean_percent_ALL_NON_WN
+
+
+
+################################################################################################
+################################################################################################
+
+# Distraction day analysis (including modalities)
+modalitykey = {'whitenoise':[1,4], 'tone':[2,5], 'combined3':[3,6]}
+
+
+discalcgroup, percent_dis_whitenoise_group, percent_dis_tone_group, \
+percent_dis_combined_group, percent_dis_all_non_WN_group, mean_percent_WHITENOISE, \
+mean_percent_TONE, mean_percent_COMBINED, mean_percent_ALL_NON_WN = discalc_modalities(distraction, modalitykey)
+
+
+## Report that they are no more distracting in these animals so no need to do the photometry!!!
+## Maybe report this early with the behavioural stuff? 
