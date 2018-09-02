@@ -13,7 +13,8 @@ Chapter 5 - Distraction and photometry in NAc terminals
 # '#B03B5C' pink 
 # '#E4AFAF' light pink for error bars 
 # '#9CBEDE' powder blue
-# '#3747A4' indego 
+# '#3747A4' blue
+# '#261F5C' indego 
 
 
 """
@@ -49,7 +50,7 @@ import os
 import matplotlib as mpl
 import itertools
 import matplotlib.mlab as mlab
-import seaborn as sb
+#import seaborn as sb
 import statistics as stats
 
 # Functions -------------------------------------------------------------
@@ -1090,11 +1091,11 @@ def PhotoPeaksCalc(snips_all_rats):
 ## Manually removed the first 2 rats in SPSS -- should also remove them here (check later about the photo plots)
 
 # All runs
-peak_runs, t_runs, pre_runs, post_runs, baseline_runs = PhotoPeaksCalc(bkgnd_sub_Runs[2:])
+peak_runs, t_runs, pre_runs, post_runs, baseline_runs = PhotoPeaksCalc(bkgnd_sub_Runs)
 # Short runs
-peak_short_runs, t_short_runs, pre_short_runs, post_short_runs, baseline_short_runs = PhotoPeaksCalc(bkgnd_sub_Short_Runs[2:])
+peak_short_runs, t_short_runs, pre_short_runs, post_short_runs, baseline_short_runs = PhotoPeaksCalc(bkgnd_sub_Short_Runs)
 # Long runs
-peak_long_runs, t_long_runs, pre_long_runs, post_long_runs, baseline_long_runs = PhotoPeaksCalc(bkgnd_sub_Long_Runs[2:])
+peak_long_runs, t_long_runs, pre_long_runs, post_long_runs, baseline_long_runs = PhotoPeaksCalc(bkgnd_sub_Long_Runs)
 # Distractors
 peak_distractor, t_distractor, pre_distractor, post_distractor, baseline_distractor = PhotoPeaksCalc(bkgnd_sub_Distractor)
 # Distracted
@@ -1179,7 +1180,7 @@ ax.set_ylim([-0.005, 0.005])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_distractorMOD),np.asarray(blueMeans_distractorMOD)], ppsBlue, eventText='Distractor', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
-fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 5 - Photometry NAc/Figures/Modelled_Distractors_All_Rats.pdf', bbox_inches="tight")
+#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 5 - Photometry NAc/Figures/Modelled_Distractors_All_Rats.pdf', bbox_inches="tight")
 
 
 
@@ -1352,9 +1353,7 @@ ax.set_ylim([-0.005, 0.005])
 trialsMultShadedFig(ax, [np.asarray(uvMeans_distractorHAB),np.asarray(blueMeans_distractorHAB)], ppsBlue, eventText='Distractor', linecolor = ['purple','blue'], errorcolor = ['thistle','lightblue'], scale=0)
 # EDIT THIS TEXT TO SHOW NUMBER OF TOTAL DISTRACTORS OR TRIALS ON THE AVERAGED PLOT 
 #plt.text(250,0.03, '{}'.format(len(MergedRunList_Long)) + ' Long Runs' ) ## Edit this to be all
-#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Habituation_Distractors_All_Rats.pdf', bbox_inches="tight")
-
-fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 5 - Photometry NAc/Figures/Habituation_Distractors_All_Rats.pdf', bbox_inches="tight")
+#fig.savefig('/Volumes/KPMSB352/Thesis/Chapter 5 - Photometry NAc/Figures/Habituation_Distractors_All_Rats.pdf', bbox_inches="tight")
 
 
 for i, val in enumerate(allRatDistractedHAB):
