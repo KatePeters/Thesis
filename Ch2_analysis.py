@@ -816,9 +816,8 @@ nlicks, nlicks_minus1, nlicks_minus2 = nlicksgrouped(last_lick, lick_minus1, lic
 ### Cumulative licking plots - Post distraction pauses for DIS1 animals 
 ## Code taken from the THPH1 and 2 analysis 
 
-#import seaborn as sn
-
-#sn.set_style("white")
+import seaborn as sn
+sn.set_style("white")
 
 # Plot settings, font / size / styles
 Calibri = {'fontname':'Calibri'}
@@ -846,12 +845,12 @@ for index, pdplists in enumerate(pdps_mod_dis):
 for index, licklist in enumerate(all_pdps_mod):
     plot = cumulativelickFig(ax, all_pdps_mod[index], normed=True, color='lightgrey', log=True)
 avg = [item for rat in all_pdps_mod for item in rat] 
-cumulativelickFig(ax, avg, normed=True, color='dimgrey', log=True)
+cumulativelickFig(ax, avg, normed=True, color='#0277BD', log=True)
 ax.set(ylabel = 'Probability')
 ax.yaxis.label.set_size(16)
-ax.set(xlabel = 'post-distraction pause log(s)')
+ax.set(xlabel = 'post-distractor pause log(s)')
 ax.xaxis.label.set_size(16)
-#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Cumulative_M_sal_mod.pdf", bbox_inches='tight')
+plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/Cumulative_allPDPs_mod.pdf', bbox_inches='tight')
 
 ## Distraction day  
 # CUMULATIVE PDPS
@@ -869,22 +868,18 @@ for index, pdplists in enumerate(pdps_dis):
 for index, licklist in enumerate(all_pdps):
     plot = cumulativelickFig(ax, all_pdps[index], normed=True, color='lightgrey', log=True)
 avg = [item for rat in all_pdps for item in rat] 
-cumulativelickFig(ax, avg, normed=True, color='gold', log=True)
+cumulativelickFig(ax, avg, normed=True, color='#880E4F', log=True)
 #avg2 = [item for rat in pdps_dis_sal_M for item in rat] 
 #cumulativelickFig(ax, avg2, normed=True, color='green', log=True)
 #avg3 = [item for rat in pdps_notdis_sal_M for item in rat] 
 #cumulativelickFig(ax, avg3, normed=True, color='blue', log=True)
 ax.set(ylabel = 'Probability')
 ax.yaxis.label.set_size(16)
-ax.set(xlabel = 'post-distraction pause log(s)')
+ax.set(xlabel = 'post-distractor pause log(s)')
 ax.xaxis.label.set_size(16)
-#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Cumulative_M_sal_dis.pdf", bbox_inches='tight')
+plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/Cumulative_allPDPs_dis.pdf', bbox_inches='tight')
 
-
-
-
-
-### All four lines on one graph no individual rats at all 
+### Both lines on one graph no individual rats at all 
 
 fig = plt.figure()
 #plt.title('PDPs by day and group', **Calibri, **Size)
@@ -893,22 +888,17 @@ ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
   
 
-avg = [item for rat in all_pdps_mod_sal_M for item in rat] 
-avg1 = [item for rat in all_pdps_sal_M for item in rat] 
-avg2 = [item for rat in all_pdps_mod_pcp_M for item in rat] 
-avg3 = [item for rat in all_pdps_pcp_M for item in rat] 
+avg = [item for rat in all_pdps_mod for item in rat] 
+avg1 = [item for rat in all_pdps for item in rat] 
+cumulativelickFig(ax, avg, normed=True, color='#0277BD', log=True)
+cumulativelickFig(ax, avg1, normed=True, color='#880E4F', log=True)
 
-
-cumulativelickFig(ax, avg, normed=True, color='dimgrey', log=True)
-cumulativelickFig(ax, avg1, normed=True, color='gold', log=True)
-cumulativelickFig(ax, avg2, normed=True, color='black', log=True) 
-cumulativelickFig(ax, avg3, normed=True, color='orange', log=True)
 ax.set(ylabel = 'Probability')
 ax.yaxis.label.set_size(16)
-ax.set(xlabel = 'post-distraction pause log(s)')
+ax.set(xlabel = 'post-distractor pause log(s)')
 ax.xaxis.label.set_size(16)
 
-#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Cumulative_M_spmd.pdf", bbox_inches='tight')
+plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/Cumulative_allPDPs_modVSdis.pdf', bbox_inches='tight')
 
 
 
@@ -921,13 +911,19 @@ fig = plt.figure()
 ax = fig.add_subplot(111)
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
+for index, licklist in enumerate(pdps_dis):
+    plot = cumulativelickFig(ax, pdps_dis[index], normed=True, color='lightgrey', log=True)
 avg = [item for rat in pdps_dis for item in rat] 
-cumulativelickFig(ax, avg, normed=True, color='darkgrey', log=True)
-avg1 = [item for rat in pdps_notdis for item in rat] 
-cumulativelickFig(ax, avg1, normed=True, color='darkgrey', log=True)
-#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Cumulative_M_S_P_disvsnot.pdf", bbox_inches='tight')
+cumulativelickFig(ax, avg, normed=True, color='#E91E63', log=True)
 
-## Add individual data for trials 
+for index, licklist in enumerate(pdps_notdis):
+    plot = cumulativelickFig(ax, pdps_notdis[index], normed=True, color='lightgrey', log=True)
+avg = [item for rat in pdps_notdis for item in rat] 
+cumulativelickFig(ax, avg, normed=True, color='#4FC3F7', log=True)
+ax.set(ylabel = 'Probability')
+ax.yaxis.label.set_size(16)
+ax.set(xlabel = 'post-distractor pause log(s)')
+ax.xaxis.label.set_size(16)
+plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/Cumulative__disvsnot.pdf', bbox_inches='tight')
 
 
-    
