@@ -816,8 +816,8 @@ nlicks, nlicks_minus1, nlicks_minus2 = nlicksgrouped(last_lick, lick_minus1, lic
 ### Cumulative licking plots - Post distraction pauses for DIS1 animals 
 ## Code taken from the THPH1 and 2 analysis 
 
-import seaborn as sn
-sn.set_style("white")
+#import seaborn as sn
+#sn.set_style("white")
 
 # Plot settings, font / size / styles
 Calibri = {'fontname':'Calibri'}
