@@ -319,15 +319,16 @@ def data2obj2D(data):
 import matplotlib as mpl 
 
 mpl.rcParams['font.size'] = 14
-
+label_size = 14
+plt.rcParams['xtick.labelsize'] = label_size 
+plt.rcParams['ytick.labelsize'] = label_size 
 
 # Barscatter, licking across days 1,2,3 (all rats DIS1)
-lickdata = [[nlicks_minus2,nlicks_minus1,nlicks]]
+lickdata = [nlicks_minus6, nlicks_minus5, nlicks_minus4, nlicks_minus3, nlicks_minus2, nlicks_minus1, nlicks]
 col = ['#81D4FA','#03A9F4','#0277BD']
-labels = ['-3','-2','-1']
-# Males licking on 3 lick days 
+labels = ['1','2','3','4','5','6','7']
 figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,4)) ### x,y
-ax, barx, barlist, sclist = barscatter(lickdata, transpose=False, ax=ax,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Licks', xlabel='Lick days before distraction', barlabels=labels, itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax, barx, barlist, sclist = barscatter(lickdata, transpose=False, ax=ax,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Licks', xlabel='Lick training days', barlabels=labels, itemlabel=['1','2'], barlabeloffset=0.05) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
 ax.xaxis.labelpad = 40
 plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/LickDaysBarscatter.pdf', bbox_inches='tight')
 
@@ -402,5 +403,66 @@ figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,4)) ### x,y
 ax, barx, barlist, sclist = barscatter(modality_data, transpose=False, ax=ax,paired=False, barfacecolor=col, barfacecoloroption='individual',  ylabel='Mean licks per burst', barlabels=labels, itemlabel=['1','2'], barlabeloffset=0.05, xrotation=45) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
 ax.xaxis.labelpad = 40               
 plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/ModalityBarscatter.pdf', bbox_inches='tight')
+
+
+#Licking paramters - N CLUSTERS
+mean_n_runs = np.mean(all_n_runs)
+nruns_data = [[all_n_runs[0]],[all_n_runs[1]],[all_n_runs[2]],[all_n_runs[3]],[all_n_runs[4]],[all_n_runs[5]],[all_n_runs[6]],[all_n_runs[7]], all_n_runs]
+col = ['lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightpink']
+labels = ['rat 1', 'rat 2', 'rat 3', 'rat 4', 'rat 5', 'rat 6', 'rat 7', 'rat 8', 'mean']
+figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,4)) ### x,y
+ax, barx, barlist, sclist = barscatter(nruns_data, transpose=False, ax=ax,paired=False, barfacecolor=col, barfacecoloroption='individual',  ylabel='Number of clusters', barlabels=labels, itemlabel=['1','2'], barlabeloffset=0.05, xrotation=45, unequal=False) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax.xaxis.labelpad = 40
+plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/NRunsBarscatter.pdf', bbox_inches='tight')
+
+
+#Licking parameters - LICKS PER CLUSTER
+## Maybe here you should have all of the burst lengths for each rat? 
+mean_runlen = np.mean(all_mean_run_length)
+nrun_len_data = [[all_mean_run_length[0]],[all_mean_run_length[1]],[all_mean_run_length[2]],[all_mean_run_length[3]],[all_mean_run_length[4]],[all_mean_run_length[5]],[all_mean_run_length[6]],[all_mean_run_length[7]], all_mean_run_length]
+col = ['lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightpink']
+labels = ['rat 1', 'rat 2', 'rat 3', 'rat 4', 'rat 5', 'rat 6', 'rat 7', 'rat 8', 'mean']
+figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,4)) ### x,y
+ax, barx, barlist, sclist = barscatter(nrun_len_data, transpose=False, ax=ax,paired=False, barfacecolor=col, barfacecoloroption='individual',  ylabel='Mean licks per cluster', barlabels=labels, itemlabel=['1','2'], barlabeloffset=0.05, xrotation=45) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax.xaxis.labelpad = 40               
+plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/MeanRunLenBarscatter.pdf', bbox_inches='tight')
+
+
+##### Inter-cluster (IRI) ICI - could have all the IRIs on the plot if wanted (need to extract though)
+mean_IRI = np.mean(all_mean_IRI)
+IRI_data = [[all_mean_IRI[0]],[all_mean_IRI[1]],[all_mean_IRI[2]],[all_mean_IRI[3]],[all_mean_IRI[4]],[all_mean_IRI[5]],[all_mean_IRI[6]],[all_mean_IRI[7]], all_mean_IRI]
+col = ['lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightpink']
+labels = ['rat 1', 'rat 2', 'rat 3', 'rat 4', 'rat 5', 'rat 6', 'rat 7', 'rat 8', 'mean']
+figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,4)) ### x,y
+ax, barx, barlist, sclist = barscatter(IRI_data, transpose=False, ax=ax,paired=False, barfacecolor=col, barfacecoloroption='individual',  ylabel='Mean inter cluster interval (s)', barlabels=labels, itemlabel=['1','2'], barlabeloffset=0.05, xrotation=45) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax.xaxis.labelpad = 40               
+plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/MeanIRIBarscatter.pdf', bbox_inches='tight')
+
+### Inter-burst (IBI) - could have all the IBIs on the plot if wanted 
+##### Inter-cluster (IRI) ICI - could have all the IRIs on the plot if wanted (need to extract though)
+mean_IBI = np.mean(all_mean_IBI)
+IBI_data = [[all_mean_IBI[0]],[all_mean_IBI[1]],[all_mean_IBI[2]],[all_mean_IBI[3]],[all_mean_IBI[4]],[all_mean_IBI[5]],[all_mean_IBI[6]],[all_mean_IBI[7]], all_mean_IBI]
+col = ['lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','powderblue']
+labels = ['rat 1', 'rat 2', 'rat 3', 'rat 4', 'rat 5', 'rat 6', 'rat 7', 'rat 8', 'mean']
+figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,4)) ### x,y
+ax, barx, barlist, sclist = barscatter(IBI_data, transpose=False, ax=ax,paired=False, barfacecolor=col, barfacecoloroption='individual',  ylabel='Mean inter burst interval (s)', barlabels=labels, itemlabel=['1','2'], barlabeloffset=0.05, xrotation=45) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax.xaxis.labelpad = 40               
+plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/MeanIBIBarscatter.pdf', bbox_inches='tight')
+
+## Licking frequency (check that it is 6-7Hz)
+freq_data = [[lick_analysis[0]['freq']], [lick_analysis[1]['freq']],[lick_analysis[2]['freq']],[lick_analysis[3]['freq']],[lick_analysis[4]['freq']],[lick_analysis[5]['freq']],[lick_analysis[6]['freq']],[lick_analysis[7]['freq']]]
+freq_data2 = [[lick_analysis[0]['freq']], [lick_analysis[1]['freq']],[lick_analysis[2]['freq']],[lick_analysis[3]['freq']],[lick_analysis[4]['freq']],[lick_analysis[5]['freq']],[lick_analysis[6]['freq']],[lick_analysis[7]['freq']], freq_data]
+col = ['lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','k']
+labels = ['rat 1', 'rat 2', 'rat 3', 'rat 4', 'rat 5', 'rat 6', 'rat 7', 'rat 8', 'mean']
+figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,4)) ### x,y
+ax, barx, barlist, sclist = barscatter(freq_data2, transpose=False, ax=ax,paired=False, barfacecolor=col, barfacecoloroption='individual',  ylabel='Licking frequency (Hz)', barlabels=labels, itemlabel=['1','2'], barlabeloffset=0.05, xrotation=45) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax.xaxis.labelpad = 40               
+plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/FreqBarscatter.pdf', bbox_inches='tight')
+
+
+
+
+
+
 
 

@@ -595,7 +595,7 @@ def percentdisgroup(distractiondict):
     return percent_dis_group
 
     
-def nlicksgrouped(licklist1, licklist2, licklist3):
+def nlicksgrouped(licklist1, licklist2, licklist3, licklist4, licklist5, licklist6, licklist7):
     """ Calculates n licks from lists already subset, for the 3 
         training days before distraction. Subset list expected to 
         contain n lists by group, n = rat
@@ -603,8 +603,11 @@ def nlicksgrouped(licklist1, licklist2, licklist3):
     lick = []
     lickminus1 = []
     lickminus2 = []
+    lickminus3 = []
+    lickminus4 = []
+    lickminus5 = []
+    lickminus6 = []
 
-    
     for rat in licklist1:
         lick.append(len(rat[0]))
         
@@ -614,9 +617,21 @@ def nlicksgrouped(licklist1, licklist2, licklist3):
     for rat in licklist3:
         lickminus2.append(len(rat[0]))
         
+    for rat in licklist4:
+        lickminus3.append(len(rat[0]))
+                
+    for rat in licklist5:
+        lickminus4.append(len(rat[0]))
+        
+    for rat in licklist6:
+        lickminus5.append(len(rat[0]))         
+        
+    for rat in licklist7:
+        lickminus6.append(len(rat[0]))        
+        
 
 
-    return lick, lickminus1, lickminus2   
+    return lick, lickminus1, lickminus2, lickminus3, lickminus4, lickminus5, lickminus6  
 
 def cumulativelickFig(ax, firstlick, normed=True, color='g', log=True, ylabel='none', xlabel='none', title='none'):
     sorted_data = np.sort(firstlick)
@@ -699,6 +714,10 @@ medfolder = '/Volumes/KP_HARD_DRI/kp259/DIS1/'
 last_lick = subsetter2(extract_data, ['170225'])
 lick_minus1 = subsetter2(extract_data, ['170224'])
 lick_minus2 = subsetter2(extract_data, ['170222'])
+lick_minus3 = subsetter2(extract_data, ['170221'])
+lick_minus4 = subsetter2(extract_data, ['170220'])
+lick_minus5 = subsetter2(extract_data, ['170219'])
+lick_minus6 = subsetter2(extract_data, ['170218'])
 distraction = subsetter2(extract_data, ['170226'], dis=True)
 hab1 = subsetter2(extract_data, ['170227'], dis=True)
 hab2 = subsetter2(extract_data, ['170228'], dis=True)
@@ -803,9 +822,9 @@ percent_dis_hab2 = percentdisgroup(hab2_dis)
 percent_dis_sal = percentdisgroup(sal_dis)
 percent_dis_amph = percentdisgroup(amph_dis)
 
-# Using subset lists, finds N licks for the last 3 saccharin training days 
+# Using subset lists, finds N licks for the last 7? saccharin training days 
 # Stores as list variables for later plotting     
-nlicks, nlicks_minus1, nlicks_minus2 = nlicksgrouped(last_lick, lick_minus1, lick_minus2)
+nlicks, nlicks_minus1, nlicks_minus2, nlicks_minus3, nlicks_minus4, nlicks_minus5, nlicks_minus6 = nlicksgrouped(last_lick, lick_minus1, lick_minus2, lick_minus3, lick_minus4, lick_minus5, lick_minus6)
 
  
    
@@ -822,7 +841,7 @@ nlicks, nlicks_minus1, nlicks_minus2 = nlicksgrouped(last_lick, lick_minus1, lic
 # Plot settings, font / size / styles
 Calibri = {'fontname':'Calibri'}
 Size = {'fontsize': 22}
-label_size = 18
+label_size = 14
 plt.rcParams['xtick.labelsize'] = label_size 
 plt.rcParams['ytick.labelsize'] = label_size 
 plt.rcParams['lines.linewidth'] = 2
@@ -927,3 +946,7 @@ ax.xaxis.label.set_size(16)
 plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/Cumulative__disvsnot.pdf', bbox_inches='tight')
 
 
+frequency = []
+
+for rat, value in enumerate(lick_analysis):
+    frequency.append(lick_analysis[rat]['freq'])
