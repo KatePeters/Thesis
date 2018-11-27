@@ -831,7 +831,16 @@ for filename in TDTfiles_thph_dis:
     allRatDistractors.append(ratdata['distractors'])
     allRatDistracted.append(ratdata['distracted'])
     allRatNotDistracted.append(ratdata['notdistracted'])
-
+    figure12 = plt.figure(figsize=(6,3))
+    ax6 = plt.subplot(111)
+    ax6.spines['right'].set_visible(False)
+    ax6.xaxis.set_visible(False)
+    ax6.spines['top'].set_visible(False)
+    ax6.spines['bottom'].set_visible(False)
+    ax6.set(ylabel = 'Trials')
+    ax6.yaxis.label.set_size(14)
+    distractionrasterFig(ax6, ratdata['distractors'], ratdata['licks'], pre=1, post=10, sortevents='yes', sortdirection='dec')
+    
 
 for i, val in enumerate(allRatDistractors):
     try:
