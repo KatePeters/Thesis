@@ -369,148 +369,142 @@ plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/Perc
 # Mean licks per burst correlation against mean licks per clusters
 
 
-# (1) Number of bursts by number of clusters 
-import matplotlib as mpl 
-import seaborn as sn
-sn.set_style("darkgrid")
-mpl.rcParams['font.size'] = 14
-# Number of bursts by number of clusters
-slope, intercept, r_value, p_value, std_err = stats.linregress(all_n_bursts, all_n_runs)
-## Plot the scatter 
-plt.plot(all_n_bursts, all_n_runs,'o', color='darkgrey')
-## Add line of best fit
-plt.plot(np.asarray(all_n_bursts), intercept+slope*np.asarray(all_n_bursts), 'darkgrey')
-
-plt.legend()
-sn.despine(offset=10, trim=True); 
-plt.xlabel('Number of bursts', fontsize=14)
-plt.ylabel('Number of clusters', fontsize=14)
-plt.xticks(fontsize=14)
-plt.yticks(fontsize=14)
-#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Corr_DIvs%_M.pdf", bbox_inches='tight')
-plt.show()
-print('Linear regression, bursts vs clusters')
-print('SALINE')
-print('R squared = ',r_value**2, ', p value = ', p_value)
-
-
-# (2) Licks per burst, licks per cluster (means) - have the means bar at the end too
-
-# Licks per burst by licks per cluster
-slope, intercept, r_value, p_value, std_err = stats.linregress(all_mean_burst_length, all_mean_run_length)
-## Plot the scatter 
-plt.plot(all_mean_burst_length, all_mean_run_length,'o', color='darkgrey')
-## Add line of best fit
-plt.plot(np.asarray(all_mean_burst_length), intercept+slope*np.asarray(all_mean_burst_length), 'darkgrey')
-
-plt.legend()
-sn.despine(offset=10, trim=True); 
-plt.xlabel('Mean licks per burst', fontsize=14)
-plt.ylabel('Mean licks per cluster', fontsize=14)
-plt.xticks(fontsize=14)
-plt.yticks(fontsize=14)
-#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Corr_DIvs%_M.pdf", bbox_inches='tight')
-plt.show()
-print('Linear regression, licks per burst vs cluster')
-print('SALINE')
-print('R squared = ',r_value**2, ', p value = ', p_value)
-
-# (3) Inter burst interval vs intercluster interval 
-
-# Number of bursts by mber of nuclusters
-slope, intercept, r_value, p_value, std_err = stats.linregress(all_mean_IBI, all_mean_IRI)
-## Plot the scatter 
-plt.plot(all_mean_IBI, all_mean_IRI,'o', color='darkgrey')
-## Add line of best fit
-plt.plot(np.asarray(all_mean_IBI), intercept+slope*np.asarray(all_mean_IBI), 'darkgrey')
-
-plt.legend()
-sn.despine(offset=10, trim=True); 
-plt.xlabel('Mean inter-burst interval', fontsize=14)
-plt.ylabel('Mean inter-cluster interval', fontsize=14)
-plt.xticks(fontsize=14)
-plt.yticks(fontsize=14)
-#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Corr_DIvs%_M.pdf", bbox_inches='tight')
-plt.show()
-print('Linear regression, bursts vs clusters')
-print('SALINE')
-print('R squared = ',r_value**2, ', p value = ', p_value)
-
-
-meanIBI 
-meanIRI
-
-
-
-
-
-
+## (1) Number of bursts by number of clusters 
+#import matplotlib as mpl 
+#import seaborn as sn
+#sn.set_style("darkgrid")
+#mpl.rcParams['font.size'] = 14
+## Number of bursts by number of clusters
+#slope, intercept, r_value, p_value, std_err = stats.linregress(all_n_bursts, all_n_runs)
+### Plot the scatter 
+#plt.plot(all_n_bursts, all_n_runs,'o', color='darkgrey')
+### Add line of best fit
+#plt.plot(np.asarray(all_n_bursts), intercept+slope*np.asarray(all_n_bursts), 'darkgrey')
 #
-##Licking paramters - N LICKS
-#mean_licks = np.mean(nlicks)
-#nlick_data = [[nlicks[0]],[nlicks[1]],[nlicks[2]],[nlicks[3]],[nlicks[4]],[nlicks[5]],[nlicks[6]],[nlicks[7]], nlicks]
-#col = ['lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','powderblue']
-#labels = ['rat 1', 'rat 2', 'rat 3', 'rat 4', 'rat 5', 'rat 6', 'rat 7', 'rat 8', 'mean']
-#figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,4)) ### x,y
-#ax, barx, barlist, sclist = barscatter(nlick_data, transpose=False, ax=ax,paired=False, barfacecolor=col, barfacecoloroption='individual',  ylabel='Licks', barlabels=labels, itemlabel=['1','2'], barlabeloffset=0.05, xrotation=45, unequal=False) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-#ax.xaxis.labelpad = 40
-#plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/NLicksBarscatter.pdf', bbox_inches='tight')
+#plt.legend()
+#sn.despine(offset=10, trim=True); 
+#plt.xlabel('Number of bursts', fontsize=14)
+#plt.ylabel('Number of clusters', fontsize=14)
+#plt.xticks(fontsize=14)
+#plt.yticks(fontsize=14)
+##plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Corr_DIvs%_M.pdf", bbox_inches='tight')
+#plt.show()
+#print('Linear regression, bursts vs clusters')
+#print('SALINE')
+#print('R squared = ',r_value**2, ', p value = ', p_value)
 #
-##Licking paramters - N BURSTS
-#mean_n_bursts = np.mean(all_n_bursts)
-#nbursts_data = [[all_n_bursts[0]],[all_n_bursts[1]],[all_n_bursts[2]],[all_n_bursts[3]],[all_n_bursts[4]],[all_n_bursts[5]],[all_n_bursts[6]],[all_n_bursts[7]], all_n_bursts]
-#col = ['lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','powderblue']
-#labels = ['rat 1', 'rat 2', 'rat 3', 'rat 4', 'rat 5', 'rat 6', 'rat 7', 'rat 8', 'mean']
-#figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,4)) ### x,y
-#ax, barx, barlist, sclist = barscatter(nbursts_data, transpose=False, ax=ax,paired=False, barfacecolor=col, barfacecoloroption='individual',  ylabel='Number of bursts', barlabels=labels, itemlabel=['1','2'], barlabeloffset=0.05, xrotation=45, unequal=False) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-#ax.xaxis.labelpad = 40
-#plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/NBurstsBarscatter.pdf', bbox_inches='tight')
+#
+## (2) Licks per burst, licks per cluster (means) - have the means bar at the end too
+#
+## Licks per burst by licks per cluster
+#slope, intercept, r_value, p_value, std_err = stats.linregress(all_mean_burst_length, all_mean_run_length)
+### Plot the scatter 
+#plt.plot(all_mean_burst_length, all_mean_run_length,'o', color='darkgrey')
+### Add line of best fit
+#plt.plot(np.asarray(all_mean_burst_length), intercept+slope*np.asarray(all_mean_burst_length), 'darkgrey')
+#
+#plt.legend()
+#sn.despine(offset=10, trim=True); 
+#plt.xlabel('Mean licks per burst', fontsize=14)
+#plt.ylabel('Mean licks per cluster', fontsize=14)
+#plt.xticks(fontsize=14)
+#plt.yticks(fontsize=14)
+##plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Corr_DIvs%_M.pdf", bbox_inches='tight')
+#plt.show()
+#print('Linear regression, licks per burst vs cluster')
+#print('SALINE')
+#print('R squared = ',r_value**2, ', p value = ', p_value)
+#
+## (3) Inter burst interval vs intercluster interval 
+#
+## Number of bursts by mber of nuclusters
+#slope, intercept, r_value, p_value, std_err = stats.linregress(all_mean_IBI, all_mean_IRI)
+### Plot the scatter 
+#plt.plot(all_mean_IBI, all_mean_IRI,'o', color='darkgrey')
+### Add line of best fit
+#plt.plot(np.asarray(all_mean_IBI), intercept+slope*np.asarray(all_mean_IBI), 'darkgrey')
+#
+#plt.legend()
+#sn.despine(offset=10, trim=True); 
+#plt.xlabel('Mean inter-burst interval', fontsize=14)
+#plt.ylabel('Mean inter-cluster interval', fontsize=14)
+#plt.xticks(fontsize=14)
+#plt.yticks(fontsize=14)
+##plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Corr_DIvs%_M.pdf", bbox_inches='tight')
+#plt.show()
+#print('Linear regression, bursts vs clusters')
+#print('SALINE')
+#print('R squared = ',r_value**2, ', p value = ', p_value)
+#
+
+
+
+
+#Licking paramters - N LICKS
+mean_licks = np.mean(nlicks)
+nlick_data = [[nlicks[0]],[nlicks[1]],[nlicks[2]],[nlicks[3]],[nlicks[4]],[nlicks[5]],[nlicks[6]],[nlicks[7]], nlicks]
+col = ['lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','powderblue']
+labels = ['rat 1', 'rat 2', 'rat 3', 'rat 4', 'rat 5', 'rat 6', 'rat 7', 'rat 8', 'mean']
+figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,4)) ### x,y
+ax, barx, barlist, sclist = barscatter(nlick_data, transpose=False, ax=ax,paired=False, barfacecolor=col, barfacecoloroption='individual',  ylabel='Licks', barlabels=labels, itemlabel=['1','2'], barlabeloffset=0.05, xrotation=45, unequal=False) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax.xaxis.labelpad = 40
+plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/NLicksBarscatter.pdf', bbox_inches='tight')
+
+#Licking paramters - N BURSTS
+mean_n_bursts = np.mean(all_n_bursts)
+nbursts_data = [[all_n_bursts[0]],[all_n_bursts[1]],[all_n_bursts[2]],[all_n_bursts[3]],[all_n_bursts[4]],[all_n_bursts[5]],[all_n_bursts[6]],[all_n_bursts[7]], all_n_bursts]
+col = ['lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','powderblue']
+labels = ['rat 1', 'rat 2', 'rat 3', 'rat 4', 'rat 5', 'rat 6', 'rat 7', 'rat 8', 'mean']
+figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,4)) ### x,y
+ax, barx, barlist, sclist = barscatter(nbursts_data, transpose=False, ax=ax,paired=False, barfacecolor=col, barfacecoloroption='individual',  ylabel='Number of bursts', barlabels=labels, itemlabel=['1','2'], barlabeloffset=0.05, xrotation=45, unequal=False) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax.xaxis.labelpad = 40
+plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/NBurstsBarscatter.pdf', bbox_inches='tight')
 
 #Licking parameters - LICKS PER BURST
+# Maybe here you should have all of the burst lengths for each rat? 
+mean_burstlen = np.mean(all_mean_burst_length)
+nburst_len_data = [[all_mean_burst_length[0]],[all_mean_burst_length[1]],[all_mean_burst_length[2]],[all_mean_burst_length[3]],[all_mean_burst_length[4]],[all_mean_burst_length[5]],[all_mean_burst_length[6]],[all_mean_burst_length[7]], all_mean_burst_length]
+col = ['lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','powderblue']
+labels = ['rat 1', 'rat 2', 'rat 3', 'rat 4', 'rat 5', 'rat 6', 'rat 7', 'rat 8', 'mean']
+figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,4)) ### x,y
+ax, barx, barlist, sclist = barscatter(nburst_len_data, transpose=False, ax=ax,paired=False, barfacecolor=col, barfacecoloroption='individual',  ylabel='Mean licks per burst', barlabels=labels, itemlabel=['1','2'], barlabeloffset=0.05, xrotation=45) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax.xaxis.labelpad = 40               
+plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/MeanBurstLenBarscatter.pdf', bbox_inches='tight')
+
+
+
+# Percentage distracted modalities 
+modality_data = [[percent_dis_whitenoise,percent_dis_tone, percent_dis_combined]]
+col = ['powderblue','blue','darkblue']
+labels = ['white noise', 'tone', 'combined']
+figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,4)) ### x,y
+ax, barx, barlist, sclist = barscatter(modality_data, transpose=False, ax=ax,paired=False, barfacecolor=col, barfacecoloroption='individual',  ylabel='Mean licks per burst', barlabels=labels, itemlabel=['1','2'], barlabeloffset=0.05, xrotation=45) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax.xaxis.labelpad = 40               
+plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/ModalityBarscatter.pdf', bbox_inches='tight')
+
+
+#Licking paramters - N CLUSTERS
+mean_n_runs = np.mean(all_n_runs)
+nruns_data = [[all_n_runs[0]],[all_n_runs[1]],[all_n_runs[2]],[all_n_runs[3]],[all_n_runs[4]],[all_n_runs[5]],[all_n_runs[6]],[all_n_runs[7]], all_n_runs]
+col = ['lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightpink']
+labels = ['rat 1', 'rat 2', 'rat 3', 'rat 4', 'rat 5', 'rat 6', 'rat 7', 'rat 8', 'mean']
+figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,4)) ### x,y
+ax, barx, barlist, sclist = barscatter(nruns_data, transpose=False, ax=ax,paired=False, barfacecolor=col, barfacecoloroption='individual',  ylabel='Number of clusters', barlabels=labels, itemlabel=['1','2'], barlabeloffset=0.05, xrotation=45, unequal=False) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax.xaxis.labelpad = 40
+plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/NRunsBarscatter.pdf', bbox_inches='tight')
+
+
+#Licking parameters - LICKS PER CLUSTER
 ## Maybe here you should have all of the burst lengths for each rat? 
-#mean_burstlen = np.mean(all_mean_burst_length)
-#nburst_len_data = [[all_mean_burst_length[0]],[all_mean_burst_length[1]],[all_mean_burst_length[2]],[all_mean_burst_length[3]],[all_mean_burst_length[4]],[all_mean_burst_length[5]],[all_mean_burst_length[6]],[all_mean_burst_length[7]], all_mean_burst_length]
-#col = ['lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','powderblue']
-#labels = ['rat 1', 'rat 2', 'rat 3', 'rat 4', 'rat 5', 'rat 6', 'rat 7', 'rat 8', 'mean']
-#figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,4)) ### x,y
-#ax, barx, barlist, sclist = barscatter(nburst_len_data, transpose=False, ax=ax,paired=False, barfacecolor=col, barfacecoloroption='individual',  ylabel='Mean licks per burst', barlabels=labels, itemlabel=['1','2'], barlabeloffset=0.05, xrotation=45) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-#ax.xaxis.labelpad = 40               
-#plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/MeanBurstLenBarscatter.pdf', bbox_inches='tight')
-#
+mean_runlen = np.mean(all_mean_run_length)
+nrun_len_data = [[all_mean_run_length[0]],[all_mean_run_length[1]],[all_mean_run_length[2]],[all_mean_run_length[3]],[all_mean_run_length[4]],[all_mean_run_length[5]],[all_mean_run_length[6]],[all_mean_run_length[7]], all_mean_run_length]
+col = ['lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightpink']
+labels = ['rat 1', 'rat 2', 'rat 3', 'rat 4', 'rat 5', 'rat 6', 'rat 7', 'rat 8', 'mean']
+figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,4)) ### x,y
+ax, barx, barlist, sclist = barscatter(nrun_len_data, transpose=False, ax=ax,paired=False, barfacecolor=col, barfacecoloroption='individual',  ylabel='Mean licks per cluster', barlabels=labels, itemlabel=['1','2'], barlabeloffset=0.05, xrotation=45) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax.xaxis.labelpad = 40               
+plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/MeanRunLenBarscatter.pdf', bbox_inches='tight')
 
-
-## Percentage distracted modalities 
-#modality_data = [[percent_dis_whitenoise,percent_dis_tone, percent_dis_combined]]
-#col = ['powderblue','blue','darkblue']
-#labels = ['white noise', 'tone', 'combined']
-#figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,4)) ### x,y
-#ax, barx, barlist, sclist = barscatter(modality_data, transpose=False, ax=ax,paired=False, barfacecolor=col, barfacecoloroption='individual',  ylabel='Mean licks per burst', barlabels=labels, itemlabel=['1','2'], barlabeloffset=0.05, xrotation=45) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-#ax.xaxis.labelpad = 40               
-#plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/ModalityBarscatter.pdf', bbox_inches='tight')
-#
-#
-##Licking paramters - N CLUSTERS
-#mean_n_runs = np.mean(all_n_runs)
-#nruns_data = [[all_n_runs[0]],[all_n_runs[1]],[all_n_runs[2]],[all_n_runs[3]],[all_n_runs[4]],[all_n_runs[5]],[all_n_runs[6]],[all_n_runs[7]], all_n_runs]
-#col = ['lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightpink']
-#labels = ['rat 1', 'rat 2', 'rat 3', 'rat 4', 'rat 5', 'rat 6', 'rat 7', 'rat 8', 'mean']
-#figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,4)) ### x,y
-#ax, barx, barlist, sclist = barscatter(nruns_data, transpose=False, ax=ax,paired=False, barfacecolor=col, barfacecoloroption='individual',  ylabel='Number of clusters', barlabels=labels, itemlabel=['1','2'], barlabeloffset=0.05, xrotation=45, unequal=False) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-#ax.xaxis.labelpad = 40
-#plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/NRunsBarscatter.pdf', bbox_inches='tight')
-
-
-##Licking parameters - LICKS PER CLUSTER
-### Maybe here you should have all of the burst lengths for each rat? 
-#mean_runlen = np.mean(all_mean_run_length)
-#nrun_len_data = [[all_mean_run_length[0]],[all_mean_run_length[1]],[all_mean_run_length[2]],[all_mean_run_length[3]],[all_mean_run_length[4]],[all_mean_run_length[5]],[all_mean_run_length[6]],[all_mean_run_length[7]], all_mean_run_length]
-#col = ['lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightgray','lightpink']
-#labels = ['rat 1', 'rat 2', 'rat 3', 'rat 4', 'rat 5', 'rat 6', 'rat 7', 'rat 8', 'mean']
-#figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,4)) ### x,y
-#ax, barx, barlist, sclist = barscatter(nrun_len_data, transpose=False, ax=ax,paired=False, barfacecolor=col, barfacecoloroption='individual',  ylabel='Mean licks per cluster', barlabels=labels, itemlabel=['1','2'], barlabeloffset=0.05, xrotation=45) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-#ax.xaxis.labelpad = 40               
-#plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 2 - Distraction pilot/Figures/MeanRunLenBarscatter.pdf', bbox_inches='tight')
-#
 
 ##### Inter-cluster (IRI) ICI - could have all the IRIs on the plot if wanted (need to extract though)
 mean_IRI = np.mean(all_mean_IRI)
