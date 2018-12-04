@@ -28,32 +28,34 @@ for index, value in enumerate(discalc):
 all_distractors_sorted_flat = list(itertools.chain.from_iterable(all_distractors_sorted))   
 all_pdps_dis_flat = list(itertools.chain.from_iterable(all_pdps_dis))
 
-
+'''
 import seaborn as sn
 
 sn.set_style("darkgrid")
 mpl.rcParams['font.size'] = 14
-
+'''
 slope, intercept, r_value, p_value, std_err = stats.linregress(all_distractors_sorted_flat, all_pdps_dis_flat)
 ## Plot the scatter of Male Saline data 
 
 for index, value in enumerate(all_pdps_dis_flat):
     if value > 1:
-        plt.plot(all_distractors_sorted_flat[index], all_pdps_dis_flat[index],'o', color='green', label='saline')
+        plt.plot(all_distractors_sorted_flat[index], all_pdps_dis_flat[index],'o', color='blue', label='saline')
     else:
-        plt.plot(all_distractors_sorted_flat[index], all_pdps_dis_flat[index],'o', color='pink', label='saline')
+        plt.plot(all_distractors_sorted_flat[index], all_pdps_dis_flat[index],'o', color='black', label='saline')
         
 
 ## Add line of best fit for Male Saline data
 plt.plot(np.asarray(all_distractors_sorted_flat), intercept+slope*np.asarray(all_distractors_sorted_flat), 'darkgrey', label='saline fitted')
 #plt.legend()
 #sn.despine(offset=10, trim=True); 
-plt.xlabel('Time in session', fontsize=14)
-plt.ylabel('PDP', fontsize=14)
+plt.xlabel('Time in session (sec)', fontsize=14)
+plt.ylabel('PDP (sec)', fontsize=14)
 plt.xticks(fontsize=14)
 plt.yticks(fontsize=14)
-plt.ylim([0,100])
-#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Corr_DIvs%_M.pdf", bbox_inches='tight')
+plt.ylim([-1,50])
+#plt.savefig('/Volumes/KPMSB352/Thesis/FINAL THESIS/CORRECTIONS/Figures/LinReg_pdpsVStime.pdf', bbox_inches='tight')
+
+
 plt.show()
 print('')
 print('')
@@ -87,9 +89,9 @@ slope, intercept, r_value, p_value, std_err = stats.linregress(all_dis_num_flat,
 
 for index, value in enumerate(all_pdps_dis_flat):
     if value > 1:
-        plt.plot(all_dis_num_flat[index], all_pdps_dis_flat[index],'o', color='green', label='saline')
+        plt.plot(all_dis_num_flat[index], all_pdps_dis_flat[index],'o', color='blue', label='saline')
     else:
-        plt.plot(all_dis_num_flat[index], all_pdps_dis_flat[index],'o', color='pink', label='saline')
+        plt.plot(all_dis_num_flat[index], all_pdps_dis_flat[index],'o', color='black', label='saline')
         
 
 ## Add line of best fit for Male Saline data
@@ -97,11 +99,12 @@ plt.plot(np.asarray(all_dis_num_flat), intercept+slope*np.asarray(all_dis_num_fl
 #plt.legend()
 #sn.despine(offset=10, trim=True); 
 plt.xlabel('Distractor number', fontsize=14)
-plt.ylabel('PDP', fontsize=14)
+plt.ylabel('PDP (sec)', fontsize=14)
 plt.xticks(fontsize=14)
 plt.yticks(fontsize=14)
-#plt.ylim([0,100])
-#plt.savefig("/Volumes/KPMSB352/Thesis/Chapter 3 - Distraction pcp model/Figures/Corr_DIvs%_M.pdf", bbox_inches='tight')
+plt.ylim([-1,50])
+#plt.savefig('/Volumes/KPMSB352/Thesis/FINAL THESIS/CORRECTIONS/Figures/LinReg_pdpsVSnumber.pdf', bbox_inches='tight')
+
 plt.show()
 print('')
 print('')
@@ -222,14 +225,16 @@ quart1, quart2, quart3, quart4 = binnedpercentdis(discalc)
 #
 ##exclude rats 1 and 3 (0 and 2) from the plotting as these have no distractors in 
 
-del quart1[0], quart1[2], quart2[0], quart2[2], quart3[0], quart3[2],quart4[0], quart4[2]
+#del quart1[0], quart1[2], quart2[0], quart2[2], quart3[0], quart3[2],quart4[0], quart4[2]
 
-quart1
-quart2
-quart3
-quart4 
-
-N=6
-
+# Percentage distracted 4 quarts of session: 
+quart1, quart2, quart3, quart4 = binnedpercentdis(discalc)    
+binned_percent = [[quart1,quart2,quart3,quart4]]
+col = ['lightgrey','powderblue','blue','darkblue']
+labels = ['15 min','30 min','45 min','60 min']
+figureA, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,4)) ### x,y
+ax, barx, barlist, sclist = barscatter(binned_percent, transpose=False, ax=ax,paired=True, barfacecolor=col, barfacecoloroption='individual',  ylabel='Percent distracted (%)', barlabels=labels, itemlabel=['1','2'], barlabeloffset=0.05, xrotation=45) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax.xaxis.labelpad = 40               
+plt.savefig('/Volumes/KPMSB352/Thesis/FINAL THESIS/CORRECTIONS/Figures/PercentDisBinned.pdf', bbox_inches='tight')
 
 
