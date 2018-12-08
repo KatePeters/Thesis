@@ -595,7 +595,7 @@ yrange = ax.get_ylim()[1] - ax.get_ylim()[0]
 scalebary = (yrange / 10) + ax.get_ylim()[0]
 scalebarx = [ax.get_xlim()[1] - scalebar, ax.get_xlim()[1]]
 ax.plot(scalebarx, [scalebary, scalebary], c='k', linewidth=2)
-ax.text((scalebarx[0] + (scalebar/2)), scalebary-(yrange/50), str(scale) +' s', ha='center',va='top', **Calibri, **Size)
+ax.text((scalebarx[0] + (scalebar/2)), scalebary-(yrange/50), str(scale) +' s', ha='center',va='top')
 #f.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/SingleTrial_SCALE.pdf',  bbox_inches="tight")
 
 
