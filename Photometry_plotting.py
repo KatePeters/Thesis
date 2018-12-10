@@ -550,7 +550,7 @@ ax[0].spines['bottom'].set_visible(False)
 ax[1].spines['bottom'].set_visible(False)
 ax[2].spines['bottom'].set_visible(False)
 ax[3].spines['bottom'].set_visible(False)
-#figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/ShortVsLongPeaksBarScatter.pdf', bbox_inches="tight")
+figureA.savefig('/Volumes/KPMSB352/Thesis/FINAL THESIS/CORRECTIONS/Figures/ShortVsLongPeaksBarScatter.pdf', bbox_inches="tight")
 
 ################################################################################################
 ################################################################################################
@@ -588,7 +588,7 @@ ax[0].spines['bottom'].set_visible(False)
 ax[1].spines['bottom'].set_visible(False)
 ax[2].spines['bottom'].set_visible(False)
 ax[3].spines['bottom'].set_visible(False)
-#figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/RunVsDisPeaksBarScatter.pdf', bbox_inches="tight")
+figureA.savefig('/Volumes/KPMSB352/Thesis/FINAL THESIS/CORRECTIONS/Figures/RunVsDisPeaksBarScatter.pdf', bbox_inches="tight")
 
 
 ################################################################################################
@@ -627,8 +627,7 @@ ax[0].spines['bottom'].set_visible(False)
 ax[1].spines['bottom'].set_visible(False)
 ax[2].spines['bottom'].set_visible(False)
 ax[3].spines['bottom'].set_visible(False)
-figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/DisVsNotDisPeaksBarScatter.pdf', bbox_inches="tight")
-
+figureA.savefig('/Volumes/KPMSB352/Thesis/FINAL THESIS/CORRECTIONS/Figures/DisVsNotDisPeaksBarScatter.pdf', bbox_inches="tight")
 
 ################################################################################################
 ################################################################################################
@@ -666,7 +665,7 @@ ax[0].spines['bottom'].set_visible(False)
 ax[1].spines['bottom'].set_visible(False)
 ax[2].spines['bottom'].set_visible(False)
 ax[3].spines['bottom'].set_visible(False)
-figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/ModVsDisPeaksBarScatter.pdf', bbox_inches="tight")
+figureA.savefig('/Volumes/KPMSB352/Thesis/FINAL THESIS/CORRECTIONS/Figures/ModVsDisPeaksBarScatter.pdf', bbox_inches="tight")
 
 ################################################################################################
 ################################################################################################
@@ -703,80 +702,80 @@ ax[0].spines['bottom'].set_visible(False)
 ax[1].spines['bottom'].set_visible(False)
 ax[2].spines['bottom'].set_visible(False)
 ax[3].spines['bottom'].set_visible(False)
-#figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/DisVsHabPeaksBarScatter.pdf', bbox_inches="tight")
+figureA.savefig('/Volumes/KPMSB352/Thesis/FINAL THESIS/CORRECTIONS/Figures/DisVsHabPeaksBarScatter.pdf', bbox_inches="tight")
 
 #???????
 
 # ANALYSIS FOR WHITE NOISE VS NON-WHITE NOISE HERE 
 # (7) 4 bars --> wn vs nwn dis day vs hab day - peak, t, pre, post 
 
-
-
-## Correlation between PERCENT DISTRACTED and DISTRCTOR PEAK 
-import matplotlib as mpl 
-from scipy import stats
-import seaborn as sn
-slope, intercept, r_value, p_value, std_err = stats.linregress(percentdisDis[2:], MultBy100(peak_distractor))
-## Plot the scatter
-plt.plot(percentdisDis[2:], MultBy100(peak_distractor),'o', color='limegreen')
-## Add line of best fit
-plt.plot(np.asarray(percentdisDis[2:]), intercept+slope*np.asarray(percentdisDis[2:]), 'limegreen')
-
-plt.legend()
-sn.despine(offset=10, trim=True); 
-
-plt.xlabel('Percent distracted', fontsize=14)
-plt.ylabel('Peak response to distractors (% ΔF)', fontsize=14)
-plt.xticks(fontsize=14)
-plt.yticks(fontsize=14)
-plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Corr_Percent_DistractorPeak.pdf', bbox_inches="tight")
-plt.show()
-print('Linear regression, Percent distracted VS distractor peak')
-print('R squared = ',r_value**2, ', p value = ', p_value)
-
-
-## Correlation between PERCENT DISTRACTED and DISTRACTED PEAK 
-slope, intercept, r_value, p_value, std_err = stats.linregress(percentdisDis[2:], MultBy100(peak_distracted))
-## Plot the scatter
-plt.plot(percentdisDis[2:], MultBy100(peak_distracted),'o', color='#257200')
-## Add line of best fit
-plt.plot(np.asarray(percentdisDis[2:]), intercept+slope*np.asarray(percentdisDis[2:]) ,'#257200')
-
-plt.legend()
-sn.despine(offset=10, trim=True); 
-
-plt.xlabel('Percent distracted', fontsize=14)
-plt.ylabel('Peak response distracted (% ΔF)', fontsize=14)
-plt.xticks(fontsize=14)
-plt.yticks(fontsize=14)
-plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Corr_Percent_DistractedPeak.pdf', bbox_inches="tight")
-plt.show()
-print('Linear regression, Percent distracted VS distracted peak')
-print('R squared = ',r_value**2, ', p value = ', p_value)
-
-
-
-
-## Correlation between PERCENT DISTRACTED and RUNS PEAK 
-slope, intercept, r_value, p_value, std_err = stats.linregress(percentdisDis[2:], MultBy100(peak_runs))
-## Plot the scatter
-plt.plot(percentdisDis[2:], MultBy100(peak_runs),'o', color='darkorange')
-## Add line of best fit
-plt.plot(np.asarray(percentdisDis[2:]), intercept+slope*np.asarray(percentdisDis[2:]), 'darkorange')
-
-plt.legend()
-sn.despine(offset=10, trim=True); 
-
-plt.xlabel('Percent distracted', fontsize=14)
-plt.ylabel('Peak response runs (% ΔF)', fontsize=14)
-plt.xticks(fontsize=14)
-plt.yticks(fontsize=14)
-plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Corr_Percent_RunsPeak.pdf', bbox_inches="tight")
-
-plt.show()
-print('Linear regression, Percent distracted VS all runs peak')
-print('R squared = ',r_value**2, ', p value = ', p_value)
-
+#
+#
+### Correlation between PERCENT DISTRACTED and DISTRCTOR PEAK 
+#import matplotlib as mpl 
+#from scipy import stats
+#import seaborn as sn
+#slope, intercept, r_value, p_value, std_err = stats.linregress(percentdisDis[2:], MultBy100(peak_distractor))
+### Plot the scatter
+#plt.plot(percentdisDis[2:], MultBy100(peak_distractor),'o', color='limegreen')
+### Add line of best fit
+#plt.plot(np.asarray(percentdisDis[2:]), intercept+slope*np.asarray(percentdisDis[2:]), 'limegreen')
+#
+#plt.legend()
+#sn.despine(offset=10, trim=True); 
+#
+#plt.xlabel('Percent distracted', fontsize=14)
+#plt.ylabel('Peak response to distractors (% ΔF)', fontsize=14)
+#plt.xticks(fontsize=14)
+#plt.yticks(fontsize=14)
+#plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Corr_Percent_DistractorPeak.pdf', bbox_inches="tight")
+#plt.show()
+#print('Linear regression, Percent distracted VS distractor peak')
+#print('R squared = ',r_value**2, ', p value = ', p_value)
+#
+#
+### Correlation between PERCENT DISTRACTED and DISTRACTED PEAK 
+#slope, intercept, r_value, p_value, std_err = stats.linregress(percentdisDis[2:], MultBy100(peak_distracted))
+### Plot the scatter
+#plt.plot(percentdisDis[2:], MultBy100(peak_distracted),'o', color='#257200')
+### Add line of best fit
+#plt.plot(np.asarray(percentdisDis[2:]), intercept+slope*np.asarray(percentdisDis[2:]) ,'#257200')
+#
+#plt.legend()
+#sn.despine(offset=10, trim=True); 
+#
+#plt.xlabel('Percent distracted', fontsize=14)
+#plt.ylabel('Peak response distracted (% ΔF)', fontsize=14)
+#plt.xticks(fontsize=14)
+#plt.yticks(fontsize=14)
+#plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Corr_Percent_DistractedPeak.pdf', bbox_inches="tight")
+#plt.show()
+#print('Linear regression, Percent distracted VS distracted peak')
+#print('R squared = ',r_value**2, ', p value = ', p_value)
+#
+#
+#
+#
+### Correlation between PERCENT DISTRACTED and RUNS PEAK 
+#slope, intercept, r_value, p_value, std_err = stats.linregress(percentdisDis[2:], MultBy100(peak_runs))
+### Plot the scatter
+#plt.plot(percentdisDis[2:], MultBy100(peak_runs),'o', color='darkorange')
+### Add line of best fit
+#plt.plot(np.asarray(percentdisDis[2:]), intercept+slope*np.asarray(percentdisDis[2:]), 'darkorange')
+#
+#plt.legend()
+#sn.despine(offset=10, trim=True); 
+#
+#plt.xlabel('Percent distracted', fontsize=14)
+#plt.ylabel('Peak response runs (% ΔF)', fontsize=14)
+#plt.xticks(fontsize=14)
+#plt.yticks(fontsize=14)
+#plt.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/Corr_Percent_RunsPeak.pdf', bbox_inches="tight")
+#
+#plt.show()
+#print('Linear regression, Percent distracted VS all runs peak')
+#print('R squared = ',r_value**2, ', p value = ', p_value)
+#
 
 ################################################################################################
 ################################################################################################
