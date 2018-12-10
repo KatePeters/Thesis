@@ -415,16 +415,16 @@ for i, val in enumerate(allRunTimes):
 #    trialsMultShadedFig(ax, [uvSnips,blueSnips], ppsBlue, eventText='First Lick in Run')
 #    plt.text(250,0.03, '{}'.format(len(allRunTimes[i])) + ' Runs' )
 #    
-    fig2 = plt.figure()
-    ax2 = plt.subplot(1,1,1)
-    ax2.set_ylim([-0.03, 0.03])
-    trialsFig(ax2, blueSnips, uvSnips, ppsBlue, eventText='First Lick in Run') #noiseindex=noiseindex) #, )
-    plt.text(250,0.02, '{}'.format(len(allRunTimes[i])) + ' Runs' )
-
-    filepath ='/Volumes/KPMSB352/Thesis/Chapter 5 - Photometry NAc/Figures/'
-    ratname = str(i+1) +'.pdf'
-
-    fig2.savefig(filepath+ratname)
+#    fig2 = plt.figure()
+#    ax2 = plt.subplot(1,1,1)
+#    ax2.set_ylim([-0.03, 0.03])
+#    trialsFig(ax2, blueSnips, uvSnips, ppsBlue, eventText='First Lick in Run') #noiseindex=noiseindex) #, )
+#    plt.text(250,0.02, '{}'.format(len(allRunTimes[i])) + ' Runs' )
+#
+#    filepath ='/Volumes/KPMSB352/Thesis/Chapter 5 - Photometry NAc/Figures/'
+#    ratname = str(i+1) +'.pdf'
+#
+#    fig2.savefig(filepath+ratname)
 
  # these four lines used later to define means plot (made after runs)
     blueMean = np.mean(blueSnips, axis=0)
@@ -594,7 +594,7 @@ yrange = ax.get_ylim()[1] - ax.get_ylim()[0]
 scalebary = (yrange / 10) + ax.get_ylim()[0]
 scalebarx = [ax.get_xlim()[1] - scalebar, ax.get_xlim()[1]]
 ax.plot(scalebarx, [scalebary, scalebary], c='k', linewidth=2)
-ax.text((scalebarx[0] + (scalebar/2)), scalebary-(yrange/50), str(scale) +' s', ha='center',va='top', **Calibri, **Size)
+ax.text((scalebarx[0] + (scalebar/2)), scalebary-(yrange/50), str(scale) +' s', ha='center',va='top') #, **Calibri, **Size)
 #f.savefig('/Volumes/KPMSB352/Thesis/Chapter 5 - Photometry NAc/Figures/SingleTrialSCALE0.02.pdf',bbox_inches="tight")
 
 # Individual trial 1 - 3, 1 ----- TESTER FOR SCALE - 0.04 
@@ -614,7 +614,7 @@ yrange = ax.get_ylim()[1] - ax.get_ylim()[0]
 scalebary = (yrange / 10) + ax.get_ylim()[0]
 scalebarx = [ax.get_xlim()[1] - scalebar, ax.get_xlim()[1]]
 ax.plot(scalebarx, [scalebary, scalebary], c='k', linewidth=2)
-ax.text((scalebarx[0] + (scalebar/2)), scalebary-(yrange/50), str(scale) +' s', ha='center',va='top', **Calibri, **Size)
+ax.text((scalebarx[0] + (scalebar/2)), scalebary-(yrange/50), str(scale) +' s', ha='center',va='top')#, **Calibri, **Size)
 #f.savefig('/Volumes/KPMSB352/Thesis/Chapter 5 - Photometry NAc/Figures/SingleTrialSCALE0.04.pdf',bbox_inches="tight")
 
 
@@ -867,12 +867,12 @@ for i, val in enumerate(allRatDistractors):
         pass
 # Individual plots to choose a representative rat 
     
-    fig14 = plt.figure()
-    ax13 = plt.subplot(1,1,1)
-    ax13.set_ylim([-0.015, 0.015])
-    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Distractor') #, noiseindex=noiseindex) #, )
-    plt.text(250,0.01, '{}'.format(len(allRatDistractors[i])) + ' distractors' )
-    fig14.savefig('/Volumes/KPMSB352/Thesis/Chapter 5 - Photometry NAc/Figures/Distractors_' + str(i) + '.pdf', bbox_inches="tight")
+#    fig14 = plt.figure()
+#    ax13 = plt.subplot(1,1,1)
+#    ax13.set_ylim([-0.015, 0.015])
+#    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Distractor') #, noiseindex=noiseindex) #, )
+#    plt.text(250,0.01, '{}'.format(len(allRatDistractors[i])) + ' distractors' )
+#    fig14.savefig('/Volumes/KPMSB352/Thesis/Chapter 5 - Photometry NAc/Figures/Distractors_' + str(i) + '.pdf', bbox_inches="tight")
 
     blueMeanDISTRACTOR = np.mean(blueSnips, axis=0)
     blueMeans_distractor.append(blueMeanDISTRACTOR)
@@ -906,13 +906,13 @@ for i, val in enumerate(allRatDistracted):
     except: 
         pass
 # Individual plots to choose a representative rat 
-    fig14 = plt.figure()
-    ax13 = plt.subplot(1,1,1)
-    ax13.set_ylim([-0.01, 0.01])
-    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Distracted') #, noiseindex=noiseindex) #, )
-    plt.text(250,0.005, '{}'.format(len(allRatDistracted[i])) + ' distracted' )
-    fig14.savefig('/Volumes/KPMSB352/Thesis/Chapter 5 - Photometry NAc/Figures/Distracted_' + str(i) + '.pdf', bbox_inches="tight")
-
+#    fig14 = plt.figure()
+#    ax13 = plt.subplot(1,1,1)
+#    ax13.set_ylim([-0.01, 0.01])
+#    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Distracted') #, noiseindex=noiseindex) #, )
+#    plt.text(250,0.005, '{}'.format(len(allRatDistracted[i])) + ' distracted' )
+#    fig14.savefig('/Volumes/KPMSB352/Thesis/Chapter 5 - Photometry NAc/Figures/Distracted_' + str(i) + '.pdf', bbox_inches="tight")
+#
 
     blueMeanDISTRACTED = np.mean(blueSnips, axis=0)
     blueMeans_distracted.append(blueMeanDISTRACTED)
@@ -948,12 +948,12 @@ for i, val in enumerate(allRatNotDistracted):
         pass
     
 # Individual plots to choose a representative rat 
-    fig14 = plt.figure()
-    ax13 = plt.subplot(1,1,1)
-    ax13.set_ylim([-0.01, 0.01])
-    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Not Distracted') #, noiseindex=noiseindex) #, )
-    plt.text(250,0.005, '{}'.format(len(allRatNotDistracted[i])) + ' not distracted' )
-    fig14.savefig('/Volumes/KPMSB352/Thesis/Chapter 5 - Photometry NAc/Figures/NotDistracted_' + str(i) + '.pdf', bbox_inches="tight")
+#    fig14 = plt.figure()
+#    ax13 = plt.subplot(1,1,1)
+#    ax13.set_ylim([-0.01, 0.01])
+#    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Not Distracted') #, noiseindex=noiseindex) #, )
+#    plt.text(250,0.005, '{}'.format(len(allRatNotDistracted[i])) + ' not distracted' )
+#    fig14.savefig('/Volumes/KPMSB352/Thesis/Chapter 5 - Photometry NAc/Figures/NotDistracted_' + str(i) + '.pdf', bbox_inches="tight")
 
 # Means for not distracted trials here MULT SHADED FIG 
 
@@ -1067,8 +1067,8 @@ def PhotoPeaksCalc(snips_all_rats):
     
     for rat in snips_all_rats:
         pre_event = np.mean(rat[0:50]) # Average for 5 seconds, 10 seconds before event 
-        peak = np.max(rat[100:300]) ## Minus the average of the first 5 seconds and after 100 points (slice)
-        peak_range = rat[100:300]
+        peak = np.max(rat[100:130]) ## Minus the average of the first 5 seconds and after 100 points (slice)
+        peak_range = rat[100:130]
         a = peak_range.tolist()
         peak_index = a.index(peak)
         t = peak_index / 10
