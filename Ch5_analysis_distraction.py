@@ -527,7 +527,7 @@ ax[0].spines['bottom'].set_visible(False)
 ax[1].spines['bottom'].set_visible(False)
 ax[2].spines['bottom'].set_visible(False)
 ax[3].spines['bottom'].set_visible(False)
-figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 5 - Photometry NAc/Figures/ShortVsLongPeaksBarScatter.pdf', bbox_inches="tight")
+figureA.savefig('/Volumes/KPMSB352/Thesis/FINAL THESIS/CORRECTIONS/Figures/ShortVsLongPeaksBarScatterCh5.pdf', bbox_inches="tight")
 
 ################################################################################################
 ################################################################################################
@@ -566,7 +566,7 @@ ax[0].spines['bottom'].set_visible(False)
 ax[1].spines['bottom'].set_visible(False)
 ax[2].spines['bottom'].set_visible(False)
 ax[3].spines['bottom'].set_visible(False)
-figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 5 - Photometry NAc/Figures/RunVsDisPeaksBarScatter.pdf', bbox_inches="tight")
+figureA.savefig('/Volumes/KPMSB352/Thesis/FINAL THESIS/CORRECTIONS/Figures/RunVsDisPeaksBarScatterCh5.pdf', bbox_inches="tight")
 
 
 ################################################################################################
@@ -605,7 +605,7 @@ ax[0].spines['bottom'].set_visible(False)
 ax[1].spines['bottom'].set_visible(False)
 ax[2].spines['bottom'].set_visible(False)
 ax[3].spines['bottom'].set_visible(False)
-figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 5 - Photometry NAc/Figures/DisVsNotDisPeaksBarScatter.pdf', bbox_inches="tight")
+figureA.savefig('/Volumes/KPMSB352/Thesis/FINAL THESIS/CORRECTIONS/Figures/DisVsNotDisPeaksBarScatterCh5.pdf', bbox_inches="tight")
 
 
 ################################################################################################
@@ -644,7 +644,7 @@ ax[0].spines['bottom'].set_visible(False)
 ax[1].spines['bottom'].set_visible(False)
 ax[2].spines['bottom'].set_visible(False)
 ax[3].spines['bottom'].set_visible(False)
-figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 5 - Photometry NAc/Figures/ModVsDisPeaksBarScatter.pdf', bbox_inches="tight")
+figureA.savefig('/Volumes/KPMSB352/Thesis/FINAL THESIS/CORRECTIONS/Figures/ModVsDisPeaksBarScatterCh5.pdf', bbox_inches="tight")
 
 
 ################################################################################################
@@ -688,7 +688,7 @@ ax[0].spines['bottom'].set_visible(False)
 ax[1].spines['bottom'].set_visible(False)
 ax[2].spines['bottom'].set_visible(False)
 ax[3].spines['bottom'].set_visible(False)
-figureA.savefig('/Volumes/KPMSB352/Thesis/Chapter 5 - Photometry NAc/Figures/DisVsHabPeaksBarScatter.pdf', bbox_inches="tight")
+figureA.savefig('/Volumes/KPMSB352/Thesis/FINAL THESIS/CORRECTIONS/Figures/DisVsHabPeaksBarScatterCh5.pdf', bbox_inches="tight")
 
 
 #???????
