@@ -667,10 +667,10 @@ figureA, ax = plt.subplots(nrows=1, ncols=4, figsize=(10,4)) ### x,y
 figureA.tight_layout(pad=3, w_pad=3, h_pad=1.0)
 
 labels = []
-ax[0], barx, barlist, sclist = barscatter(wnVnwnPeak, ax=ax[0],transpose=False, paired=True, barfacecolor=['lightgray','#4cbb17'], barfacecoloroption='individual',  ylabel='Peak (%)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-ax[1], barx, barlist, sclist = barscatter(wnVnwnt, ax=ax[1], transpose=False, paired=True, barfacecolor=['lightgray','#4cbb17'], barfacecoloroption='individual',  ylabel='t (s)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-ax[2], barx, barlist, sclist = barscatter(wnVnwnPre, ax=ax[2],transpose=False, paired=True, barfacecolor=['lightgray','#4cbb17'], barfacecoloroption='individual',  ylabel='Pre-event period (mean %)', barlabels=labels,  baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
-ax[3], barx, barlist, sclist = barscatter(wnVnwnPost, ax=ax[3],transpose=False, paired=True, barfacecolor=['lightgray','#4cbb17'], barfacecoloroption='individual',  ylabel='Post-event period (mean %)', barlabels=labels, baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[0], barx, barlist, sclist = barscatter(wnVnwnPeak, ax=ax[0],transpose=False, paired=True, barfacecolor=['powderblue','gold'], barfacecoloroption='individual',  ylabel='Peak (%)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[1], barx, barlist, sclist = barscatter(wnVnwnt, ax=ax[1], transpose=False, paired=True, barfacecolor=['powderblue','gold'], barfacecoloroption='individual',  ylabel='t (s)', barlabels=labels, baredgecolor=['']) #,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[2], barx, barlist, sclist = barscatter(wnVnwnPre, ax=ax[2],transpose=False, paired=True, barfacecolor=['powderblue','gold'], barfacecoloroption='individual',  ylabel='Pre-event period (mean %)', barlabels=labels,  baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
+ax[3], barx, barlist, sclist = barscatter(wnVnwnPost, ax=ax[3],transpose=False, paired=True, barfacecolor=['powderblue','gold'], barfacecoloroption='individual',  ylabel='Post-event period (mean %)', barlabels=labels, baredgecolor=[''] )#,grouplabel=['Sal', 'Pcp', 'day -2', 'day -1'])
 
 ax[0].set_ylabel('Peak (% ΔF)')
 ax[1].set_ylabel('t (s)')
