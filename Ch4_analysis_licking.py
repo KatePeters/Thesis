@@ -940,12 +940,12 @@ for i, val in enumerate(allRatNotDistracted):
         pass
     
 # Individual plots to choose a representative rat 
-    fig14 = plt.figure()
-    ax13 = plt.subplot(1,1,1)
-    ax13.set_ylim([-0.15, 0.15])
-    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Not Distracted') #, noiseindex=noiseindex) #, )
-    plt.text(250,0.2, '{}'.format(len(allRatNotDistracted[i])) + ' not distracted' )
-    fig14.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/NotDistracted_' + str(i) + '.pdf', bbox_inches="tight")
+#    fig14 = plt.figure()
+#    ax13 = plt.subplot(1,1,1)
+#    ax13.set_ylim([-0.15, 0.15])
+#    trialsFig(ax13, blueSnips, uvSnips, ppsBlue, eventText='Not Distracted') #, noiseindex=noiseindex) #, )
+#    plt.text(250,0.2, '{}'.format(len(allRatNotDistracted[i])) + ' not distracted' )
+#    fig14.savefig('/Volumes/KPMSB352/Thesis/Chapter 4 - Photometry VTA/Figures/NotDistracted_' + str(i) + '.pdf', bbox_inches="tight")
 
 # Means for not distracted trials here MULT SHADED FIG 
 
